@@ -1,4 +1,5 @@
 .header {
+    width: 100vw;
     height: 88px;
     display: flex;
     justify-content: center;
@@ -7,7 +8,6 @@
 }
 
 .content {
-    /* TODO: вынести для использования везде */
     width: 1280px;
     display: flex;
     justify-content: space-between;
