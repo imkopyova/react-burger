@@ -1,0 +1,27 @@
+.header {
+    height: 88px;
+    display: flex;
+    justify-content: center;
+    /* TODO: вынести в переменную */
+    background-color: #1c1c21;
+}
+
+.content {
+    /* TODO: вынести для использования везде */
+    width: 1280px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.nav {
+    display: flex;
+    gap: 8px;
+}
+
+.logo {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
