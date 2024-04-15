@@ -1,0 +1,22 @@
+.scrollable {
+    overflow-y: scroll;
+}
+
+@supports (scrollbar-width: thin) {
+    .scrollable {
+        scrollbar-color: #8585ad #2f2f37;
+        scrollbar-width: thin;
+    }
+}
+
+@supports selector(::-webkit-scrollbar) {
+    .scrollable::-webkit-scrollbar-thumb {
+        background: #8585ad;
+    }
+    .scrollable::-webkit-scrollbar-track {
+        background: #2f2f37;
+    }
+    .scrollable::-webkit-scrollbar {
+        max-width: 8px;
+    }
+}
