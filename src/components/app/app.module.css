@@ -1,5 +1,5 @@
 .app {
-    background-color: #131316;
+    background-color: var(--background-alt);
     height: 100vh;
     margin: 0;
     display: flex;

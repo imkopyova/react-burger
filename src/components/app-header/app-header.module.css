@@ -3,8 +3,7 @@
     height: 88px;
     display: flex;
     justify-content: center;
-    /* TODO: вынести в переменную */
-    background-color: #1c1c21;
+    background-color: var(--background);
 }
 
 .content {

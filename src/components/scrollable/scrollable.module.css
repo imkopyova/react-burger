@@ -4,17 +4,17 @@
 /* 
 @supports (scrollbar-width: thin) {
     .scrollable {
-        scrollbar-color: #8585ad #2f2f37;
+        scrollbar-color: var(--text-inactive-color) var(--background-element);
         scrollbar-width: thin;
     }
 }
 
 @supports selector(::-webkit-scrollbar) {
     .scrollable::-webkit-scrollbar-thumb {
-        background: #8585ad;
+        background: var(--text-inactive-color);
     }
     .scrollable::-webkit-scrollbar-track {
-        background: #2f2f37;
+        background: var(--background-element);
     }
     .scrollable::-webkit-scrollbar {
         max-width: 8px;
