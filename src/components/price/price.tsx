@@ -2,7 +2,12 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 
 import styles from './price.module.css';
 
-export const Price = ({ children, extraClass }) => {
+interface IPrice {
+    children: number;
+    extraClass?: string;
+}
+
+export const Price = ({ children, extraClass }: IPrice) => {
     return (
         <div className={styles.price}>
             <span className={`text text_type_digits-default ${extraClass}`}>

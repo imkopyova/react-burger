@@ -3,7 +3,19 @@ import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './ingredient-card.module.css';
 import { Price } from '../../price/price';
 
-export const IngredientCard = ({ name, price, image, quantity }) => {
+interface IIngredientCard {
+    name: string;
+    price: number;
+    image: string;
+    quantity?: number;
+}
+
+export const IngredientCard = ({
+    name,
+    price,
+    image,
+    quantity,
+}: IIngredientCard) => {
     return (
         <div className={classNames(styles.card, 'pr-4 pl-4')}>
             <img width={240} height={120} alt={name} src={image} />
@@ -18,7 +30,7 @@ export const IngredientCard = ({ name, price, image, quantity }) => {
             >
                 {name}
             </h3>
-            {quantity > 0 && (
+            {quantity && (
                 <Counter
                     count={quantity}
                     size="default"

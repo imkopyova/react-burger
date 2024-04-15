@@ -13,15 +13,19 @@ export const AppHeader = () => {
         <header className={classNames(styles.header, 'pt-4 pb-4')}>
             <div className={styles.content}>
                 <nav className={styles.nav}>
-                    <NavLink isActive icon={<BurgerIcon />}>
+                    <NavLink isActive icon={<BurgerIcon type="primary" />}>
                         Конструктор
                     </NavLink>
-                    <NavLink icon={<ListIcon />}>Лента заказов</NavLink>
+                    <NavLink icon={<ListIcon type="secondary" />}>
+                        Лента заказов
+                    </NavLink>
                 </nav>
                 <div className={styles.logo}>
                     <Logo />
                 </div>
-                <NavLink icon={<ProfileIcon />}>Личный кабинет</NavLink>
+                <NavLink icon={<ProfileIcon type="secondary" />}>
+                    Личный кабинет
+                </NavLink>
             </div>
         </header>
     );

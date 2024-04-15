@@ -3,7 +3,13 @@ import classNames from 'classnames';
 
 import styles from './nav-link.module.css';
 
-export const NavLink = ({ isActive, icon, children }) => {
+interface INavLink {
+    isActive?: boolean;
+    icon: React.ReactElement;
+    children: string;
+}
+
+export const NavLink = ({ isActive, icon, children }: INavLink) => {
     const clonedIcon = React.cloneElement(icon, {
         type: isActive ? 'primary' : 'secondary',
     });

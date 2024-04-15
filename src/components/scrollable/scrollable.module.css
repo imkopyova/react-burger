@@ -1,7 +1,7 @@
 .scrollable {
     overflow-y: scroll;
 }
-
+/* 
 @supports (scrollbar-width: thin) {
     .scrollable {
         scrollbar-color: #8585ad #2f2f37;
@@ -19,4 +19,4 @@
     .scrollable::-webkit-scrollbar {
         max-width: 8px;
     }
-}
+} */

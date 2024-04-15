@@ -7,10 +7,21 @@ import {
 import styles from './burger-constructor.module.css';
 import { Price } from '../price/price';
 import { Scrollable } from '../scrollable/scrollable';
+import type { TIngredient } from '../../utils/data';
 
 const FIXED_HEIGHT_WITHOUT_SCROLLABLE = 582;
 
-export const BurgerConstructor = ({ bunTop, bunBottom, ingredients }) => {
+export interface IBurgerConstructor {
+    bunTop: TIngredient;
+    bunBottom: TIngredient;
+    ingredients: TIngredient[];
+}
+
+export const BurgerConstructor = ({
+    bunTop,
+    bunBottom,
+    ingredients,
+}: IBurgerConstructor) => {
     return (
         <section className={classNames(styles.container, 'pl-4')}>
             <div className={classNames(styles.ingredient)}>
@@ -61,7 +72,7 @@ export const BurgerConstructor = ({ bunTop, bunBottom, ingredients }) => {
                 >
                     Оформить заказ
                 </Button>
-                <Price extraClass="text_type_digits-medium">610</Price>
+                <Price extraClass="text_type_digits-medium">{610}</Price>
             </div>
         </section>
     );
