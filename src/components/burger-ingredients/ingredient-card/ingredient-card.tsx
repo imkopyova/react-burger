@@ -23,11 +23,6 @@ export const IngredientCard = ({
 }: IIngredientCard) => {
     const [showModal, setShowModal] = useState(false);
 
-    const handleClick = () => {
-        console.log('handleClick', showModal);
-        setShowModal(true);
-    };
-
     return (
         <>
             {showModal && (
@@ -37,7 +32,7 @@ export const IngredientCard = ({
             )}
             <div
                 className={classNames(styles.card, 'pr-4 pl-4')}
-                onClick={handleClick}
+                onClick={() => setShowModal(true)}
             >
                 <img width={240} height={120} alt={name} src={image} />
                 <div className="mt-1">
