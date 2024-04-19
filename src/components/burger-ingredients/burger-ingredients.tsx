@@ -58,6 +58,7 @@ export const BurgerIngredients = ({ ingredients }: IBurgerIngredients) => {
                                 name={ingredient.name}
                                 price={ingredient.price}
                                 image={ingredient.image}
+                                imageLarge={ingredient.image_large}
                                 quantity={1}
                             />
                         ))}
@@ -70,6 +71,7 @@ export const BurgerIngredients = ({ ingredients }: IBurgerIngredients) => {
                                 name={ingredient.name}
                                 price={ingredient.price}
                                 image={ingredient.image}
+                                imageLarge={ingredient.image_large}
                             />
                         ))}
                     </IngredientsSection>
@@ -81,6 +83,7 @@ export const BurgerIngredients = ({ ingredients }: IBurgerIngredients) => {
                                 name={ingredient.name}
                                 price={ingredient.price}
                                 image={ingredient.image}
+                                imageLarge={ingredient.image_large}
                             />
                         ))}
                     </IngredientsSection>
