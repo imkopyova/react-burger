@@ -5,15 +5,21 @@ import { IngredientCard } from './ingredient-card/ingredient-card';
 import { IngredientsSection } from './ingredients-section/ingredients-section';
 import { Scrollable } from '../scrollable/scrollable';
 import styles from './burger-ingredients.module.css';
-import { DATA } from '../../utils/data';
+import type { TIngredient } from '../../utils/data';
 
 const FIXED_HEIGHT_WITHOUT_SCROLLABLE = 244;
 
-export const BurgerIngredients = () => {
+interface IBurgerIngredients {
+    ingredients: TIngredient[];
+}
+
+export const BurgerIngredients = ({ ingredients }: IBurgerIngredients) => {
     const [current, setCurrent] = React.useState('bun');
-    const buns = DATA.filter(ingredient => ingredient.type === 'bun');
-    const sauces = DATA.filter(ingredient => ingredient.type === 'sauce');
-    const mains = DATA.filter(ingredient => ingredient.type === 'main');
+    const buns = ingredients.filter(ingredient => ingredient.type === 'bun');
+    const sauces = ingredients.filter(
+        ingredient => ingredient.type === 'sauce',
+    );
+    const mains = ingredients.filter(ingredient => ingredient.type === 'main');
     return (
         <section className={styles.container}>
             <div className={styles.tabs}>
