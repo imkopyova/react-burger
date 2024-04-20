@@ -55,14 +55,7 @@ export const BurgerIngredients = ({ ingredients }: IBurgerIngredients) => {
                         {buns.map(ingredient => (
                             <IngredientCard
                                 key={ingredient._id}
-                                name={ingredient.name}
-                                price={ingredient.price}
-                                image={ingredient.image}
-                                imageLarge={ingredient.image_large}
-                                proteins={ingredient.proteins}
-                                fat={ingredient.fat}
-                                carbohydrates={ingredient.carbohydrates}
-                                calories={ingredient.calories}
+                                ingredient={ingredient}
                                 quantity={1}
                             />
                         ))}
@@ -72,14 +65,7 @@ export const BurgerIngredients = ({ ingredients }: IBurgerIngredients) => {
                         {sauces.map(ingredient => (
                             <IngredientCard
                                 key={ingredient._id}
-                                name={ingredient.name}
-                                price={ingredient.price}
-                                image={ingredient.image}
-                                imageLarge={ingredient.image_large}
-                                proteins={ingredient.proteins}
-                                fat={ingredient.fat}
-                                carbohydrates={ingredient.carbohydrates}
-                                calories={ingredient.calories}
+                                ingredient={ingredient}
                             />
                         ))}
                     </IngredientsSection>
@@ -88,14 +74,7 @@ export const BurgerIngredients = ({ ingredients }: IBurgerIngredients) => {
                         {mains.map(ingredient => (
                             <IngredientCard
                                 key={ingredient._id}
-                                name={ingredient.name}
-                                price={ingredient.price}
-                                image={ingredient.image}
-                                imageLarge={ingredient.image_large}
-                                proteins={ingredient.proteins}
-                                fat={ingredient.fat}
-                                carbohydrates={ingredient.carbohydrates}
-                                calories={ingredient.calories}
+                                ingredient={ingredient}
                             />
                         ))}
                     </IngredientsSection>

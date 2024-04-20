@@ -1,24 +1,12 @@
 import classNames from 'classnames';
 import styles from './ingredient-details.module.css';
+import type { TIngredient } from '../../utils/data';
 
 interface IIngredientDetails {
-    name: string;
-    image: string;
-    proteins: number;
-    fat: number;
-    carbohydrates: number;
-    calories: number;
+    ingredient: TIngredient;
 }
 
-export const IngredientDetails = ({
-    name,
-    image,
-    proteins,
-    carbohydrates,
-    calories,
-    fat,
-}: IIngredientDetails) => {
-    console.log(name, image, proteins, carbohydrates, calories, fat);
+export const IngredientDetails = ({ ingredient }: IIngredientDetails) => {
     return (
         <div className={classNames(styles.container, 'p-10 pb-15')}>
             <h3
@@ -31,12 +19,12 @@ export const IngredientDetails = ({
             </h3>
             <img
                 className={classNames(styles.image, 'mt-5')}
-                alt={name}
-                src={image}
+                alt={ingredient.name}
+                src={ingredient.image}
                 width={520}
                 height={240}
             />
-            <p className="text text_type_main-medium mt-2">{name}</p>
+            <p className="text text_type_main-medium mt-2">{ingredient.name}</p>
             <div
                 className={classNames(
                     styles.nutrients_layout,
@@ -48,7 +36,7 @@ export const IngredientDetails = ({
                         Калории,ккал
                     </span>
                     <span className="text text_type_digits-default pt-2">
-                        {calories}
+                        {ingredient.calories}
                     </span>
                 </div>
                 <div className={styles.nutrients_item}>
@@ -56,7 +44,7 @@ export const IngredientDetails = ({
                         Белки, г
                     </span>
                     <span className="text text_type_digits-default pt-2">
-                        {proteins}
+                        {ingredient.proteins}
                     </span>
                 </div>
                 <div className={styles.nutrients_item}>
@@ -64,7 +52,7 @@ export const IngredientDetails = ({
                         Жиры, г
                     </span>
                     <span className="text text_type_digits-default pt-2">
-                        {fat}
+                        {ingredient.fat}
                     </span>
                 </div>
                 <div className={styles.nutrients_item}>
@@ -72,7 +60,7 @@ export const IngredientDetails = ({
                         Углеводы, г
                     </span>
                     <span className="text text_type_digits-default pt-2">
-                        {carbohydrates}
+                        {ingredient.carbohydrates}
                     </span>
                 </div>
             </div>

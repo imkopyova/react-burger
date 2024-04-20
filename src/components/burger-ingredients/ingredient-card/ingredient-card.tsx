@@ -5,53 +5,35 @@ import styles from './ingredient-card.module.css';
 import { Price } from '../../price/price';
 import { Modal } from '../../modal/modal';
 import { IngredientDetails } from '../../ingredient-details/ingredient-details';
+import type { TIngredient } from '../../../utils/data';
 
 interface IIngredientCard {
-    name: string;
-    price: number;
-    image: string;
-    imageLarge: string;
-    proteins: number;
-    fat: number;
-    carbohydrates: number;
-    calories: number;
+    ingredient: TIngredient;
     quantity?: number;
 }
 
-export const IngredientCard = ({
-    name,
-    price,
-    image,
-    imageLarge,
-    quantity,
-    proteins,
-    carbohydrates,
-    calories,
-    fat,
-}: IIngredientCard) => {
+export const IngredientCard = ({ ingredient, quantity }: IIngredientCard) => {
     const [showModal, setShowModal] = useState(false);
 
     return (
         <>
             {showModal && (
                 <Modal onClose={() => setShowModal(false)}>
-                    <IngredientDetails
-                        name={name}
-                        image={imageLarge}
-                        proteins={proteins}
-                        carbohydrates={carbohydrates}
-                        calories={calories}
-                        fat={fat}
-                    />
+                    <IngredientDetails ingredient={ingredient} />
                 </Modal>
             )}
             <div
                 className={classNames(styles.card, 'pr-4 pl-4')}
                 onClick={() => setShowModal(true)}
             >
-                <img width={240} height={120} alt={name} src={image} />
+                <img
+                    width={240}
+                    height={120}
+                    alt={ingredient.name}
+                    src={ingredient.image}
+                />
                 <div className="mt-1">
-                    <Price>{price}</Price>
+                    <Price>{ingredient.price}</Price>
                 </div>
                 <h3
                     className={classNames(
@@ -59,7 +41,7 @@ export const IngredientCard = ({
                         'text text_type_main-default mt-1',
                     )}
                 >
-                    {name}
+                    {ingredient.name}
                 </h3>
                 {quantity && (
                     <Counter
