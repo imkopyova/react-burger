@@ -59,6 +59,10 @@ export const BurgerIngredients = ({ ingredients }: IBurgerIngredients) => {
                                 price={ingredient.price}
                                 image={ingredient.image}
                                 imageLarge={ingredient.image_large}
+                                proteins={ingredient.proteins}
+                                fat={ingredient.fat}
+                                carbohydrates={ingredient.carbohydrates}
+                                calories={ingredient.calories}
                                 quantity={1}
                             />
                         ))}
@@ -72,6 +76,10 @@ export const BurgerIngredients = ({ ingredients }: IBurgerIngredients) => {
                                 price={ingredient.price}
                                 image={ingredient.image}
                                 imageLarge={ingredient.image_large}
+                                proteins={ingredient.proteins}
+                                fat={ingredient.fat}
+                                carbohydrates={ingredient.carbohydrates}
+                                calories={ingredient.calories}
                             />
                         ))}
                     </IngredientsSection>
@@ -84,6 +92,10 @@ export const BurgerIngredients = ({ ingredients }: IBurgerIngredients) => {
                                 price={ingredient.price}
                                 image={ingredient.image}
                                 imageLarge={ingredient.image_large}
+                                proteins={ingredient.proteins}
+                                fat={ingredient.fat}
+                                carbohydrates={ingredient.carbohydrates}
+                                calories={ingredient.calories}
                             />
                         ))}
                     </IngredientsSection>

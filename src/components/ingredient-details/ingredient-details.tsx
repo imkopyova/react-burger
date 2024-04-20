@@ -4,10 +4,21 @@ import styles from './ingredient-details.module.css';
 interface IIngredientDetails {
     name: string;
     image: string;
+    proteins: number;
+    fat: number;
+    carbohydrates: number;
+    calories: number;
 }
 
-// TODO: Добавить пропсы для КБЖУ
-export const IngredientDetails = ({ name, image }: IIngredientDetails) => {
+export const IngredientDetails = ({
+    name,
+    image,
+    proteins,
+    carbohydrates,
+    calories,
+    fat,
+}: IIngredientDetails) => {
+    console.log(name, image, proteins, carbohydrates, calories, fat);
     return (
         <div className={classNames(styles.container, 'p-10 pb-15')}>
             <h3
@@ -37,7 +48,7 @@ export const IngredientDetails = ({ name, image }: IIngredientDetails) => {
                         Калории,ккал
                     </span>
                     <span className="text text_type_digits-default pt-2">
-                        244,4
+                        {calories}
                     </span>
                 </div>
                 <div className={styles.nutrients_item}>
@@ -45,7 +56,7 @@ export const IngredientDetails = ({ name, image }: IIngredientDetails) => {
                         Белки, г
                     </span>
                     <span className="text text_type_digits-default pt-2">
-                        12,2
+                        {proteins}
                     </span>
                 </div>
                 <div className={styles.nutrients_item}>
@@ -53,7 +64,7 @@ export const IngredientDetails = ({ name, image }: IIngredientDetails) => {
                         Жиры, г
                     </span>
                     <span className="text text_type_digits-default pt-2">
-                        17,2
+                        {fat}
                     </span>
                 </div>
                 <div className={styles.nutrients_item}>
@@ -61,7 +72,7 @@ export const IngredientDetails = ({ name, image }: IIngredientDetails) => {
                         Углеводы, г
                     </span>
                     <span className="text text_type_digits-default pt-2">
-                        10,2
+                        {carbohydrates}
                     </span>
                 </div>
             </div>

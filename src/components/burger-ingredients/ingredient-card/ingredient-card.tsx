@@ -11,6 +11,10 @@ interface IIngredientCard {
     price: number;
     image: string;
     imageLarge: string;
+    proteins: number;
+    fat: number;
+    carbohydrates: number;
+    calories: number;
     quantity?: number;
 }
 
@@ -20,6 +24,10 @@ export const IngredientCard = ({
     image,
     imageLarge,
     quantity,
+    proteins,
+    carbohydrates,
+    calories,
+    fat,
 }: IIngredientCard) => {
     const [showModal, setShowModal] = useState(false);
 
@@ -27,7 +35,14 @@ export const IngredientCard = ({
         <>
             {showModal && (
                 <Modal onClose={() => setShowModal(false)}>
-                    <IngredientDetails name={name} image={imageLarge} />
+                    <IngredientDetails
+                        name={name}
+                        image={imageLarge}
+                        proteins={proteins}
+                        carbohydrates={carbohydrates}
+                        calories={calories}
+                        fat={fat}
+                    />
                 </Modal>
             )}
             <div
