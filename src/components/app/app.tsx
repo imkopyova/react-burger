@@ -8,20 +8,25 @@ import styles from './app.module.css';
 const API_INGREDIENTS = 'https://norma.nomoreparties.space/api/ingredients';
 
 export const App = () => {
-    const [data, setData] = useState();
+    const [data, setData] = useState(null);
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(true);
 
-    // TODO: Избавиться от моргания
     useEffect(() => {
-        const getData = async () => {
+        const getData = () => {
+            setLoading(true);
             setError(false);
-            const res = await fetch(API_INGREDIENTS).catch(() => {
-                setError(true);
-            });
-            const { data } = await res?.json();
-            setData(data);
-            setLoading(false);
+            fetch(API_INGREDIENTS)
+                .then(res => res.json())
+                .then(({ data }) => {
+                    setData(data);
+                })
+                .catch(e => {
+                    setError(true);
+                })
+                .finally(() => {
+                    setLoading(false);
+                });
         };
 
         getData();
