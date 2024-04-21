@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import classNames from 'classnames';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './ingredient-card.module.css';
@@ -6,6 +5,7 @@ import { Price } from '../../price/price';
 import { Modal } from '../../modal/modal';
 import { IngredientDetails } from '../../ingredient-details/ingredient-details';
 import type { TIngredient } from '../../../utils/data';
+import { useModal } from '../../modal/hooks/use-modal';
 
 interface IIngredientCard {
     ingredient: TIngredient;
@@ -13,18 +13,18 @@ interface IIngredientCard {
 }
 
 export const IngredientCard = ({ ingredient, quantity }: IIngredientCard) => {
-    const [showModal, setShowModal] = useState(false);
+    const { isModalOpen, openModal, closeModal } = useModal();
 
     return (
         <>
-            {showModal && (
-                <Modal onClose={() => setShowModal(false)}>
+            {isModalOpen && (
+                <Modal onClose={closeModal}>
                     <IngredientDetails ingredient={ingredient} />
                 </Modal>
             )}
             <div
                 className={classNames(styles.card, 'pr-4 pl-4')}
-                onClick={() => setShowModal(true)}
+                onClick={openModal}
             >
                 <img
                     width={240}

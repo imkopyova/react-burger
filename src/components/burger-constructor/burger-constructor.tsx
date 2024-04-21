@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import classNames from 'classnames';
 import {
     ConstructorElement,
@@ -11,6 +10,7 @@ import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
 import { Scrollable } from '../scrollable/scrollable';
 import type { TIngredient } from '../../utils/data';
+import { useModal } from '../modal/hooks/use-modal';
 
 const FIXED_HEIGHT_WITHOUT_SCROLLABLE = 582;
 
@@ -25,12 +25,12 @@ export const BurgerConstructor = ({
     bunBottom,
     ingredients,
 }: IBurgerConstructor) => {
-    const [showModal, setShowModal] = useState(false);
+    const { isModalOpen, openModal, closeModal } = useModal();
 
     return (
         <>
-            {showModal && (
-                <Modal onClose={() => setShowModal(false)}>
+            {isModalOpen && (
+                <Modal onClose={closeModal}>
                     <OrderDetails id="034536" />
                 </Modal>
             )}
@@ -83,7 +83,7 @@ export const BurgerConstructor = ({
                         type="primary"
                         size="large"
                         extraClass="ml-10"
-                        onClick={() => setShowModal(true)}
+                        onClick={openModal}
                     >
                         Оформить заказ
                     </Button>
