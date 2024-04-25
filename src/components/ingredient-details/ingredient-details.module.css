@@ -1,0 +1,21 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nutrients_layout {
+    display: flex;
+    gap: 20px;
+}
+
+.nutrients_item {
+    min-width: 112px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title {
+    width: 100%;
+}

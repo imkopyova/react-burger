@@ -1,0 +1,26 @@
+.header {
+    width: 100vw;
+    height: 88px;
+    display: flex;
+    justify-content: center;
+    background-color: var(--background);
+}
+
+.content {
+    width: 1280px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.nav {
+    display: flex;
+    gap: 8px;
+}
+
+.logo {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+}

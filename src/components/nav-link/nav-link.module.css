@@ -1,0 +1,13 @@
+.container {
+    height: 56px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: var(--text-inactive-color);
+}
+
+.active {
+    color: var(--text-primary-color);
+}
