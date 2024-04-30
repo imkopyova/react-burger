@@ -1,36 +1,47 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { AppHeader } from '../app-header/app-header';
 import { BurgerIngredients } from '../burger-ingredients/burger-ingredients';
 import { BurgerConstructor } from '../burger-constructor/burger-constructor';
 
 import styles from './app.module.css';
 
-const API_INGREDIENTS = 'https://norma.nomoreparties.space/api/ingredients';
+import { IRootState } from '../../services/models';
+import { thunkGetIngredients } from '../../services/actions/ingredients';
 
 export const App = () => {
-    const [data, setData] = useState(null);
-    const [error, setError] = useState(false);
-    const [loading, setLoading] = useState(true);
+    const dispatch = useDispatch();
+
+    const {
+        ingredients,
+        ingredientsRequest: loading,
+        ingredientsFailed: error,
+    } = useSelector((store: IRootState) => store.ingredients);
 
     useEffect(() => {
-        const getData = () => {
-            setLoading(true);
-            setError(false);
-            fetch(API_INGREDIENTS)
-                .then(res => res.json())
-                .then(({ data }) => {
-                    setData(data);
-                })
-                .catch(e => {
-                    setError(true);
-                })
-                .finally(() => {
-                    setLoading(false);
-                });
-        };
+        // TODO: исправить типы
+        dispatch(thunkGetIngredients() as any);
+    }, [dispatch]);
 
-        getData();
-    }, []);
+    const content = useMemo(() => {
+        return (
+            <>
+                {loading && (
+                    <p className="text text_type_main-default">
+                        Загружаем ингридиенты...
+                    </p>
+                )}
+                {error && (
+                    <p className="text text_type_main-default">
+                        Произошла ошибка, попробуйте перезагрузить страницу
+                    </p>
+                )}
+                {ingredients !== undefined && (
+                    <BurgerIngredients ingredients={ingredients} />
+                )}
+            </>
+        );
+    }, [loading, error, ingredients]);
 
     return (
         <div className={styles.app}>
@@ -40,33 +51,18 @@ export const App = () => {
                     Соберите бургер
                 </h1>
                 <main className={styles.main}>
-                    {data && (
-                        <>
-                            <BurgerIngredients ingredients={data} />
-                            <BurgerConstructor
-                                bunTop={data[0]}
-                                bunBottom={data[0]}
-                                ingredients={[
-                                    data[6],
-                                    data[5],
-                                    data[8],
-                                    data[10],
-                                    data[10],
-                                ]}
-                            />
-                        </>
-                    )}
-                    {error && (
-                        <p className="text text_type_main-default">
-                            Произошла ошибка, попробуйте перезагрузить страницу
-                        </p>
-                    )}
-
-                    {loading && (
-                        <p className="text text_type_main-default">
-                            Загружаем ингридиенты...
-                        </p>
-                    )}
+                    {/* <BurgerConstructor
+                        bunTop={ingredients[0]}
+                        bunBottom={ingredients[0]}
+                        ingredients={[
+                            ingredients[6],
+                            ingredients[5],
+                            ingredients[8],
+                            ingredients[10],
+                            ingredients[10],
+                        ]}
+                    /> */}
+                    {content}
                 </main>
             </div>
         </div>
