@@ -5,7 +5,7 @@ import { IngredientCard } from './ingredient-card/ingredient-card';
 import { IngredientsSection } from './ingredients-section/ingredients-section';
 import { Scrollable } from '../scrollable/scrollable';
 import styles from './burger-ingredients.module.css';
-import type { TIngredient } from '../../utils/data';
+import type { TIngredient } from '../../services/models';
 
 const FIXED_HEIGHT_WITHOUT_SCROLLABLE = 244;
 

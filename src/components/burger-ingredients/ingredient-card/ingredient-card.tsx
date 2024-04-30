@@ -4,7 +4,7 @@ import styles from './ingredient-card.module.css';
 import { Price } from '../../price/price';
 import { Modal } from '../../modal/modal';
 import { IngredientDetails } from '../../ingredient-details/ingredient-details';
-import type { TIngredient } from '../../../utils/data';
+import type { TIngredient } from '../../../services/models';
 import { useModal } from '../../modal/hooks/use-modal';
 
 interface IIngredientCard {

@@ -9,7 +9,7 @@ import { Price } from '../price/price';
 import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
 import { Scrollable } from '../scrollable/scrollable';
-import type { TIngredient } from '../../utils/data';
+import type { TIngredient } from '../../services/models';
 import { useModal } from '../modal/hooks/use-modal';
 
 const FIXED_HEIGHT_WITHOUT_SCROLLABLE = 582;
