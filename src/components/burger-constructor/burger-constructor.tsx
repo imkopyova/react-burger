@@ -46,7 +46,7 @@ export const BurgerConstructor = ({
                 </div>
                 <Scrollable
                     availableHeight={
-                        window.outerHeight - FIXED_HEIGHT_WITHOUT_SCROLLABLE
+                        window.innerHeight - FIXED_HEIGHT_WITHOUT_SCROLLABLE
                     }
                 >
                     <div>
