@@ -51,18 +51,9 @@ export const App = () => {
                     Соберите бургер
                 </h1>
                 <main className={styles.main}>
-                    {/* <BurgerConstructor
-                        bunTop={ingredients[0]}
-                        bunBottom={ingredients[0]}
-                        ingredients={[
-                            ingredients[6],
-                            ingredients[5],
-                            ingredients[8],
-                            ingredients[10],
-                            ingredients[10],
-                        ]}
-                    /> */}
                     {content}
+                    {/* TODO: Поправить стили заглушек */}
+                    <BurgerConstructor />
                 </main>
             </div>
         </div>

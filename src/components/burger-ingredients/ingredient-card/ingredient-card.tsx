@@ -25,12 +25,14 @@ export const IngredientCard = ({ ingredient, quantity }: IIngredientCard) => {
             <div
                 className={classNames(styles.card, 'pr-4 pl-4')}
                 onClick={openModal}
+                draggable
             >
                 <img
                     width={240}
                     height={120}
                     alt={ingredient.name}
                     src={ingredient.image}
+                    className={styles.image}
                 />
                 <div className="mt-1">
                     <Price>{ingredient.price}</Price>

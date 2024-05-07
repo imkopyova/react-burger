@@ -11,20 +11,16 @@ import { OrderDetails } from '../order-details/order-details';
 import { Scrollable } from '../scrollable/scrollable';
 import type { TIngredient } from '../../services/models';
 import { useModal } from '../modal/hooks/use-modal';
+import { IngredientStub } from './ingredient-stub/ingredient-stub';
 
 const FIXED_HEIGHT_WITHOUT_SCROLLABLE = 582;
 
 export interface IBurgerConstructor {
-    bunTop: TIngredient;
-    bunBottom: TIngredient;
-    ingredients: TIngredient[];
+    bun?: TIngredient;
+    ingredients?: TIngredient[];
 }
 
-export const BurgerConstructor = ({
-    bunTop,
-    bunBottom,
-    ingredients,
-}: IBurgerConstructor) => {
+export const BurgerConstructor = ({ bun, ingredients }: IBurgerConstructor) => {
     const { isModalOpen, openModal, closeModal } = useModal();
 
     return (
@@ -36,13 +32,17 @@ export const BurgerConstructor = ({
             )}
             <section className={classNames(styles.container, 'pl-4')}>
                 <div className={classNames(styles.ingredient)}>
-                    <ConstructorElement
-                        type="top"
-                        isLocked={true}
-                        text={`${bunTop.name} (верх)`}
-                        price={bunTop.price}
-                        thumbnail={bunTop.image}
-                    />
+                    {bun ? (
+                        <ConstructorElement
+                            type="top"
+                            isLocked={true}
+                            text={`${bun.name} (верх)`}
+                            price={bun.price}
+                            thumbnail={bun.image}
+                        />
+                    ) : (
+                        <IngredientStub type="bunTop" />
+                    )}
                 </div>
                 <Scrollable
                     availableHeight={
@@ -50,32 +50,39 @@ export const BurgerConstructor = ({
                     }
                 >
                     <div>
-                        {ingredients.map((ingredient, id) => (
-                            <div
-                                key={id}
-                                className={classNames(
-                                    styles.ingredient,
-                                    'pt-4',
-                                )}
-                            >
-                                <ConstructorElement
-                                    text={ingredient.name}
-                                    price={ingredient.price}
-                                    thumbnail={ingredient.image}
-                                />
-                                <DragIcon type="primary" />
-                            </div>
-                        ))}
+                        {ingredients &&
+                            ingredients.map((ingredient, id) => (
+                                <div
+                                    key={id}
+                                    className={classNames(
+                                        // TODO: Перенести стили на уровень выше
+                                        styles.ingredient,
+                                        'pt-4',
+                                    )}
+                                >
+                                    <ConstructorElement
+                                        text={ingredient.name}
+                                        price={ingredient.price}
+                                        thumbnail={ingredient.image}
+                                    />
+                                    <DragIcon type="primary" />
+                                </div>
+                            ))}
+                        <IngredientStub type="ingredient" />
                     </div>
                 </Scrollable>
                 <div className={classNames(styles.ingredient, 'mt-4')}>
-                    <ConstructorElement
-                        type="bottom"
-                        isLocked={true}
-                        text={`${bunBottom.name} (низ)`}
-                        price={bunBottom.price}
-                        thumbnail={bunBottom.image}
-                    />
+                    {bun ? (
+                        <ConstructorElement
+                            type="bottom"
+                            isLocked={true}
+                            text={`${bun.name} (низ)`}
+                            price={bun.price}
+                            thumbnail={bun.image}
+                        />
+                    ) : (
+                        <IngredientStub type="bunBottom" />
+                    )}
                 </div>
                 <div className={classNames(styles.order, 'mt-10')}>
                     <Button

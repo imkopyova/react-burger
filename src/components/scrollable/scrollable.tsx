@@ -18,14 +18,16 @@ export const Scrollable = forwardRef(
 
         // TODO: Избавиться от as HTMLDivElement
         useEffect(() => {
-            setCurrentHeight(
-                availableHeight >
-                    (scrollableRef.current?.children[0] as HTMLDivElement)
-                        .offsetHeight
-                    ? (scrollableRef.current?.children[0] as HTMLDivElement)
-                          .offsetHeight
-                    : availableHeight,
-            );
+            if (scrollableRef) {
+                setCurrentHeight(
+                    availableHeight >
+                        (scrollableRef.current?.children[0] as HTMLDivElement)
+                            .offsetHeight
+                        ? (scrollableRef.current?.children[0] as HTMLDivElement)
+                              .offsetHeight
+                        : availableHeight,
+                );
+            }
         }, [scrollableRef, availableHeight]);
 
         return (
