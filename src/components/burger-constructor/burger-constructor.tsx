@@ -1,15 +1,17 @@
 import classNames from 'classnames';
+import { useDrop } from 'react-dnd';
 import {
     ConstructorElement,
     DragIcon,
     Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+
 import styles from './burger-constructor.module.css';
 import { Price } from '../price/price';
 import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
 import { Scrollable } from '../scrollable/scrollable';
-import type { TIngredient } from '../../services/models';
+import type { TIngredient, TChosenIngredient } from '../../services/models';
 import { useModal } from '../modal/hooks/use-modal';
 import { IngredientStub } from './ingredient-stub/ingredient-stub';
 
@@ -17,11 +19,40 @@ const FIXED_HEIGHT_WITHOUT_SCROLLABLE = 582;
 
 export interface IBurgerConstructor {
     bun?: TIngredient;
-    ingredients?: TIngredient[];
+    ingredients?: TChosenIngredient[];
+    onDropHandler: (id: string) => void;
+    onDropIngredient: (id: string) => void;
+    onDeleteIngredient: (id: string) => void;
 }
 
-export const BurgerConstructor = ({ bun, ingredients }: IBurgerConstructor) => {
+export const BurgerConstructor = ({
+    bun,
+    ingredients,
+    onDropHandler,
+    onDropIngredient,
+    onDeleteIngredient,
+}: IBurgerConstructor) => {
     const { isModalOpen, openModal, closeModal } = useModal();
+
+    const [{ isHover: isHoverBun }, dropBunTarget] = useDrop({
+        accept: 'bun',
+        drop(item: { id: string }) {
+            onDropHandler(item.id);
+        },
+        collect: monitor => ({
+            isHover: monitor.isOver(),
+        }),
+    });
+
+    const [{ isHover: isHoverIngredient }, dropIngredientTarget] = useDrop({
+        accept: 'ingredient',
+        drop(item: { id: string }) {
+            onDropIngredient(item.id);
+        },
+        collect: monitor => ({
+            isHover: monitor.isOver(),
+        }),
+    });
 
     return (
         <>
@@ -31,7 +62,10 @@ export const BurgerConstructor = ({ bun, ingredients }: IBurgerConstructor) => {
                 </Modal>
             )}
             <section className={classNames(styles.container, 'pl-4')}>
-                <div className={classNames(styles.ingredient)}>
+                <div
+                    className={classNames(styles.ingredient)}
+                    ref={dropBunTarget}
+                >
                     {bun ? (
                         <ConstructorElement
                             type="top"
@@ -41,7 +75,7 @@ export const BurgerConstructor = ({ bun, ingredients }: IBurgerConstructor) => {
                             thumbnail={bun.image}
                         />
                     ) : (
-                        <IngredientStub type="bunTop" />
+                        <IngredientStub type="bunTop" isHover={isHoverBun} />
                     )}
                 </div>
                 <Scrollable
@@ -49,7 +83,7 @@ export const BurgerConstructor = ({ bun, ingredients }: IBurgerConstructor) => {
                         window.innerHeight - FIXED_HEIGHT_WITHOUT_SCROLLABLE
                     }
                 >
-                    <div>
+                    <div ref={dropIngredientTarget}>
                         {ingredients &&
                             ingredients.map((ingredient, id) => (
                                 <div
@@ -64,14 +98,25 @@ export const BurgerConstructor = ({ bun, ingredients }: IBurgerConstructor) => {
                                         text={ingredient.name}
                                         price={ingredient.price}
                                         thumbnail={ingredient.image}
+                                        handleClose={() =>
+                                            onDeleteIngredient(
+                                                ingredient.inConstructorId,
+                                            )
+                                        }
                                     />
                                     <DragIcon type="primary" />
                                 </div>
                             ))}
-                        <IngredientStub type="ingredient" />
+                        <IngredientStub
+                            type="ingredient"
+                            isHover={isHoverIngredient}
+                        />
                     </div>
                 </Scrollable>
-                <div className={classNames(styles.ingredient, 'mt-4')}>
+                <div
+                    className={classNames(styles.ingredient, 'mt-4')}
+                    ref={dropBunTarget}
+                >
                     {bun ? (
                         <ConstructorElement
                             type="bottom"
@@ -81,7 +126,7 @@ export const BurgerConstructor = ({ bun, ingredients }: IBurgerConstructor) => {
                             thumbnail={bun.image}
                         />
                     ) : (
-                        <IngredientStub type="bunBottom" />
+                        <IngredientStub type="bunBottom" isHover={isHoverBun} />
                     )}
                 </div>
                 <div className={classNames(styles.order, 'mt-10')}>

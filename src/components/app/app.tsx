@@ -1,16 +1,33 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+
 import { AppHeader } from '../app-header/app-header';
 import { BurgerIngredients } from '../burger-ingredients/burger-ingredients';
 import { BurgerConstructor } from '../burger-constructor/burger-constructor';
 
 import styles from './app.module.css';
 
-import { IRootState } from '../../services/models';
+import {
+    IRootState,
+    TIngredient,
+    TChosenIngredient,
+} from '../../services/models';
 import { thunkGetIngredients } from '../../services/actions/ingredients';
+import {
+    ADD_BUN,
+    ADD_INGREDIENT,
+    DELETE_INGREDIENT,
+} from '../../services/actions/burger-constructor';
 
 export const App = () => {
     const dispatch = useDispatch();
+
+    const [chosenBun, setChosenBun] = useState<TIngredient>();
+    const [chosenIngredients, setChosenIngredients] = useState<
+        TChosenIngredient[]
+    >([]);
 
     const {
         ingredients,
@@ -18,10 +35,45 @@ export const App = () => {
         ingredientsFailed: error,
     } = useSelector((store: IRootState) => store.ingredients);
 
+    const chosenBunId = useSelector(
+        (store: IRootState) => store.burgerConstructor.bun,
+    );
+
+    const chosenIngredientsIds = useSelector(
+        (store: IRootState) => store.burgerConstructor.ingredients,
+    );
+
     useEffect(() => {
         // TODO: исправить типы
         dispatch(thunkGetIngredients() as any);
     }, [dispatch]);
+
+    useEffect(() => {
+        if (!!chosenBunId && !!ingredients) {
+            setChosenBun(
+                ingredients.find(ingredient => ingredient._id === chosenBunId),
+            );
+        }
+    }, [ingredients, chosenBunId]);
+
+    useEffect(() => {
+        if (!!chosenIngredientsIds && !!ingredients) {
+            const filteredIngredients: TChosenIngredient[] = [];
+            chosenIngredientsIds.forEach(chosen => {
+                const newFilteredIngredient = ingredients.find(
+                    ingredient => ingredient._id === chosen.id,
+                );
+                if (newFilteredIngredient) {
+                    filteredIngredients.push({
+                        ...newFilteredIngredient,
+                        inConstructorId: chosen.inConstructorId,
+                    });
+                }
+            });
+
+            setChosenIngredients(filteredIngredients);
+        }
+    }, [ingredients, chosenIngredientsIds]);
 
     const content = useMemo(() => {
         return (
@@ -43,6 +95,18 @@ export const App = () => {
         );
     }, [loading, error, ingredients]);
 
+    const onDropHandlerBun = (id: string) => {
+        dispatch({ type: ADD_BUN, id });
+    };
+
+    const onDropIngredient = (id: string) => {
+        dispatch({ type: ADD_INGREDIENT, id });
+    };
+
+    const onDeleteIngredient = (id: string) => {
+        dispatch({ type: DELETE_INGREDIENT, id });
+    };
+
     return (
         <div className={styles.app}>
             <AppHeader />
@@ -50,11 +114,19 @@ export const App = () => {
                 <h1 className="text text_type_main-large pt-10 pb-5">
                     Соберите бургер
                 </h1>
-                <main className={styles.main}>
-                    {content}
-                    {/* TODO: Поправить стили заглушек */}
-                    <BurgerConstructor />
-                </main>
+                <DndProvider backend={HTML5Backend}>
+                    <main className={styles.main}>
+                        {content}
+                        {/* TODO: Поправить стили заглушек */}
+                        <BurgerConstructor
+                            bun={chosenBun}
+                            ingredients={chosenIngredients}
+                            onDropHandler={onDropHandlerBun}
+                            onDropIngredient={onDropIngredient}
+                            onDeleteIngredient={onDeleteIngredient}
+                        />
+                    </main>
+                </DndProvider>
             </div>
         </div>
     );

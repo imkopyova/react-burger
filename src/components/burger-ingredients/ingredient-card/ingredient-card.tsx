@@ -1,19 +1,54 @@
 import classNames from 'classnames';
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useDrag } from 'react-dnd';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
+
 import styles from './ingredient-card.module.css';
 import { Price } from '../../price/price';
 import { Modal } from '../../modal/modal';
 import { IngredientDetails } from '../../ingredient-details/ingredient-details';
-import type { TIngredient } from '../../../services/models';
+import type { TIngredient, IRootState } from '../../../services/models';
 import { useModal } from '../../modal/hooks/use-modal';
 
 interface IIngredientCard {
     ingredient: TIngredient;
-    quantity?: number;
 }
 
-export const IngredientCard = ({ ingredient, quantity }: IIngredientCard) => {
+export const IngredientCard = ({ ingredient }: IIngredientCard) => {
     const { isModalOpen, openModal, closeModal } = useModal();
+    const [quantity, setQuantity] = useState<number>();
+
+    const [{ isDrag }, dragRef] = useDrag({
+        type: ingredient.type === 'bun' ? 'bun' : 'ingredient',
+        item: { id: ingredient._id },
+        collect: monitor => ({
+            isDrag: monitor.isDragging(),
+        }),
+    });
+
+    const constructorBunId = useSelector(
+        (store: IRootState) => store.burgerConstructor.bun,
+    );
+
+    const constructorIngredients = useSelector(
+        (store: IRootState) => store.burgerConstructor.ingredients,
+    );
+
+    useEffect(() => {
+        if (ingredient.type === 'bun') {
+            ingredient._id === constructorBunId
+                ? setQuantity(2)
+                : setQuantity(undefined);
+        } else {
+            const quantity = constructorIngredients.reduce(
+                (acc, current) =>
+                    current.id === ingredient._id ? acc + 1 : acc,
+                0,
+            );
+            setQuantity(quantity);
+        }
+    }, [constructorBunId, constructorIngredients, ingredient]);
 
     return (
         <>
@@ -23,9 +58,13 @@ export const IngredientCard = ({ ingredient, quantity }: IIngredientCard) => {
                 </Modal>
             )}
             <div
-                className={classNames(styles.card, 'pr-4 pl-4')}
+                className={classNames(
+                    styles.card,
+                    { [styles.cardDragging]: isDrag },
+                    'pr-4 pl-4',
+                )}
                 onClick={openModal}
-                draggable
+                ref={dragRef}
             >
                 <img
                     width={240}
@@ -45,7 +84,7 @@ export const IngredientCard = ({ ingredient, quantity }: IIngredientCard) => {
                 >
                     {ingredient.name}
                 </h3>
-                {quantity && (
+                {!!quantity && (
                     <Counter
                         count={quantity}
                         size="default"

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IngredientCard } from './ingredient-card/ingredient-card';
@@ -110,7 +110,6 @@ export const BurgerIngredients = ({ ingredients }: IBurgerIngredients) => {
                             <IngredientCard
                                 key={ingredient._id}
                                 ingredient={ingredient}
-                                quantity={1}
                             />
                         ))}
                     </IngredientsSection>

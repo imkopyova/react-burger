@@ -5,7 +5,7 @@
     padding: 16px 24px;
     display: inline-block;
     border-radius: var(--common-border-radius-s);
-    background: var(--background-element);
+    background: var(--background);
     flex-grow: 1;
     box-sizing: border-box;
 }
@@ -22,4 +22,8 @@
 .stubBottom {
     composes: stub;
     border-radius: var(--bottom-constructor-item-border-radius);
+}
+
+.hovered {
+    border: 2px solid var(--colors-interface-accent);
 }

@@ -10,6 +10,10 @@
     overflow: hidden;
 }
 
+.cardDragging {
+    opacity: 0.2;
+}
+
 .counter {
     position: absolute;
     top: 0;
