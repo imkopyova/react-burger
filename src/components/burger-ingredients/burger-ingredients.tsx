@@ -73,6 +73,31 @@ export const BurgerIngredients = ({ ingredients }: IBurgerIngredients) => {
         setMainPosition();
     };
 
+    const handleScroll = () => {
+        if (
+            tabsRef.current &&
+            bunsRef.current &&
+            saucesRef.current &&
+            mainsRef.current
+        ) {
+            const absolutePlaceToScroll =
+                tabsRef.current.getBoundingClientRect().bottom;
+            const bunsCoords = bunsRef.current.getBoundingClientRect();
+            const saucesCoords = saucesRef.current.getBoundingClientRect();
+            const mainsCoords = mainsRef.current.getBoundingClientRect();
+
+            if (absolutePlaceToScroll > bunsCoords.y) {
+                setCurrent(INGREDIENT_TYPE.bun);
+            }
+            if (absolutePlaceToScroll > saucesCoords.y) {
+                setCurrent(INGREDIENT_TYPE.sauce);
+            }
+            if (absolutePlaceToScroll > mainsCoords.y) {
+                setCurrent(INGREDIENT_TYPE.main);
+            }
+        }
+    };
+
     return (
         <section className={styles.container}>
             <div className={styles.tabs} ref={tabsRef}>
@@ -99,6 +124,7 @@ export const BurgerIngredients = ({ ingredients }: IBurgerIngredients) => {
                 </Tab>
             </div>
             <Scrollable
+                handleScroll={handleScroll}
                 ref={listRef}
                 availableHeight={
                     window.innerHeight - FIXED_HEIGHT_WITHOUT_SCROLLABLE

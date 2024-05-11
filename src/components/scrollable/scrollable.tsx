@@ -5,11 +5,12 @@ import classNames from 'classnames';
 interface IScrollable {
     children: React.ReactElement;
     availableHeight: number;
+    handleScroll?: (e: React.UIEvent) => void;
 }
 
 export const Scrollable = forwardRef(
     (
-        { children, availableHeight }: IScrollable,
+        { children, availableHeight, handleScroll }: IScrollable,
         ref: React.ForwardedRef<HTMLDivElement>,
     ) => {
         const scrollableRef =
@@ -33,6 +34,7 @@ export const Scrollable = forwardRef(
         return (
             <div
                 ref={scrollableRef}
+                onScroll={handleScroll}
                 className={classNames(styles.scrollable, 'custom-scroll')}
                 style={{
                     height: currentHeight,
