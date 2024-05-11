@@ -6,7 +6,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './burger-constructor.module.css';
-import { Price } from '../price/price';
+import { TotalPrice } from '../total-price/total-price';
 import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
 import { Scrollable } from '../scrollable/scrollable';
@@ -130,7 +130,7 @@ export const BurgerConstructor = ({
                     >
                         Оформить заказ
                     </Button>
-                    <Price extraClass="text_type_digits-medium">{610}</Price>
+                    <TotalPrice extraClass="text_type_digits-medium" />
                 </div>
             </section>
         </>
