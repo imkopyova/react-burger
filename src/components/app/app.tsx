@@ -54,6 +54,8 @@ export const App = () => {
             setChosenBun(
                 ingredients.find(ingredient => ingredient._id === chosenBunId),
             );
+        } else {
+            setChosenBun(undefined);
         }
     }, [ingredients, chosenBunId]);
 

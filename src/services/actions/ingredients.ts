@@ -6,6 +6,13 @@ export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
 export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
 
+const API_INGREDIENTS = 'https://norma.nomoreparties.space/api/ingredients';
+
+export async function getIngredientsRequest() {
+    const res = await fetch(API_INGREDIENTS);
+    return await res.json();
+}
+
 export function thunkGetIngredients(): ThunkAction<
     void,
     IRootState,
@@ -29,11 +36,4 @@ export function thunkGetIngredients(): ThunkAction<
             }
         });
     };
-}
-
-const API_INGREDIENTS = 'https://norma.nomoreparties.space/api/ingredients';
-
-export async function getIngredientsRequest() {
-    const res = await fetch(API_INGREDIENTS);
-    return await res.json();
 }

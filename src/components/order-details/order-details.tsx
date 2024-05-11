@@ -3,13 +3,13 @@ import styles from './order-details.module.css';
 import DoneImage from '../../images/done.png';
 
 interface IOrderDetails {
-    id: string;
+    number?: number;
 }
 
-export const OrderDetails = ({ id }: IOrderDetails) => {
+export const OrderDetails = ({ number }: IOrderDetails) => {
     return (
         <div className={classNames(styles.container, 'p-30 pl-10 pr-10')}>
-            <h3 className="text text_type_digits-large">{id}</h3>
+            <h3 className="text text_type_digits-large">{number}</h3>
             <p className="text text_type_main-medium mt-8">
                 идентификатор заказа
             </p>

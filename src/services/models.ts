@@ -32,9 +32,11 @@ export interface IShownIngredientInfo {
     ingredient: TIngredient;
 }
 
-// TODO: Описать типы
 export interface IOrderState {
-    order: unknown;
+    name?: string;
+    number?: number;
+    orderRequest: boolean;
+    orderFailed: boolean;
 }
 
 export interface IBurgerConstructorState {

@@ -1,19 +1,14 @@
 import classNames from 'classnames';
 import { useDrop } from 'react-dnd';
-import {
-    ConstructorElement,
-    Button,
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './burger-constructor.module.css';
 import { TotalPrice } from '../total-price/total-price';
-import { Modal } from '../modal/modal';
-import { OrderDetails } from '../order-details/order-details';
 import { Scrollable } from '../scrollable/scrollable';
 import type { TIngredient, TChosenIngredient } from '../../services/models';
-import { useModal } from '../modal/hooks/use-modal';
 import { IngredientStub } from './ingredient-stub/ingredient-stub';
 import { ConstructorIngredient } from './constructor-ingredient/constructor-ingredient';
+import { OrderButton } from './order-button/order-button';
 
 const FIXED_HEIGHT_WITHOUT_SCROLLABLE = 582;
 
@@ -34,8 +29,6 @@ export const BurgerConstructor = ({
     onDeleteIngredient,
     onMoveIngredient,
 }: IBurgerConstructor) => {
-    const { isModalOpen, openModal, closeModal } = useModal();
-
     const [{ isHover: isHoverBun }, dropBunTarget] = useDrop({
         accept: 'bun',
         drop(item: { id: string }) {
@@ -58,11 +51,6 @@ export const BurgerConstructor = ({
 
     return (
         <>
-            {isModalOpen && (
-                <Modal onClose={closeModal}>
-                    <OrderDetails id="034536" />
-                </Modal>
-            )}
             <section className={classNames(styles.container, 'pl-4')}>
                 <div
                     className={classNames(styles.ingredient)}
@@ -121,15 +109,7 @@ export const BurgerConstructor = ({
                     )}
                 </div>
                 <div className={classNames(styles.order, 'mt-10')}>
-                    <Button
-                        htmlType="button"
-                        type="primary"
-                        size="large"
-                        extraClass="ml-10"
-                        onClick={openModal}
-                    >
-                        Оформить заказ
-                    </Button>
+                    <OrderButton />
                     <TotalPrice extraClass="text_type_digits-medium" />
                 </div>
             </section>

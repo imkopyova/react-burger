@@ -32,7 +32,7 @@ export const TotalPrice = ({ extraClass }: IPrice) => {
             },
             0,
         );
-        return bunPrice + ingredientsPrice;
+        return bunPrice * 2 + ingredientsPrice;
     }, [constructorIngredients, ingredients, bun]);
 
     return <Price extraClass={extraClass}>{totalPrice}</Price>;

@@ -7,6 +7,7 @@ import {
     ADD_INGREDIENT,
     DELETE_INGREDIENT,
     SORT_INGREDIENTS,
+    CLEAR_CONSTRUCTOR,
 } from '../actions/burger-constructor';
 
 export const initialBurgerConstructorState: IBurgerConstructorState = {
@@ -57,6 +58,11 @@ export const burgerConstructorReducer = (
             return {
                 ...state,
                 ingredients: ingredients,
+            };
+        }
+        case CLEAR_CONSTRUCTOR: {
+            return {
+                ...initialBurgerConstructorState,
             };
         }
         default: {
