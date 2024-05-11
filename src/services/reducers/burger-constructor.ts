@@ -6,6 +6,7 @@ import {
     ADD_BUN,
     ADD_INGREDIENT,
     DELETE_INGREDIENT,
+    SORT_INGREDIENTS,
 } from '../actions/burger-constructor';
 
 export const initialBurgerConstructorState: IBurgerConstructorState = {
@@ -44,6 +45,18 @@ export const burgerConstructorReducer = (
                         ingredient => ingredient.inConstructorId !== action.id,
                     ),
                 ],
+            };
+        }
+        case SORT_INGREDIENTS: {
+            const ingredients = [...state.ingredients];
+            ingredients.splice(
+                (action as any).toIndex,
+                0,
+                ingredients.splice((action as any).fromIndex, 1)[0],
+            );
+            return {
+                ...state,
+                ingredients: ingredients,
             };
         }
         default: {

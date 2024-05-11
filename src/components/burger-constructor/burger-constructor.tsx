@@ -2,7 +2,6 @@ import classNames from 'classnames';
 import { useDrop } from 'react-dnd';
 import {
     ConstructorElement,
-    DragIcon,
     Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -14,6 +13,7 @@ import { Scrollable } from '../scrollable/scrollable';
 import type { TIngredient, TChosenIngredient } from '../../services/models';
 import { useModal } from '../modal/hooks/use-modal';
 import { IngredientStub } from './ingredient-stub/ingredient-stub';
+import { ConstructorIngredient } from './constructor-ingredient/constructor-ingredient';
 
 const FIXED_HEIGHT_WITHOUT_SCROLLABLE = 582;
 
@@ -23,6 +23,7 @@ export interface IBurgerConstructor {
     onDropHandler: (id: string) => void;
     onDropIngredient: (id: string) => void;
     onDeleteIngredient: (id: string) => void;
+    onMoveIngredient: (fromIndex: number, toIndex: number) => void;
 }
 
 export const BurgerConstructor = ({
@@ -31,6 +32,7 @@ export const BurgerConstructor = ({
     onDropHandler,
     onDropIngredient,
     onDeleteIngredient,
+    onMoveIngredient,
 }: IBurgerConstructor) => {
     const { isModalOpen, openModal, closeModal } = useModal();
 
@@ -84,33 +86,22 @@ export const BurgerConstructor = ({
                     }
                 >
                     <div ref={dropIngredientTarget}>
-                        {ingredients &&
-                            ingredients.map((ingredient, id) => (
-                                <div
-                                    key={id}
-                                    className={classNames(
-                                        // TODO: Перенести стили на уровень выше
-                                        styles.ingredient,
-                                        'pt-4',
-                                    )}
-                                >
-                                    <ConstructorElement
-                                        text={ingredient.name}
-                                        price={ingredient.price}
-                                        thumbnail={ingredient.image}
-                                        handleClose={() =>
-                                            onDeleteIngredient(
-                                                ingredient.inConstructorId,
-                                            )
-                                        }
-                                    />
-                                    <DragIcon type="primary" />
-                                </div>
-                            ))}
-                        <IngredientStub
-                            type="ingredient"
-                            isHover={isHoverIngredient}
-                        />
+                        {ingredients && ingredients.length > 0 ? (
+                            ingredients.map((ingredient, index) => (
+                                <ConstructorIngredient
+                                    key={ingredient.inConstructorId}
+                                    index={index}
+                                    onDeleteIngredient={onDeleteIngredient}
+                                    onMoveIngredient={onMoveIngredient}
+                                    ingredient={ingredient}
+                                />
+                            ))
+                        ) : (
+                            <IngredientStub
+                                type="ingredient"
+                                isHover={isHoverIngredient}
+                            />
+                        )}
                     </div>
                 </Scrollable>
                 <div

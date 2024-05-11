@@ -19,6 +19,7 @@ import {
     ADD_BUN,
     ADD_INGREDIENT,
     DELETE_INGREDIENT,
+    SORT_INGREDIENTS,
 } from '../../services/actions/burger-constructor';
 
 export const App = () => {
@@ -107,6 +108,10 @@ export const App = () => {
         dispatch({ type: DELETE_INGREDIENT, id });
     };
 
+    const onMoveIngredient = (fromIndex: number, toIndex: number) => {
+        dispatch({ type: SORT_INGREDIENTS, fromIndex, toIndex });
+    };
+
     return (
         <div className={styles.app}>
             <AppHeader />
@@ -124,6 +129,7 @@ export const App = () => {
                             onDropHandler={onDropHandlerBun}
                             onDropIngredient={onDropIngredient}
                             onDeleteIngredient={onDeleteIngredient}
+                            onMoveIngredient={onMoveIngredient}
                         />
                     </main>
                 </DndProvider>
