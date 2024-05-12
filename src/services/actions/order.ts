@@ -36,18 +36,24 @@ export function thunkPostOrder(
         dispatch({
             type: POST_ORDER_REQUEST,
         });
-        postOrderRequest(ingredients).then(res => {
-            if (res && res.success) {
-                dispatch({
-                    type: POST_ORDER_SUCCESS,
-                    number: res.order.number,
-                    name: res.name,
-                });
-            } else {
+        postOrderRequest(ingredients)
+            .then(res => {
+                if (res && res.success) {
+                    dispatch({
+                        type: POST_ORDER_SUCCESS,
+                        number: res.order.number,
+                        name: res.name,
+                    });
+                } else {
+                    dispatch({
+                        type: POST_ORDER_FAILED,
+                    });
+                }
+            })
+            .catch(() => {
                 dispatch({
                     type: POST_ORDER_FAILED,
                 });
-            }
-        });
+            });
     };
 }
