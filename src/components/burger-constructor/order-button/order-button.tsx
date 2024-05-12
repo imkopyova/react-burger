@@ -7,17 +7,17 @@ import { OrderDetails } from '../../order-details/order-details';
 import { thunkPostOrder } from '../../../services/actions/order';
 import { CLEAR_CONSTRUCTOR } from '../../../services/actions/burger-constructor';
 import { useModal } from '../../modal/hooks/use-modal';
-import { IRootState } from '../../../services/models';
+import {
+    getBurgerConstructor,
+    getOrder,
+} from '../../../services/selectors/selectors';
 
 export const OrderButton = () => {
     const { isModalOpen, openModal, closeModal } = useModal();
     const dispatch = useDispatch();
 
-    const { ingredients, bun } = useSelector(
-        (store: IRootState) => store.burgerConstructor,
-    );
-
-    const order = useSelector((store: IRootState) => store.order);
+    const { ingredients, bun } = useSelector(getBurgerConstructor);
+    const order = useSelector(getOrder);
 
     const postOrder = () => {
         if (!bun) return;

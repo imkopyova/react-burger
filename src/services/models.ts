@@ -39,10 +39,12 @@ export interface IOrderState {
     orderFailed: boolean;
 }
 
+export type TBurgerConstructorIngredient = {
+    id: string;
+    inConstructorId: string;
+};
+
 export interface IBurgerConstructorState {
     bun?: string;
-    ingredients: Array<{
-        id: string;
-        inConstructorId: string;
-    }>;
+    ingredients: TBurgerConstructorIngredient[];
 }

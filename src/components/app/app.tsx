@@ -9,11 +9,12 @@ import { BurgerConstructor } from '../burger-constructor/burger-constructor';
 
 import styles from './app.module.css';
 
+import { TIngredient, TChosenIngredient } from '../../services/models';
 import {
-    IRootState,
-    TIngredient,
-    TChosenIngredient,
-} from '../../services/models';
+    getIngredients,
+    getBurgerConstructorBun,
+    getBurgerConstructorIngredients,
+} from '../../services/selectors/selectors';
 import { thunkGetIngredients } from '../../services/actions/ingredients';
 import {
     ADD_BUN,
@@ -34,15 +35,9 @@ export const App = () => {
         ingredients,
         ingredientsRequest: loading,
         ingredientsFailed: error,
-    } = useSelector((store: IRootState) => store.ingredients);
-
-    const chosenBunId = useSelector(
-        (store: IRootState) => store.burgerConstructor.bun,
-    );
-
-    const chosenIngredientsIds = useSelector(
-        (store: IRootState) => store.burgerConstructor.ingredients,
-    );
+    } = useSelector(getIngredients);
+    const chosenBunId = useSelector(getBurgerConstructorBun);
+    const chosenIngredientsIds = useSelector(getBurgerConstructorIngredients);
 
     useEffect(() => {
         // TODO: исправить типы

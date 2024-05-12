@@ -6,7 +6,7 @@ import { IngredientCard } from './ingredient-card/ingredient-card';
 import { IngredientsSection } from './ingredients-section/ingredients-section';
 import { Scrollable } from '../scrollable/scrollable';
 import styles from './burger-ingredients.module.css';
-import type { TIngredient, IRootState } from '../../services/models';
+import type { TIngredient } from '../../services/models';
 import { useScrollToElement } from './hooks/use-scroll-to-element';
 import { Modal } from '../modal/modal';
 import { IngredientDetails } from '../ingredient-details/ingredient-details';
@@ -15,6 +15,7 @@ import {
     SET_SHOWN_INGREDIENT,
     CLEAR_SHOWN_INGREDIENT,
 } from '../../services/actions/shown-ingredient';
+import { getShownIngredient } from '../../services/selectors/selectors';
 
 const FIXED_HEIGHT_WITHOUT_SCROLLABLE = 244;
 
@@ -110,9 +111,7 @@ export const BurgerIngredients = ({ ingredients }: IBurgerIngredients) => {
         }
     };
 
-    const shownIngredient = useSelector(
-        (store: IRootState) => store.shownIngredient.ingredient,
-    );
+    const shownIngredient = useSelector(getShownIngredient);
 
     const showInfo = (ingredient: TIngredient) => {
         dispatch({ type: SET_SHOWN_INGREDIENT, ingredient: ingredient });

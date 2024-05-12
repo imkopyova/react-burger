@@ -2,22 +2,22 @@ import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
 import { Price } from '../price/price';
-import type { IRootState } from '../../services/models';
+import {
+    getIngredients,
+    getBurgerConstructorBun,
+    getBurgerConstructorIngredients,
+} from '../../services/selectors/selectors';
 
 interface IPrice {
     extraClass?: string;
 }
 
 export const TotalPrice = ({ extraClass }: IPrice) => {
-    const constructorIngredients = useSelector(
-        (store: IRootState) => store.burgerConstructor.ingredients,
-    );
+    const constructorIngredients = useSelector(getBurgerConstructorIngredients);
 
-    const bun = useSelector((store: IRootState) => store.burgerConstructor.bun);
+    const bun = useSelector(getBurgerConstructorBun);
 
-    const ingredients = useSelector(
-        (store: IRootState) => store.ingredients.ingredients,
-    );
+    const { ingredients } = useSelector(getIngredients);
 
     const totalPrice = useMemo(() => {
         const bunPrice =

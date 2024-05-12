@@ -6,7 +6,14 @@ import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './ingredient-card.module.css';
 import { Price } from '../../price/price';
-import type { TIngredient, IRootState } from '../../../services/models';
+import type {
+    TIngredient,
+    TBurgerConstructorIngredient,
+} from '../../../services/models';
+import {
+    getBurgerConstructorBun,
+    getBurgerConstructorIngredients,
+} from '../../../services/selectors/selectors';
 
 interface IIngredientCard {
     ingredient: TIngredient;
@@ -24,13 +31,8 @@ export const IngredientCard = ({ ingredient, onClick }: IIngredientCard) => {
         }),
     });
 
-    const constructorBunId = useSelector(
-        (store: IRootState) => store.burgerConstructor.bun,
-    );
-
-    const constructorIngredients = useSelector(
-        (store: IRootState) => store.burgerConstructor.ingredients,
-    );
+    const constructorBunId = useSelector(getBurgerConstructorBun);
+    const constructorIngredients = useSelector(getBurgerConstructorIngredients);
 
     useEffect(() => {
         if (ingredient.type === 'bun') {
@@ -38,7 +40,9 @@ export const IngredientCard = ({ ingredient, onClick }: IIngredientCard) => {
                 ? setQuantity(2)
                 : setQuantity(undefined);
         } else {
-            const quantity = constructorIngredients.reduce(
+            const quantity = (
+                constructorIngredients as TBurgerConstructorIngredient[]
+            ).reduce(
                 (acc, current) =>
                     current.id === ingredient._id ? acc + 1 : acc,
                 0,
