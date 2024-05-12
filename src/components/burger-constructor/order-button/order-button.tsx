@@ -6,6 +6,7 @@ import { Modal } from '../../modal/modal';
 import { OrderDetails } from '../../order-details/order-details';
 import { thunkPostOrder } from '../../../services/actions/order';
 import { CLEAR_CONSTRUCTOR } from '../../../services/actions/burger-constructor';
+import { CLEAR_ORDER_DATA } from '../../../services/actions/order';
 import { useModal } from '../../modal/hooks/use-modal';
 import {
     getBurgerConstructor,
@@ -13,7 +14,10 @@ import {
 } from '../../../services/selectors/selectors';
 
 export const OrderButton = () => {
-    const { isModalOpen, openModal, closeModal } = useModal();
+    const { isModalOpen, openModal, closeModal } = useModal(() => {
+        dispatch({ type: CLEAR_CONSTRUCTOR });
+        dispatch({ type: CLEAR_ORDER_DATA });
+    });
     const dispatch = useDispatch();
 
     const { ingredients, bun } = useSelector(getBurgerConstructor);
@@ -29,9 +33,8 @@ export const OrderButton = () => {
     useEffect(() => {
         if (order?.number) {
             openModal();
-            dispatch({ type: CLEAR_CONSTRUCTOR });
         }
-    }, [order, openModal, dispatch]);
+    }, [order, openModal]);
 
     return (
         <>

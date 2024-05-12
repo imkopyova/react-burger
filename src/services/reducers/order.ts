@@ -5,6 +5,7 @@ import {
     POST_ORDER_REQUEST,
     POST_ORDER_SUCCESS,
     POST_ORDER_FAILED,
+    CLEAR_ORDER_DATA,
 } from '../actions/order';
 
 export const initialOrderState: IOrderState = {
@@ -36,8 +37,14 @@ export const orderReducer = (
         }
         case POST_ORDER_FAILED: {
             return {
-                ...initialOrderState,
+                ...state,
                 orderFailed: true,
+                orderRequest: false,
+            };
+        }
+        case CLEAR_ORDER_DATA: {
+            return {
+                ...initialOrderState,
             };
         }
         default: {
