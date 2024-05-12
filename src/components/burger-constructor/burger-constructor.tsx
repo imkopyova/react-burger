@@ -9,6 +9,7 @@ import type { TIngredient, TChosenIngredient } from '../../services/models';
 import { IngredientStub } from './ingredient-stub/ingredient-stub';
 import { ConstructorIngredient } from './constructor-ingredient/constructor-ingredient';
 import { OrderButton } from './order-button/order-button';
+import { DropBunZone } from './drop-bun-zone/drop-bun-zone';
 
 const FIXED_HEIGHT_WITHOUT_SCROLLABLE = 582;
 
@@ -29,19 +30,9 @@ export const BurgerConstructor = ({
     onDeleteIngredient,
     onMoveIngredient,
 }: IBurgerConstructor) => {
-    const [{ isHover: isHoverBun }, dropBunTarget] = useDrop({
-        accept: 'bun',
-        drop(item: { id: string }) {
-            onDropHandler(item.id);
-        },
-        collect: monitor => ({
-            isHover: monitor.isOver(),
-        }),
-    });
-
     const [{ isHover: isHoverIngredient }, dropIngredientTarget] = useDrop({
         accept: 'ingredient',
-        drop(item: { id: string }) {
+        drop: (item: { id: string }) => {
             onDropIngredient(item.id);
         },
         collect: monitor => ({
@@ -52,11 +43,8 @@ export const BurgerConstructor = ({
     return (
         <>
             <section className={classNames(styles.container, 'pl-4')}>
-                <div
-                    className={classNames(styles.ingredient)}
-                    ref={dropBunTarget}
-                >
-                    {bun ? (
+                <DropBunZone onDropHandler={onDropHandler} stubType="bunTop">
+                    {bun && (
                         <ConstructorElement
                             type="top"
                             isLocked={true}
@@ -64,10 +52,8 @@ export const BurgerConstructor = ({
                             price={bun.price}
                             thumbnail={bun.image}
                         />
-                    ) : (
-                        <IngredientStub type="bunTop" isHover={isHoverBun} />
                     )}
-                </div>
+                </DropBunZone>
                 <Scrollable
                     availableHeight={
                         window.innerHeight - FIXED_HEIGHT_WITHOUT_SCROLLABLE
@@ -92,11 +78,8 @@ export const BurgerConstructor = ({
                         )}
                     </div>
                 </Scrollable>
-                <div
-                    className={classNames(styles.ingredient, 'mt-4')}
-                    ref={dropBunTarget}
-                >
-                    {bun ? (
+                <DropBunZone onDropHandler={onDropHandler} stubType="bunBottom">
+                    {bun && (
                         <ConstructorElement
                             type="bottom"
                             isLocked={true}
@@ -104,10 +87,8 @@ export const BurgerConstructor = ({
                             price={bun.price}
                             thumbnail={bun.image}
                         />
-                    ) : (
-                        <IngredientStub type="bunBottom" isHover={isHoverBun} />
                     )}
-                </div>
+                </DropBunZone>
                 <div className={classNames(styles.order, 'mt-10')}>
                     <OrderButton />
                     <TotalPrice extraClass="text_type_digits-medium" />
