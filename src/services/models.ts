@@ -18,7 +18,7 @@ export type TChosenIngredient = TIngredient & { inConstructorId: string };
 export interface IRootState {
     ingredients: IIngredientsState;
     burgerConstructor: IBurgerConstructorState;
-    shownIngredientInfo: IShownIngredientInfo;
+    shownIngredient: IShownIngredientState;
     order: IOrderState;
 }
 
@@ -28,8 +28,8 @@ export interface IIngredientsState {
     ingredientsFailed: boolean;
 }
 
-export interface IShownIngredientInfo {
-    ingredient: TIngredient;
+export interface IShownIngredientState {
+    ingredient: TIngredient | null;
 }
 
 export interface IOrderState {
