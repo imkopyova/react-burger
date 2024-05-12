@@ -10,6 +10,8 @@ import {
 export const initialOrderState: IOrderState = {
     orderRequest: false,
     orderFailed: false,
+    number: undefined,
+    name: undefined,
 };
 
 export const orderReducer = (
@@ -21,8 +23,6 @@ export const orderReducer = (
             return {
                 ...state,
                 orderRequest: true,
-                number: undefined,
-                name: undefined,
             };
         }
         case POST_ORDER_SUCCESS: {
@@ -36,9 +36,8 @@ export const orderReducer = (
         }
         case POST_ORDER_FAILED: {
             return {
-                ...state,
+                ...initialOrderState,
                 orderFailed: true,
-                orderRequest: false,
             };
         }
         default: {
