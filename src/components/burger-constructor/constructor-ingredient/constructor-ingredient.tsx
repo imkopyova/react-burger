@@ -32,7 +32,6 @@ export const ConstructorIngredient = ({
 
     const [, drop] = useDrop<DragItem, void>({
         accept: 'order',
-        // TODO: Заменить any
         hover(item: DragItem, monitor) {
             if (!ref.current) return;
 
@@ -65,7 +64,7 @@ export const ConstructorIngredient = ({
         item: () => {
             return { id: ingredient.inConstructorId, index: index } as DragItem;
         },
-        collect: (monitor: any) => ({
+        collect: monitor => ({
             isDragging: monitor.isDragging(),
         }),
     });

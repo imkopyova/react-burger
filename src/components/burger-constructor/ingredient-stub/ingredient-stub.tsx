@@ -11,7 +11,6 @@ export const IngredientStub = ({
     type,
     isHover,
 }: {
-    // TODO: исправить типы
     type: 'bunTop' | 'bunBottom' | 'ingredient';
     isHover?: boolean;
 }) => {
