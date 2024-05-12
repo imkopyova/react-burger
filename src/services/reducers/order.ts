@@ -21,6 +21,8 @@ export const orderReducer = (
             return {
                 ...state,
                 orderRequest: true,
+                number: undefined,
+                name: undefined,
             };
         }
         case POST_ORDER_SUCCESS: {
