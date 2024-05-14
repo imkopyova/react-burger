@@ -10,6 +10,10 @@
     overflow: hidden;
 }
 
+.cardDragging {
+    opacity: 0.2;
+}
+
 .counter {
     position: absolute;
     top: 0;
@@ -18,4 +22,8 @@
 
 .name {
     text-align: center;
+}
+
+.image {
+    pointer-events: none;
 }

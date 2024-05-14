@@ -1,36 +1,113 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+
 import { AppHeader } from '../app-header/app-header';
 import { BurgerIngredients } from '../burger-ingredients/burger-ingredients';
 import { BurgerConstructor } from '../burger-constructor/burger-constructor';
 
 import styles from './app.module.css';
 
-const API_INGREDIENTS = 'https://norma.nomoreparties.space/api/ingredients';
+import { TIngredient, TChosenIngredient } from '../../services/models';
+import {
+    getIngredients,
+    getBurgerConstructorBun,
+    getBurgerConstructorIngredients,
+} from '../../services/selectors/selectors';
+import { thunkGetIngredients } from '../../services/actions/ingredients';
+import {
+    ADD_BUN,
+    ADD_INGREDIENT,
+    DELETE_INGREDIENT,
+    SORT_INGREDIENTS,
+} from '../../services/actions/burger-constructor';
 
 export const App = () => {
-    const [data, setData] = useState(null);
-    const [error, setError] = useState(false);
-    const [loading, setLoading] = useState(true);
+    const dispatch = useDispatch();
+
+    const [chosenBun, setChosenBun] = useState<TIngredient>();
+    const [chosenIngredients, setChosenIngredients] = useState<
+        TChosenIngredient[]
+    >([]);
+
+    const {
+        ingredients,
+        ingredientsRequest: loading,
+        ingredientsFailed: error,
+    } = useSelector(getIngredients);
+    const chosenBunId = useSelector(getBurgerConstructorBun);
+    const chosenIngredientsIds = useSelector(getBurgerConstructorIngredients);
 
     useEffect(() => {
-        const getData = () => {
-            setLoading(true);
-            setError(false);
-            fetch(API_INGREDIENTS)
-                .then(res => res.json())
-                .then(({ data }) => {
-                    setData(data);
-                })
-                .catch(e => {
-                    setError(true);
-                })
-                .finally(() => {
-                    setLoading(false);
-                });
-        };
+        // TODO: исправить типы
+        dispatch(thunkGetIngredients() as any);
+    }, [dispatch]);
 
-        getData();
-    }, []);
+    useEffect(() => {
+        if (!!chosenBunId && !!ingredients) {
+            setChosenBun(
+                ingredients.find(ingredient => ingredient._id === chosenBunId),
+            );
+        } else {
+            setChosenBun(undefined);
+        }
+    }, [ingredients, chosenBunId]);
+
+    useEffect(() => {
+        if (!!chosenIngredientsIds && !!ingredients) {
+            const filteredIngredients: TChosenIngredient[] = [];
+            chosenIngredientsIds.forEach(chosen => {
+                const newFilteredIngredient = ingredients.find(
+                    ingredient => ingredient._id === chosen.id,
+                );
+                if (newFilteredIngredient) {
+                    filteredIngredients.push({
+                        ...newFilteredIngredient,
+                        inConstructorId: chosen.inConstructorId,
+                    });
+                }
+            });
+
+            setChosenIngredients(filteredIngredients);
+        }
+    }, [ingredients, chosenIngredientsIds]);
+
+    const content = useMemo(() => {
+        return (
+            <>
+                {loading && (
+                    <p className="text text_type_main-default">
+                        Загружаем ингридиенты...
+                    </p>
+                )}
+                {error && (
+                    <p className="text text_type_main-default">
+                        Произошла ошибка, попробуйте перезагрузить страницу
+                    </p>
+                )}
+                {ingredients !== undefined && (
+                    <BurgerIngredients ingredients={ingredients} />
+                )}
+            </>
+        );
+    }, [loading, error, ingredients]);
+
+    const onDropHandlerBun = (id: string) => {
+        dispatch({ type: ADD_BUN, id });
+    };
+
+    const onDropIngredient = (id: string) => {
+        dispatch({ type: ADD_INGREDIENT, id });
+    };
+
+    const onDeleteIngredient = (id: string) => {
+        dispatch({ type: DELETE_INGREDIENT, id });
+    };
+
+    const onMoveIngredient = (fromIndex: number, toIndex: number) => {
+        dispatch({ type: SORT_INGREDIENTS, fromIndex, toIndex });
+    };
 
     return (
         <div className={styles.app}>
@@ -39,35 +116,20 @@ export const App = () => {
                 <h1 className="text text_type_main-large pt-10 pb-5">
                     Соберите бургер
                 </h1>
-                <main className={styles.main}>
-                    {data && (
-                        <>
-                            <BurgerIngredients ingredients={data} />
-                            <BurgerConstructor
-                                bunTop={data[0]}
-                                bunBottom={data[0]}
-                                ingredients={[
-                                    data[6],
-                                    data[5],
-                                    data[8],
-                                    data[10],
-                                    data[10],
-                                ]}
-                            />
-                        </>
-                    )}
-                    {error && (
-                        <p className="text text_type_main-default">
-                            Произошла ошибка, попробуйте перезагрузить страницу
-                        </p>
-                    )}
-
-                    {loading && (
-                        <p className="text text_type_main-default">
-                            Загружаем ингридиенты...
-                        </p>
-                    )}
-                </main>
+                <DndProvider backend={HTML5Backend}>
+                    <main className={styles.main}>
+                        {content}
+                        {/* TODO: Поправить стили заглушек */}
+                        <BurgerConstructor
+                            bun={chosenBun}
+                            ingredients={chosenIngredients}
+                            onDropHandler={onDropHandlerBun}
+                            onDropIngredient={onDropIngredient}
+                            onDeleteIngredient={onDeleteIngredient}
+                            onMoveIngredient={onMoveIngredient}
+                        />
+                    </main>
+                </DndProvider>
             </div>
         </div>
     );

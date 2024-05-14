@@ -1,0 +1,29 @@
+.stub {
+    max-width: 536px;
+    width: 100%;
+    min-height: 80px;
+    padding: 16px 24px;
+    display: inline-block;
+    border-radius: var(--common-border-radius-s);
+    background: var(--background);
+    flex-grow: 1;
+    box-sizing: border-box;
+}
+
+.stubTop {
+    composes: stub;
+    border-radius: var(--top-constructor-item-border-radius);
+}
+
+.stubMiddle {
+    composes: stub;
+}
+
+.stubBottom {
+    composes: stub;
+    border-radius: var(--bottom-constructor-item-border-radius);
+}
+
+.hovered {
+    border: 2px solid var(--colors-interface-accent);
+}

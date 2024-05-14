@@ -1,93 +1,97 @@
 import classNames from 'classnames';
-import {
-    ConstructorElement,
-    DragIcon,
-    Button,
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDrop } from 'react-dnd';
+import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
+
 import styles from './burger-constructor.module.css';
-import { Price } from '../price/price';
-import { Modal } from '../modal/modal';
-import { OrderDetails } from '../order-details/order-details';
+import { TotalPrice } from '../total-price/total-price';
 import { Scrollable } from '../scrollable/scrollable';
-import type { TIngredient } from '../../utils/data';
-import { useModal } from '../modal/hooks/use-modal';
+import type { TIngredient, TChosenIngredient } from '../../services/models';
+import { IngredientStub } from './ingredient-stub/ingredient-stub';
+import { ConstructorIngredient } from './constructor-ingredient/constructor-ingredient';
+import { OrderButton } from './order-button/order-button';
+import { DropBunZone } from './drop-bun-zone/drop-bun-zone';
 
 const FIXED_HEIGHT_WITHOUT_SCROLLABLE = 582;
 
 export interface IBurgerConstructor {
-    bunTop: TIngredient;
-    bunBottom: TIngredient;
-    ingredients: TIngredient[];
+    bun?: TIngredient;
+    ingredients?: TChosenIngredient[];
+    onDropHandler: (id: string) => void;
+    onDropIngredient: (id: string) => void;
+    onDeleteIngredient: (id: string) => void;
+    onMoveIngredient: (fromIndex: number, toIndex: number) => void;
 }
 
 export const BurgerConstructor = ({
-    bunTop,
-    bunBottom,
+    bun,
     ingredients,
+    onDropHandler,
+    onDropIngredient,
+    onDeleteIngredient,
+    onMoveIngredient,
 }: IBurgerConstructor) => {
-    const { isModalOpen, openModal, closeModal } = useModal();
+    const [{ isHover: isHoverIngredient }, dropIngredientTarget] = useDrop({
+        accept: 'ingredient',
+        drop: (item: { id: string }) => {
+            onDropIngredient(item.id);
+        },
+        collect: monitor => ({
+            isHover: monitor.isOver(),
+        }),
+    });
 
     return (
         <>
-            {isModalOpen && (
-                <Modal onClose={closeModal}>
-                    <OrderDetails id="034536" />
-                </Modal>
-            )}
             <section className={classNames(styles.container, 'pl-4')}>
-                <div className={classNames(styles.ingredient)}>
-                    <ConstructorElement
-                        type="top"
-                        isLocked={true}
-                        text={`${bunTop.name} (верх)`}
-                        price={bunTop.price}
-                        thumbnail={bunTop.image}
-                    />
-                </div>
+                <DropBunZone onDropHandler={onDropHandler} stubType="bunTop">
+                    {bun && (
+                        <ConstructorElement
+                            type="top"
+                            isLocked={true}
+                            text={`${bun.name} (верх)`}
+                            price={bun.price}
+                            thumbnail={bun.image}
+                        />
+                    )}
+                </DropBunZone>
                 <Scrollable
                     availableHeight={
-                        window.outerHeight - FIXED_HEIGHT_WITHOUT_SCROLLABLE
+                        window.innerHeight - FIXED_HEIGHT_WITHOUT_SCROLLABLE
                     }
                 >
-                    <div>
-                        {ingredients.map((ingredient, id) => (
-                            <div
-                                key={id}
-                                className={classNames(
-                                    styles.ingredient,
-                                    'pt-4',
-                                )}
-                            >
-                                <ConstructorElement
-                                    text={ingredient.name}
-                                    price={ingredient.price}
-                                    thumbnail={ingredient.image}
+                    <div ref={dropIngredientTarget}>
+                        {ingredients && ingredients.length > 0 ? (
+                            ingredients.map((ingredient, index) => (
+                                <ConstructorIngredient
+                                    key={ingredient.inConstructorId}
+                                    index={index}
+                                    onDeleteIngredient={onDeleteIngredient}
+                                    onMoveIngredient={onMoveIngredient}
+                                    ingredient={ingredient}
                                 />
-                                <DragIcon type="primary" />
-                            </div>
-                        ))}
+                            ))
+                        ) : (
+                            <IngredientStub
+                                type="ingredient"
+                                isHover={isHoverIngredient}
+                            />
+                        )}
                     </div>
                 </Scrollable>
-                <div className={classNames(styles.ingredient, 'mt-4')}>
-                    <ConstructorElement
-                        type="bottom"
-                        isLocked={true}
-                        text={`${bunBottom.name} (низ)`}
-                        price={bunBottom.price}
-                        thumbnail={bunBottom.image}
-                    />
-                </div>
+                <DropBunZone onDropHandler={onDropHandler} stubType="bunBottom">
+                    {bun && (
+                        <ConstructorElement
+                            type="bottom"
+                            isLocked={true}
+                            text={`${bun.name} (низ)`}
+                            price={bun.price}
+                            thumbnail={bun.image}
+                        />
+                    )}
+                </DropBunZone>
                 <div className={classNames(styles.order, 'mt-10')}>
-                    <Button
-                        htmlType="button"
-                        type="primary"
-                        size="large"
-                        extraClass="ml-10"
-                        onClick={openModal}
-                    >
-                        Оформить заказ
-                    </Button>
-                    <Price extraClass="text_type_digits-medium">{610}</Price>
+                    <OrderButton />
+                    <TotalPrice extraClass="text_type_digits-medium" />
                 </div>
             </section>
         </>

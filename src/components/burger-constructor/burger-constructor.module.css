@@ -2,15 +2,6 @@
     width: 600px;
 }
 
-.ingredient {
-    width: 568px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: row-reverse;
-    gap: 8px;
-    align-items: center;
-}
-
 .order {
     display: flex;
     flex-direction: row-reverse;

@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import styles from './ingredient-details.module.css';
-import type { TIngredient } from '../../utils/data';
+import type { TIngredient } from '../../services/models';
 
 interface IIngredientDetails {
     ingredient: TIngredient;
