@@ -4,6 +4,7 @@
     display: flex;
     justify-content: center;
     background-color: var(--background);
+    box-sizing: border-box;
 }
 
 .content {

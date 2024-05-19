@@ -21,7 +21,9 @@ export const AppHeader = () => {
                     </NavLink>
                 </nav>
                 <div className={styles.logo}>
-                    <Logo />
+                    <a href="/">
+                        <Logo />
+                    </a>
                 </div>
                 <NavLink icon={<ProfileIcon type="secondary" />}>
                     Личный кабинет
