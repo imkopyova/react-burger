@@ -7,16 +7,3 @@
     align-items: center;
     overflow: hidden;
 }
-
-.container {
-    width: 1240px;
-}
-
-.heading {
-    padding: 40px 0 10px 0;
-}
-
-.main {
-    display: flex;
-    gap: 40px;
-}
