@@ -1,3 +1,4 @@
+import { Link, useNavigate } from 'react-router-dom';
 import {
     PasswordInput,
     Input,
@@ -7,6 +8,11 @@ import {
 import styles from '../auth-layout.module.css';
 
 export const ResetPasswordPage = () => {
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate('/login');
+    };
     return (
         <div className={styles.container}>
             <form className={styles.form}>
@@ -28,16 +34,21 @@ export const ResetPasswordPage = () => {
                     name={'code'}
                     size={'default'}
                 />
-                <Button htmlType="button" type="primary" size="medium">
+                <Button
+                    htmlType="button"
+                    type="primary"
+                    size="medium"
+                    onClick={handleClick}
+                >
                     Сохранить
                 </Button>
             </form>
             <div className={styles.nav}>
                 <p className="text text_type_main-small text_color_inactive">
                     Вспомнили пароль?{' '}
-                    <a href="/login" className={styles.link}>
+                    <Link to="/login" className={styles.link}>
                         Войти
-                    </a>
+                    </Link>
                 </p>
             </div>
         </div>

@@ -25,3 +25,17 @@
     left: 50%;
     transform: translate(-50%, 0);
 }
+
+.navLinkContainer {
+    height: 56px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: var(--text-inactive-color);
+}
+
+.navLinkContainerActive {
+    color: var(--text-primary-color);
+}

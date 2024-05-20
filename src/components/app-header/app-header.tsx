@@ -4,7 +4,9 @@ import {
     ListIcon,
     ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { NavLink } from '../nav-link/nav-link';
+import { Link } from 'react-router-dom';
+
+import { HeaderNav } from './header-nav';
 import styles from './app-header.module.css';
 import classNames from 'classnames';
 
@@ -13,21 +15,24 @@ export const AppHeader = () => {
         <header className={classNames(styles.header, 'pt-4 pb-4')}>
             <div className={styles.content}>
                 <nav className={styles.nav}>
-                    <NavLink isActive icon={<BurgerIcon type="primary" />}>
+                    <HeaderNav to="/" icon={<BurgerIcon type="secondary" />}>
                         Конструктор
-                    </NavLink>
-                    <NavLink icon={<ListIcon type="secondary" />}>
+                    </HeaderNav>
+                    <HeaderNav to="/feed" icon={<ListIcon type="secondary" />}>
                         Лента заказов
-                    </NavLink>
+                    </HeaderNav>
                 </nav>
                 <div className={styles.logo}>
-                    <a href="/">
+                    <Link to="/">
                         <Logo />
-                    </a>
+                    </Link>
                 </div>
-                <NavLink icon={<ProfileIcon type="secondary" />}>
+                <HeaderNav
+                    to="/profile"
+                    icon={<ProfileIcon type="secondary" />}
+                >
                     Личный кабинет
-                </NavLink>
+                </HeaderNav>
             </div>
         </header>
     );

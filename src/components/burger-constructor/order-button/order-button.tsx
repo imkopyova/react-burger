@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { Modal } from '../../modal/modal';
 import { OrderDetails } from '../../order-details/order-details';
@@ -14,6 +15,8 @@ import {
 } from '../../../services/selectors/selectors';
 
 export const OrderButton = () => {
+    const navigate = useNavigate();
+
     const { isModalOpen, openModal, closeModal } = useModal(() => {
         dispatch({ type: CLEAR_CONSTRUCTOR });
         dispatch({ type: CLEAR_ORDER_DATA });
@@ -28,6 +31,7 @@ export const OrderButton = () => {
         const ingredientsIds = ingredients.map(ingredient => ingredient.id);
         // TODO: any
         dispatch(thunkPostOrder([bun, ...ingredientsIds, bun]) as any);
+        navigate('/login');
     };
 
     useEffect(() => {

@@ -1,3 +1,4 @@
+import { Link, useNavigate } from 'react-router-dom';
 import {
     EmailInput,
     PasswordInput,
@@ -8,6 +9,11 @@ import {
 import styles from '../auth-layout.module.css';
 
 export const RegisterPage = () => {
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate('/');
+    };
     return (
         <div className={styles.container}>
             <form className={styles.form}>
@@ -33,16 +39,21 @@ export const RegisterPage = () => {
                     value={''}
                     name={'password'}
                 />
-                <Button htmlType="button" type="primary" size="medium">
+                <Button
+                    htmlType="button"
+                    type="primary"
+                    size="medium"
+                    onClick={handleClick}
+                >
                     Зарегистрироваться
                 </Button>
             </form>
             <div className={styles.nav}>
                 <p className="text text_type_main-small text_color_inactive">
                     Уже зарегистрированы?{' '}
-                    <a href="/login" className={styles.link}>
+                    <Link to="/login" className={styles.link}>
                         Войти
-                    </a>
+                    </Link>
                 </p>
             </div>
         </div>

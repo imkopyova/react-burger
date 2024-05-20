@@ -1,3 +1,4 @@
+import { Link, useNavigate } from 'react-router-dom';
 import {
     EmailInput,
     Button,
@@ -6,6 +7,11 @@ import {
 import styles from '../auth-layout.module.css';
 
 export const ForgotPasswordPage = () => {
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate('/reset-password');
+    };
     return (
         <div className={styles.container}>
             <form className={styles.form}>
@@ -19,16 +25,21 @@ export const ForgotPasswordPage = () => {
                     placeholder="Укажите e-mail"
                     isIcon={false}
                 />
-                <Button htmlType="button" type="primary" size="medium">
+                <Button
+                    htmlType="button"
+                    type="primary"
+                    size="medium"
+                    onClick={handleClick}
+                >
                     Восстановить
                 </Button>
             </form>
             <div className={styles.nav}>
                 <p className="text text_type_main-small text_color_inactive">
                     Вспомнили пароль?{' '}
-                    <a href="/login" className={styles.link}>
+                    <Link to="/login" className={styles.link}>
                         Войти
-                    </a>
+                    </Link>
                 </p>
             </div>
         </div>

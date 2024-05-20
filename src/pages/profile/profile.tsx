@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { NavLink } from 'react-router-dom';
 import {
     EmailInput,
     PasswordInput,
@@ -13,38 +14,52 @@ export const ProfilePage = () => {
             <aside className={styles.aside}>
                 <menu className={styles.menu}>
                     <li className={styles.menuItem}>
-                        <a
-                            href="/profile"
-                            className={classNames(
-                                styles.menuLink,
-                                styles.menuLinkActive,
-                                'text text_type_main-medium',
-                            )}
+                        <NavLink
+                            to="/profile"
+                            className={({ isActive }) =>
+                                classNames(
+                                    'text text_type_main-medium',
+                                    styles.menuLink,
+                                    {
+                                        [styles.menuLinkActive]: isActive,
+                                    },
+                                )
+                            }
                         >
                             Профиль
-                        </a>
+                        </NavLink>
                     </li>
                     <li className={styles.menuItem}>
-                        <a
-                            href="/profile"
-                            className={classNames(
-                                styles.menuLink,
-                                'text text_type_main-medium text_color_inactive',
-                            )}
+                        <NavLink
+                            to="/profile/orders"
+                            className={({ isActive }) =>
+                                classNames(
+                                    'text text_type_main-medium',
+                                    styles.menuLink,
+                                    {
+                                        [styles.menuLinkActive]: isActive,
+                                    },
+                                )
+                            }
                         >
                             История заказов
-                        </a>
+                        </NavLink>
                     </li>
                     <li className={styles.menuItem}>
-                        <a
-                            href="/"
-                            className={classNames(
-                                styles.menuLink,
-                                'text text_type_main-medium text_color_inactive',
-                            )}
+                        <NavLink
+                            to="/"
+                            className={({ isActive }) =>
+                                classNames(
+                                    'text text_type_main-medium',
+                                    styles.menuLink,
+                                    {
+                                        [styles.menuLinkActive]: isActive,
+                                    },
+                                )
+                            }
                         >
                             Выход
-                        </a>
+                        </NavLink>
                     </li>
                 </menu>
                 <p
