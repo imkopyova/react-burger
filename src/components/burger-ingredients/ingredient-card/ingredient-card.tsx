@@ -65,7 +65,7 @@ export const IngredientCard = ({ ingredient, onClick }: IIngredientCard) => {
                 width={240}
                 height={120}
                 alt={ingredient.name}
-                src={ingredient.image}
+                src={ingredient.image_large}
                 className={styles.image}
             />
             <div className="mt-1">

@@ -14,7 +14,6 @@ import {
     getBurgerConstructorBun,
     getBurgerConstructorIngredients,
 } from '../../services/selectors/selectors';
-import { thunkGetIngredients } from '../../services/actions/ingredients';
 import {
     ADD_BUN,
     ADD_INGREDIENT,
@@ -37,11 +36,6 @@ export const HomePage = () => {
     } = useSelector(getIngredients);
     const chosenBunId = useSelector(getBurgerConstructorBun);
     const chosenIngredientsIds = useSelector(getBurgerConstructorIngredients);
-
-    useEffect(() => {
-        // TODO: исправить типы
-        dispatch(thunkGetIngredients() as any);
-    }, [dispatch]);
 
     useEffect(() => {
         if (!!chosenBunId && !!ingredients) {

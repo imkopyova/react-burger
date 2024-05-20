@@ -1,5 +1,5 @@
-import { useState, useRef, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState, useRef } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { IngredientCard } from './ingredient-card/ingredient-card';
@@ -8,14 +8,6 @@ import { Scrollable } from '../scrollable/scrollable';
 import styles from './burger-ingredients.module.css';
 import type { TIngredient } from '../../services/models';
 import { useScrollToElement } from './hooks/use-scroll-to-element';
-import { Modal } from '../modal/modal';
-import { IngredientDetails } from '../ingredient-details/ingredient-details';
-import { useModal } from '../modal/hooks/use-modal';
-import {
-    SET_SHOWN_INGREDIENT,
-    CLEAR_SHOWN_INGREDIENT,
-} from '../../services/actions/shown-ingredient';
-import { getShownIngredient } from '../../services/selectors/selectors';
 
 const FIXED_HEIGHT_WITHOUT_SCROLLABLE = 244;
 
@@ -30,10 +22,8 @@ const INGREDIENT_TYPE = {
 };
 
 export const BurgerIngredients = ({ ingredients }: IBurgerIngredients) => {
-    const dispatch = useDispatch();
-    const { isModalOpen, openModal, closeModal } = useModal(() => {
-        dispatch({ type: CLEAR_SHOWN_INGREDIENT });
-    });
+    const location = useLocation();
+
     const buns = ingredients.filter(
         ingredient => ingredient.type === INGREDIENT_TYPE.bun,
     );
@@ -111,25 +101,8 @@ export const BurgerIngredients = ({ ingredients }: IBurgerIngredients) => {
         }
     };
 
-    const shownIngredient = useSelector(getShownIngredient);
-
-    const showInfo = (ingredient: TIngredient) => {
-        dispatch({ type: SET_SHOWN_INGREDIENT, ingredient: ingredient });
-    };
-
-    useEffect(() => {
-        if (!!shownIngredient) {
-            openModal();
-        }
-    }, [shownIngredient, openModal]);
-
     return (
         <>
-            {isModalOpen && shownIngredient && (
-                <Modal onClose={closeModal}>
-                    <IngredientDetails ingredient={shownIngredient} />
-                </Modal>
-            )}
             <section className={styles.container}>
                 <div className={styles.tabs} ref={tabsRef}>
                     <Tab
@@ -164,31 +137,40 @@ export const BurgerIngredients = ({ ingredients }: IBurgerIngredients) => {
                     <div>
                         <IngredientsSection name="Булки" ref={bunsRef}>
                             {buns.map(ingredient => (
-                                <IngredientCard
+                                <Link
                                     key={ingredient._id}
-                                    ingredient={ingredient}
-                                    onClick={() => showInfo(ingredient)}
-                                />
+                                    to={`/ingredients/${ingredient._id}`}
+                                    state={{ background: location }}
+                                    className={styles.link}
+                                >
+                                    <IngredientCard ingredient={ingredient} />
+                                </Link>
                             ))}
                         </IngredientsSection>
 
                         <IngredientsSection name="Соусы" ref={saucesRef}>
                             {sauces.map(ingredient => (
-                                <IngredientCard
+                                <Link
                                     key={ingredient._id}
-                                    ingredient={ingredient}
-                                    onClick={() => showInfo(ingredient)}
-                                />
+                                    to={`/ingredients/${ingredient._id}`}
+                                    state={{ background: location }}
+                                    className={styles.link}
+                                >
+                                    <IngredientCard ingredient={ingredient} />
+                                </Link>
                             ))}
                         </IngredientsSection>
 
                         <IngredientsSection name="Начинки" ref={mainsRef}>
                             {mains.map(ingredient => (
-                                <IngredientCard
+                                <Link
                                     key={ingredient._id}
-                                    ingredient={ingredient}
-                                    onClick={() => showInfo(ingredient)}
-                                />
+                                    to={`/ingredients/${ingredient._id}`}
+                                    state={{ background: location }}
+                                    className={styles.link}
+                                >
+                                    <IngredientCard ingredient={ingredient} />
+                                </Link>
                             ))}
                         </IngredientsSection>
                     </div>
