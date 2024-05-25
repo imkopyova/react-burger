@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
     PasswordInput,
@@ -10,36 +11,40 @@ import styles from '../auth-layout.module.css';
 export const ResetPasswordPage = () => {
     const navigate = useNavigate();
 
-    const handleClick = () => {
-        navigate('/login');
+    const [password, setPassword] = useState('');
+    const [code, setCode] = useState('');
+
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        console.log(password, code);
+
+        // navigate('/login');
     };
+
     return (
         <div className={styles.container}>
-            <form className={styles.form}>
+            <form className={styles.form} onSubmit={handleSubmit}>
                 <h1 className="text text_type_main-medium">
                     Восстановление пароля
                 </h1>
                 <PasswordInput
-                    onChange={e => console.log(e.target.value)}
-                    value={''}
-                    name={'new-password'}
+                    onChange={e => setPassword(e.target.value)}
+                    value={password}
+                    name="new-password"
                     placeholder="Введите новый пароль"
+                    required
                 />
                 {/* @ts-ignore */}
                 <Input
-                    type={'text'}
+                    type="text"
                     placeholder={'Введите код из письма'}
-                    onChange={e => console.log(e.target.value)}
-                    value={''}
-                    name={'code'}
-                    size={'default'}
+                    onChange={e => setCode(e.target.value)}
+                    value={code}
+                    name="code"
+                    size="default"
+                    required
                 />
-                <Button
-                    htmlType="button"
-                    type="primary"
-                    size="medium"
-                    onClick={handleClick}
-                >
+                <Button htmlType="submit" type="primary" size="medium">
                     Сохранить
                 </Button>
             </form>

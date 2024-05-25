@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
     EmailInput,
@@ -11,40 +12,46 @@ import styles from '../auth-layout.module.css';
 export const RegisterPage = () => {
     const navigate = useNavigate();
 
-    const handleClick = () => {
-        navigate('/');
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+        console.log(username, email, password);
+
+        // navigate('/');
     };
     return (
         <div className={styles.container}>
-            <form className={styles.form}>
+            <form className={styles.form} onSubmit={handleSubmit}>
                 <h1 className="text text_type_main-medium">Регистрация</h1>
                 {/* @ts-ignore */}
                 <Input
-                    type={'text'}
-                    placeholder={'Имя'}
-                    onChange={e => console.log(e.target.value)}
-                    value={''}
-                    name={'name'}
-                    size={'default'}
+                    onChange={e => setUsername(e.target.value)}
+                    value={username}
+                    name="username"
+                    placeholder="Имя"
+                    type="text"
+                    size="default"
+                    required
                 />
                 <EmailInput
-                    onChange={e => console.log(e.target.value)}
-                    value={''}
-                    name={'email'}
+                    onChange={e => setEmail(e.target.value)}
+                    value={email}
+                    name="email"
                     placeholder="E-mail"
                     isIcon={false}
+                    required
                 />
                 <PasswordInput
-                    onChange={e => console.log(e.target.value)}
-                    value={''}
-                    name={'password'}
+                    onChange={e => setPassword(e.target.value)}
+                    value={password}
+                    name="password"
+                    required
                 />
-                <Button
-                    htmlType="button"
-                    type="primary"
-                    size="medium"
-                    onClick={handleClick}
-                >
+                <Button htmlType="submit" type="primary" size="medium">
                     Зарегистрироваться
                 </Button>
             </form>

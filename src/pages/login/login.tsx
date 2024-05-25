@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
     EmailInput,
@@ -10,31 +11,35 @@ import styles from '../auth-layout.module.css';
 export const LoginPage = () => {
     const navigate = useNavigate();
 
-    const handleClick = () => {
-        navigate('/');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        console.log(email, password);
+
+        // navigate('/');
     };
+
     return (
         <div className={styles.container}>
-            <form className={styles.form}>
+            <form className={styles.form} onSubmit={handleSubmit}>
                 <h1 className="text text_type_main-medium">Вход</h1>
                 <EmailInput
-                    onChange={e => console.log(e.target)}
-                    value={''}
-                    name={'email'}
+                    onChange={e => setEmail(e.target.value)}
+                    value={email}
+                    name="email"
                     placeholder="E-mail"
                     isIcon={false}
+                    required
                 />
                 <PasswordInput
-                    onChange={e => console.log(e.target)}
-                    value={''}
-                    name={'password'}
+                    onChange={e => setPassword(e.target.value)}
+                    value={password}
+                    name="password"
+                    required
                 />
-                <Button
-                    htmlType="button"
-                    type="primary"
-                    size="medium"
-                    onClick={handleClick}
-                >
+                <Button htmlType="submit" type="primary" size="medium">
                     Войти
                 </Button>
             </form>
