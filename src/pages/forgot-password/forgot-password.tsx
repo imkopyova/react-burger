@@ -6,18 +6,26 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from '../auth-layout.module.css';
+import { sendResetCodeRequest } from '../../services/api/send-reset-code';
 
 export const ForgotPasswordPage = () => {
     const navigate = useNavigate();
 
     const [email, setEmail] = useState('');
+    const [error, setError] = useState('');
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        console.log(email);
-
-        // navigate('/reset-password');
+        sendResetCodeRequest({ email })
+            .then(response => {
+                if (!response.success) {
+                    throw new Error(response.message);
+                }
+                localStorage.setItem('resetPassword', 'true');
+                navigate('/reset-password');
+            })
+            .catch(() => setError('Произошла ошибка, попробуйте еще раз'));
     };
 
     return (
@@ -36,6 +44,7 @@ export const ForgotPasswordPage = () => {
                 <Button htmlType="submit" type="primary" size="medium">
                     Восстановить
                 </Button>
+                {error && <p className="text text_type_main-small">{error}</p>}
             </form>
             <div className={styles.nav}>
                 <p className="text text_type_main-small text_color_inactive">

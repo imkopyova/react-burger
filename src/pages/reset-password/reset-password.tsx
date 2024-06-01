@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, Navigate } from 'react-router-dom';
 import {
     PasswordInput,
     Input,
@@ -7,9 +7,11 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from '../auth-layout.module.css';
+import { resetPasswordRequest } from '../../services/api/reset-password';
 
 export const ResetPasswordPage = () => {
     const navigate = useNavigate();
+    const [error, setError] = useState('');
 
     const [password, setPassword] = useState('');
     const [code, setCode] = useState('');
@@ -18,10 +20,18 @@ export const ResetPasswordPage = () => {
         event.preventDefault();
         console.log(password, code);
 
-        // navigate('/login');
+        resetPasswordRequest({ password, token: code })
+            .then(response => {
+                if (!response.success) {
+                    throw new Error(response.message);
+                }
+                localStorage.removeItem('resetPassword');
+                navigate('/login');
+            })
+            .catch(() => setError('Произошла ошибка, попробуйте еще раз'));
     };
 
-    return (
+    return localStorage.getItem('resetPassword') ? (
         <div className={styles.container}>
             <form className={styles.form} onSubmit={handleSubmit}>
                 <h1 className="text text_type_main-medium">
@@ -47,6 +57,7 @@ export const ResetPasswordPage = () => {
                 <Button htmlType="submit" type="primary" size="medium">
                     Сохранить
                 </Button>
+                {error && <p className="text text_type_main-small">{error}</p>}
             </form>
             <div className={styles.nav}>
                 <p className="text text_type_main-small text_color_inactive">
@@ -57,5 +68,7 @@ export const ResetPasswordPage = () => {
                 </p>
             </div>
         </div>
+    ) : (
+        <Navigate to="/forgot-password" />
     );
 };
