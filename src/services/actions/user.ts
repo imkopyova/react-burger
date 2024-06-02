@@ -76,7 +76,6 @@ export const logout = () => {
 export const checkUserAuth = () => {
     return (dispatch: any) => {
         const accessToken = localStorage.getItem('accessToken');
-        console.log('checkUserAuth', accessToken);
         if (accessToken) {
             getUserRequest({ accessToken })
                 .then(response => {
@@ -90,8 +89,7 @@ export const checkUserAuth = () => {
                         }),
                     );
                 })
-                .catch(e => {
-                    console.log('checkUserAuth', e);
+                .catch(() => {
                     localStorage.removeItem('accessToken');
                     localStorage.removeItem('refreshToken');
                 })

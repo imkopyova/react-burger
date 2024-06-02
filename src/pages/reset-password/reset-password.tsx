@@ -18,7 +18,6 @@ export const ResetPasswordPage = () => {
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log(password, code);
 
         resetPasswordRequest({ password, token: code })
             .then(response => {

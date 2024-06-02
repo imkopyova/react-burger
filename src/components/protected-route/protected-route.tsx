@@ -15,8 +15,6 @@ export const ProtectedRoute = ({
     const { isAuthChecked, user } = useSelector(geUserState);
     const location = useLocation();
 
-    console.log('ProtectedRoute', isAuthChecked, user);
-
     const { from } = location.state || { from: { pathname: '/' } };
 
     if (!isAuthChecked) {
