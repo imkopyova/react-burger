@@ -91,9 +91,7 @@ export const App = () => {
                 </Route>
                 <Route
                     path="/ingredients/:ingredientId"
-                    element={
-                        <ProtectedRoute component={<IngredientDetails />} />
-                    }
+                    element={<IngredientDetails />}
                 />
                 <Route
                     path="*"
@@ -105,13 +103,9 @@ export const App = () => {
                     <Route
                         path="/ingredients/:ingredientId"
                         element={
-                            <ProtectedRoute
-                                component={
-                                    <Modal onClose={closeModal}>
-                                        <IngredientDetails />
-                                    </Modal>
-                                }
-                            />
+                            <Modal onClose={closeModal}>
+                                <IngredientDetails />
+                            </Modal>
                         }
                     />
                 </Routes>
