@@ -1,3 +1,5 @@
+import { checkResponse } from './helpers/check-response';
+
 const API_SEND_RESET_CODE =
     'https://norma.nomoreparties.space/api/password-reset';
 
@@ -21,4 +23,4 @@ export const sendResetCodeRequest = (
         body: JSON.stringify({
             ...data,
         }),
-    }).then(response => response.json());
+    }).then(checkResponse);

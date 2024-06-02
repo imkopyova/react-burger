@@ -1,10 +1,5 @@
 import { refreshTokenRequest } from '../refresh-token';
-
-const checkResponse = (response: any) => {
-    return response.ok
-        ? response.json()
-        : response.json().then((error: string) => Promise.reject(error));
-};
+import { checkResponse } from './check-response';
 
 export const fetchWithRefresh = async (url: string, options: any) => {
     try {
@@ -18,7 +13,7 @@ export const fetchWithRefresh = async (url: string, options: any) => {
                 refreshToken,
             });
             // @ts-ignore
-            options.headers.authorization = refreshData.accessToken;
+            options.headers.Authorization = refreshData.accessToken;
             const response = await fetch(url, options);
             return await checkResponse(response);
         } else {

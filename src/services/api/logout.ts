@@ -1,3 +1,5 @@
+import { checkResponse } from './helpers/check-response';
+
 const API_AUTH_LOGOUT = 'https://norma.nomoreparties.space/api/auth/logout';
 
 export interface ILogoutResponse {
@@ -18,4 +20,4 @@ export const logoutRequest = (data: ILogoutRequest): Promise<ILogoutResponse> =>
         body: JSON.stringify({
             token: data.refreshToken,
         }),
-    }).then(response => response.json());
+    }).then(checkResponse);

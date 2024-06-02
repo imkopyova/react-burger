@@ -1,3 +1,5 @@
+import { checkResponse } from './helpers/check-response';
+
 const API_RESET_PASSWORD =
     'https://norma.nomoreparties.space/api/password-reset/reset';
 
@@ -22,4 +24,4 @@ export const resetPasswordRequest = (
         body: JSON.stringify({
             ...data,
         }),
-    }).then(response => response.json());
+    }).then(checkResponse);

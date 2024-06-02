@@ -1,3 +1,5 @@
+import { checkResponse } from './helpers/check-response';
+
 const API_AUTH_LOGIN = 'https://norma.nomoreparties.space/api/auth/login';
 
 export interface ILoginResponseFailed {
@@ -31,4 +33,4 @@ export const loginRequest = (data: ILoginRequest): Promise<ILoginResponse> =>
         body: JSON.stringify({
             ...data,
         }),
-    }).then(response => response.json());
+    }).then(checkResponse);

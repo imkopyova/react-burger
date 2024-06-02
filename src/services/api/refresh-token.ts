@@ -1,3 +1,5 @@
+import { checkResponse } from './helpers/check-response';
+
 const API_AUTH_TOKEN = 'https://norma.nomoreparties.space/api/auth/token';
 
 export interface IRefreshTokenRequest {
@@ -31,12 +33,12 @@ export const refreshTokenRequest = (
             token: data.refreshToken,
         }),
     })
-        .then(response => response.json())
+        .then(checkResponse)
         .then(refreshData => {
-            if (!refreshData.success) {
-                return Promise.reject(refreshData);
-            }
             localStorage.setItem('refreshToken', refreshData.refreshToken);
             localStorage.setItem('accessToken', refreshData.accessToken);
             return refreshData;
+        })
+        .catch(reason => {
+            return Promise.reject(reason);
         });

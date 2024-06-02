@@ -1,3 +1,5 @@
+import { checkResponse } from './helpers/check-response';
+
 const API_INGREDIENTS = 'https://norma.nomoreparties.space/api/ingredients';
 
 export interface IGetIngredientsResponseFailed {
@@ -15,4 +17,4 @@ export type IGetIngredientsResponse =
     | IGetIngredientsResponseSuccess;
 
 export const getIngredientsRequest = (): Promise<IGetIngredientsResponse> =>
-    fetch(API_INGREDIENTS).then(response => response.json());
+    fetch(API_INGREDIENTS).then(checkResponse);

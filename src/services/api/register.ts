@@ -1,3 +1,5 @@
+import { checkResponse } from './helpers/check-response';
+
 const API_AUTH_REGISTER = 'https://norma.nomoreparties.space/api/auth/register';
 
 export interface IRegisterResponseFailed {
@@ -36,4 +38,4 @@ export const registerRequest = (
         body: JSON.stringify({
             ...data,
         }),
-    }).then(response => response.json());
+    }).then(checkResponse);
