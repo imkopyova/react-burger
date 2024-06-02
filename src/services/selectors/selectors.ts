@@ -13,3 +13,5 @@ export const getOrder = (store: IRootState) => store.order;
 
 export const getShownIngredient = (store: IRootState) =>
     store.shownIngredient.ingredient;
+
+export const geUserState = (store: IRootState) => store.user;

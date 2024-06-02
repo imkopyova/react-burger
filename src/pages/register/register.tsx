@@ -1,27 +1,34 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import {
     EmailInput,
     PasswordInput,
     Input,
     Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { register } from '../../services/actions/user';
 
 import styles from '../auth-layout.module.css';
 
 export const RegisterPage = () => {
-    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        console.log(username, email, password);
-
-        // navigate('/');
+        try {
+            await dispatch(
+                register({ name: username, email, password }) as any,
+            );
+        } catch {
+            setError('Произошла ошибка авторизации, попробуйте еще раз');
+        }
     };
     return (
         <div className={styles.container}>
@@ -54,6 +61,7 @@ export const RegisterPage = () => {
                 <Button htmlType="submit" type="primary" size="medium">
                     Зарегистрироваться
                 </Button>
+                {error && <p className="text text_type_main-small">{error}</p>}
             </form>
             <div className={styles.nav}>
                 <p className="text text_type_main-small text_color_inactive">

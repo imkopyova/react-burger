@@ -9,6 +9,7 @@ import { thunkPostOrder } from '../../../services/actions/order';
 import { CLEAR_CONSTRUCTOR } from '../../../services/actions/burger-constructor';
 import { CLEAR_ORDER_DATA } from '../../../services/actions/order';
 import { useModal } from '../../modal/hooks/use-modal';
+import { getAccessToken } from '../../../helpers/getAccessToken';
 import {
     getBurgerConstructor,
     getOrder,
@@ -29,9 +30,19 @@ export const OrderButton = () => {
     const postOrder = () => {
         if (!bun) return;
         const ingredientsIds = ingredients.map(ingredient => ingredient.id);
-        // TODO: any
-        dispatch(thunkPostOrder([bun, ...ingredientsIds, bun]) as any);
-        navigate('/login');
+
+        const accessToken = getAccessToken();
+        if (!!accessToken) {
+            // TODO: any
+            dispatch(
+                thunkPostOrder({
+                    ingredients: [bun, ...ingredientsIds, bun],
+                    accessToken,
+                }) as any,
+            );
+        } else {
+            navigate('/login');
+        }
     };
 
     useEffect(() => {
@@ -56,7 +67,7 @@ export const OrderButton = () => {
                 onClick={postOrder}
                 disabled={!bun}
             >
-                Оформить заказ
+                {order.orderRequest ? 'В процессе...' : 'Оформить заказ'}
             </Button>
         </>
     );

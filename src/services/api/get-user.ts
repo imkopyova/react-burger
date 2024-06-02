@@ -1,3 +1,5 @@
+import { fetchWithRefresh } from './helpers/fetch-with-refresh';
+
 const API_GET_USER = 'https://norma.nomoreparties.space/api/auth/user';
 
 export interface IGetUserResponseFailed {
@@ -22,12 +24,10 @@ export interface IGetUserRequest {
 export const getUserRequest = ({
     accessToken,
 }: IGetUserRequest): Promise<IGetUserResponse> =>
-    fetch(API_GET_USER, {
+    fetchWithRefresh(API_GET_USER, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json;charset=utf-8',
             Authorization: accessToken,
         },
-    }).then(response => response.json());
-
-// TODO: обелнуть в fetcheithrefresh
+    });

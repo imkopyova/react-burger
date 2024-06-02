@@ -1,14 +1,19 @@
 import classNames from 'classnames';
-import { NavLink } from 'react-router-dom';
-import {
-    EmailInput,
-    PasswordInput,
-    Input,
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDispatch } from 'react-redux';
+import { NavLink, Outlet } from 'react-router-dom';
 
+import { logout } from '../../services/actions/user';
 import styles from './profile.module.css';
 
 export const ProfilePage = () => {
+    const dispatch = useDispatch();
+    const handleLogout = async () => {
+        try {
+            await dispatch(logout() as any);
+        } catch (error) {
+            console.log('Ошибка:', error);
+        }
+    };
     return (
         <div className={styles.container}>
             <aside className={styles.aside}>
@@ -16,6 +21,7 @@ export const ProfilePage = () => {
                     <li className={styles.menuItem}>
                         <NavLink
                             to="/profile"
+                            end
                             className={({ isActive }) =>
                                 classNames(
                                     'text text_type_main-medium',
@@ -45,21 +51,15 @@ export const ProfilePage = () => {
                             История заказов
                         </NavLink>
                     </li>
-                    <li className={styles.menuItem}>
-                        <NavLink
-                            to="/"
-                            className={({ isActive }) =>
-                                classNames(
-                                    'text text_type_main-medium',
-                                    styles.menuLink,
-                                    {
-                                        [styles.menuLinkActive]: isActive,
-                                    },
-                                )
-                            }
-                        >
-                            Выход
-                        </NavLink>
+                    <li
+                        className={classNames(
+                            styles.menuItem,
+                            styles.menuLink,
+                            'text text_type_main-medium',
+                        )}
+                        onClick={handleLogout}
+                    >
+                        Выход
                     </li>
                 </menu>
                 <p
@@ -72,31 +72,7 @@ export const ProfilePage = () => {
                     данные
                 </p>
             </aside>
-            <form className={styles.form}>
-                {/* @ts-ignore */}
-                <Input
-                    type={'text'}
-                    placeholder={'Имя'}
-                    onChange={e => console.log(e.target.value)}
-                    value={''}
-                    name={'name'}
-                    size={'default'}
-                    icon={'EditIcon'}
-                />
-                <EmailInput
-                    onChange={e => console.log(e.target.value)}
-                    value={''}
-                    name={'email'}
-                    placeholder="Логин"
-                    isIcon={true}
-                />
-                <PasswordInput
-                    onChange={e => console.log(e.target.value)}
-                    value={''}
-                    name={'password'}
-                    icon="EditIcon"
-                />
-            </form>
+            <Outlet />
         </div>
     );
 };

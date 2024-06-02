@@ -1,3 +1,5 @@
+import { fetchWithRefresh } from './helpers/fetch-with-refresh';
+
 const API_EDIT_USER = 'https://norma.nomoreparties.space/api/auth/user';
 
 export interface IEditUserResponseFailed {
@@ -17,17 +19,20 @@ export type IEditUserResponse =
     | IEditUserResponseFailed
     | IEditUserResponseSuccess;
 
-export interface IEditUserRequest {
+export interface IEditUserRequest extends TEditUserData {
+    accessToken: string;
+}
+
+export type TEditUserData = {
     name?: string;
     email?: string;
     password?: string;
-    accessToken: string;
-}
+};
 
 export const editUserRequest = (
     data: IEditUserRequest,
 ): Promise<IEditUserResponse> =>
-    fetch(API_EDIT_USER, {
+    fetchWithRefresh(API_EDIT_USER, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json;charset=utf-8',
@@ -36,4 +41,4 @@ export const editUserRequest = (
         body: JSON.stringify({
             ...data,
         }),
-    }).then(response => response.json());
+    });

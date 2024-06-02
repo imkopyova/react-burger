@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 
 import { thunkGetIngredients } from '../../services/actions/ingredients';
 
+import { ProtectedRoute } from '../protected-route/protected-route';
 import { AppHeader } from '../app-header/app-header';
 import { HomePage } from '../../pages/home/home';
 import { LoginPage } from '../../pages/login/login';
@@ -11,9 +12,11 @@ import { RegisterPage } from '../../pages/register/register';
 import { ForgotPasswordPage } from '../../pages/forgot-password/forgot-password';
 import { ResetPasswordPage } from '../../pages/reset-password/reset-password';
 import { ProfilePage } from '../../pages/profile/profile';
+import { ProfileForm } from '../../components/profile-form/profile-form';
 import { NotFoundPage } from '../../pages/not-found/not-found';
 import { IngredientDetails } from '../ingredient-details/ingredient-details';
 import { Modal } from '../modal/modal';
+import { checkUserAuth } from '../../services/actions/user';
 
 import styles from './app.module.css';
 
@@ -23,6 +26,11 @@ export const App = () => {
     const background = location.state && location.state.background;
 
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        // TODO: исправить типы
+        dispatch(checkUserAuth() as any);
+    }, [dispatch]);
 
     useEffect(() => {
         // TODO: исправить типы
@@ -38,28 +46,72 @@ export const App = () => {
             <AppHeader />
             <Routes location={background || location}>
                 <Route path="/" element={<HomePage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/register" element={<RegisterPage />} />
+                <Route
+                    path="/login"
+                    element={
+                        <ProtectedRoute
+                            unauthorizedOnly
+                            component={<LoginPage />}
+                        />
+                    }
+                />
+                <Route
+                    path="/register"
+                    element={
+                        <ProtectedRoute
+                            unauthorizedOnly
+                            component={<RegisterPage />}
+                        />
+                    }
+                />
                 <Route
                     path="/forgot-password"
-                    element={<ForgotPasswordPage />}
+                    element={
+                        <ProtectedRoute
+                            unauthorizedOnly
+                            component={<ForgotPasswordPage />}
+                        />
+                    }
                 />
-                <Route path="/reset-password" element={<ResetPasswordPage />} />
-                <Route path="/profile" element={<ProfilePage />} />
+                <Route
+                    path="/reset-password"
+                    element={
+                        <ProtectedRoute
+                            unauthorizedOnly
+                            component={<ResetPasswordPage />}
+                        />
+                    }
+                />
+                <Route
+                    path="/profile"
+                    element={<ProtectedRoute component={<ProfilePage />} />}
+                >
+                    <Route path="" element={<ProfileForm />} />
+                    <Route path="orders" element={<NotFoundPage />} />
+                </Route>
                 <Route
                     path="/ingredients/:ingredientId"
-                    element={<IngredientDetails />}
+                    element={
+                        <ProtectedRoute component={<IngredientDetails />} />
+                    }
                 />
-                <Route path="*" element={<NotFoundPage />} />
+                <Route
+                    path="*"
+                    element={<ProtectedRoute component={<NotFoundPage />} />}
+                />
             </Routes>
             {background && (
                 <Routes>
                     <Route
                         path="/ingredients/:ingredientId"
                         element={
-                            <Modal onClose={closeModal}>
-                                <IngredientDetails />
-                            </Modal>
+                            <ProtectedRoute
+                                component={
+                                    <Modal onClose={closeModal}>
+                                        <IngredientDetails />
+                                    </Modal>
+                                }
+                            />
                         }
                     />
                 </Routes>

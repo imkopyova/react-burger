@@ -28,7 +28,7 @@ export const refreshTokenRequest = (
             'Content-Type': 'application/json;charset=utf-8',
         },
         body: JSON.stringify({
-            ...data,
+            token: data.refreshToken,
         }),
     })
         .then(response => response.json())

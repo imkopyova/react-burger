@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import {
     EmailInput,
     PasswordInput,
@@ -7,18 +8,23 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from '../auth-layout.module.css';
+import { login } from '../../services/actions/user';
 
 export const LoginPage = () => {
-    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log(email, password);
-
-        // navigate('/');
+        // TODO: Отрефакторить
+        try {
+            await dispatch(login({ email, password }) as any);
+        } catch {
+            setError('Неверный логин или пароль');
+        }
     };
 
     return (
@@ -42,19 +48,20 @@ export const LoginPage = () => {
                 <Button htmlType="submit" type="primary" size="medium">
                     Войти
                 </Button>
+                {error && <p className="text text_type_main-small">{error}</p>}
             </form>
             <div className={styles.nav}>
                 <p className="text text_type_main-small text_color_inactive">
                     Вы — новый пользователь?{' '}
-                    <Link to="/register" className={styles.link}>
+                    <NavLink to="/register" className={styles.link}>
                         Зарегистрироваться
-                    </Link>
+                    </NavLink>
                 </p>
                 <p className="text text_type_main-small text_color_inactive">
                     Забыли пароль?{' '}
-                    <Link to="/forgot-password" className={styles.link}>
+                    <NavLink to="/forgot-password" className={styles.link}>
                         Восстановить пароль
-                    </Link>
+                    </NavLink>
                 </p>
             </div>
         </div>
