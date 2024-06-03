@@ -17,6 +17,8 @@
 
 .stubMiddle {
     composes: stub;
+    background: transparent;
+    padding: 0;
 }
 
 .stubBottom {
