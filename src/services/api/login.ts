@@ -1,8 +1,7 @@
 import { checkResponse } from './helpers/check-response';
 import { checkSuccess } from './helpers/check-success';
 import { IResponseFailed } from './models';
-
-const API_AUTH_LOGIN = 'https://norma.nomoreparties.space/api/auth/login';
+import { BASE_URL } from './helpers/base-url';
 
 export interface ILoginResponseSuccess {
     success: true;
@@ -22,7 +21,7 @@ export interface ILoginRequest {
 }
 
 export const loginRequest = (data: ILoginRequest): Promise<ILoginResponse> =>
-    fetch(API_AUTH_LOGIN, {
+    fetch(`${BASE_URL}/auth/login`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json;charset=utf-8',

@@ -1,8 +1,7 @@
 import { checkResponse } from './helpers/check-response';
 import { checkSuccess } from './helpers/check-success';
 import { IResponseFailed } from './models';
-
-const API_AUTH_REGISTER = 'https://norma.nomoreparties.space/api/auth/register';
+import { BASE_URL } from './helpers/base-url';
 
 export interface IRegisterResponseSuccess {
     user: {
@@ -25,7 +24,7 @@ export interface IRegisterRequest {
 export const registerRequest = (
     data: IRegisterRequest,
 ): Promise<IRegisterResponse> =>
-    fetch(API_AUTH_REGISTER, {
+    fetch(`${BASE_URL}/auth/register`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json;charset=utf-8',

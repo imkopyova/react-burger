@@ -1,8 +1,7 @@
 import { checkResponse } from './helpers/check-response';
 import { checkSuccess } from './helpers/check-success';
 import { IResponseFailed } from './models';
-
-const API_INGREDIENTS = 'https://norma.nomoreparties.space/api/ingredients';
+import { BASE_URL } from './helpers/base-url';
 
 export interface IGetIngredientsResponseSuccess {
     data: string[];
@@ -14,4 +13,4 @@ export type IGetIngredientsResponse =
     | IGetIngredientsResponseSuccess;
 
 export const getIngredientsRequest = (): Promise<IGetIngredientsResponse> =>
-    fetch(API_INGREDIENTS).then(checkResponse).then(checkSuccess);
+    fetch(`${BASE_URL}/ingredients`).then(checkResponse).then(checkSuccess);

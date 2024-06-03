@@ -1,7 +1,6 @@
 import { checkResponse } from './helpers/check-response';
 import { checkSuccess } from './helpers/check-success';
-
-const API_AUTH_LOGOUT = 'https://norma.nomoreparties.space/api/auth/logout';
+import { BASE_URL } from './helpers/base-url';
 
 export interface ILogoutResponse {
     success: boolean;
@@ -13,7 +12,7 @@ export interface ILogoutRequest {
 }
 
 export const logoutRequest = (data: ILogoutRequest): Promise<ILogoutResponse> =>
-    fetch(API_AUTH_LOGOUT, {
+    fetch(`${BASE_URL}/auth/logout`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json;charset=utf-8',

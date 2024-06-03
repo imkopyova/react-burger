@@ -1,8 +1,7 @@
 import { fetchWithRefresh } from './helpers/fetch-with-refresh';
 import { IResponseFailed } from './models';
 import { checkSuccess } from './helpers/check-success';
-
-const API_EDIT_USER = 'https://norma.nomoreparties.space/api/auth/user';
+import { BASE_URL } from './helpers/base-url';
 
 export interface IEditUserResponseSuccess {
     user: {
@@ -27,7 +26,7 @@ export type TEditUserData = {
 export const editUserRequest = (
     data: IEditUserRequest,
 ): Promise<IEditUserResponse> =>
-    fetchWithRefresh(API_EDIT_USER, {
+    fetchWithRefresh(`${BASE_URL}/auth/user`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json;charset=utf-8',

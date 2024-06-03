@@ -1,8 +1,6 @@
 import { checkResponse } from './helpers/check-response';
 import { checkSuccess } from './helpers/check-success';
-
-const API_SEND_RESET_CODE =
-    'https://norma.nomoreparties.space/api/password-reset';
+import { BASE_URL } from './helpers/base-url';
 
 export interface ISendResetCodeResponse {
     message: string;
@@ -16,7 +14,7 @@ export interface ISendResetCodeRequest {
 export const sendResetCodeRequest = (
     data: ISendResetCodeRequest,
 ): Promise<ISendResetCodeResponse> =>
-    fetch(API_SEND_RESET_CODE, {
+    fetch(`${BASE_URL}/password-reset`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json;charset=utf-8',

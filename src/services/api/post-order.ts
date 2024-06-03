@@ -1,8 +1,7 @@
 import { fetchWithRefresh } from './helpers/fetch-with-refresh';
 import { IResponseFailed } from './models';
 import { checkSuccess } from './helpers/check-success';
-
-const API_ORDERS = 'https://norma.nomoreparties.space/api/orders';
+import { BASE_URL } from './helpers/base-url';
 
 export interface IPostOrderResponseSuccess {
     name: string;
@@ -22,7 +21,7 @@ export interface IPostOrderRequest {
 export const postOrderRequest = (
     data: IPostOrderRequest,
 ): Promise<IPostOrderResponse> =>
-    fetchWithRefresh(API_ORDERS, {
+    fetchWithRefresh(`${BASE_URL}/orders`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json;charset=utf-8',

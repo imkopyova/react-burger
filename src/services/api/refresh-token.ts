@@ -1,8 +1,7 @@
 import { checkResponse } from './helpers/check-response';
 import { checkSuccess } from './helpers/check-success';
 import { IResponseFailed } from './models';
-
-const API_AUTH_TOKEN = 'https://norma.nomoreparties.space/api/auth/token';
+import { BASE_URL } from './helpers/base-url';
 
 export interface IRefreshTokenRequest {
     refreshToken: string;
@@ -21,7 +20,7 @@ export type IRefreshTokenResponse =
 export const refreshTokenRequest = (
     data: IRefreshTokenRequest,
 ): Promise<IRefreshTokenResponse> =>
-    fetch(API_AUTH_TOKEN, {
+    fetch(`${BASE_URL}/auth/token`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json;charset=utf-8',

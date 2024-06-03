@@ -1,8 +1,7 @@
 import { fetchWithRefresh } from './helpers/fetch-with-refresh';
 import { IResponseFailed } from './models';
 import { checkSuccess } from './helpers/check-success';
-
-const API_GET_USER = 'https://norma.nomoreparties.space/api/auth/user';
+import { BASE_URL } from './helpers/base-url';
 
 export interface IGetUserResponseSuccess {
     user: {
@@ -21,7 +20,7 @@ export interface IGetUserRequest {
 export const getUserRequest = ({
     accessToken,
 }: IGetUserRequest): Promise<IGetUserResponse> =>
-    fetchWithRefresh(API_GET_USER, {
+    fetchWithRefresh(`${BASE_URL}/auth/user`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json;charset=utf-8',
