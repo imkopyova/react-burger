@@ -1,11 +1,12 @@
 import { checkResponse } from './helpers/check-response';
+import { checkSuccess } from './helpers/check-success';
 
 const API_SEND_RESET_CODE =
     'https://norma.nomoreparties.space/api/password-reset';
 
 export interface ISendResetCodeResponse {
     message: string;
-    success: false;
+    success: boolean;
 }
 
 export interface ISendResetCodeRequest {
@@ -23,4 +24,6 @@ export const sendResetCodeRequest = (
         body: JSON.stringify({
             ...data,
         }),
-    }).then(checkResponse);
+    })
+        .then(checkResponse)
+        .then(checkSuccess);

@@ -1,11 +1,8 @@
 import { fetchWithRefresh } from './helpers/fetch-with-refresh';
+import { IResponseFailed } from './models';
+import { checkSuccess } from './helpers/check-success';
 
 const API_GET_USER = 'https://norma.nomoreparties.space/api/auth/user';
-
-export interface IGetUserResponseFailed {
-    message: string;
-    success: false;
-}
 
 export interface IGetUserResponseSuccess {
     user: {
@@ -15,7 +12,7 @@ export interface IGetUserResponseSuccess {
     success: true;
 }
 
-export type IGetUserResponse = IGetUserResponseFailed | IGetUserResponseSuccess;
+export type IGetUserResponse = IResponseFailed | IGetUserResponseSuccess;
 
 export interface IGetUserRequest {
     accessToken: string;
@@ -30,4 +27,4 @@ export const getUserRequest = ({
             'Content-Type': 'application/json;charset=utf-8',
             Authorization: accessToken,
         },
-    });
+    }).then(checkSuccess);

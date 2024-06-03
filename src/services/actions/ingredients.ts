@@ -19,11 +19,9 @@ export function thunkGetIngredients(): ThunkAction<
         });
         getIngredientsRequest()
             .then(response => {
-                if (!response.success) {
-                    throw new Error(response.message);
-                }
                 dispatch({
                     type: GET_INGREDIENTS_SUCCESS,
+                    // @ts-ignore
                     ingredients: response.data,
                 });
             })

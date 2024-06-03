@@ -1,14 +1,11 @@
 import { checkResponse } from './helpers/check-response';
+import { checkSuccess } from './helpers/check-success';
+import { IResponseFailed } from './models';
 
 const API_AUTH_TOKEN = 'https://norma.nomoreparties.space/api/auth/token';
 
 export interface IRefreshTokenRequest {
     refreshToken: string;
-}
-
-export interface IRefreshTokenResponseFailed {
-    message: string;
-    success: false;
 }
 
 export interface IRefreshTokenResponseSuccess {
@@ -18,7 +15,7 @@ export interface IRefreshTokenResponseSuccess {
 }
 
 export type IRefreshTokenResponse =
-    | IRefreshTokenResponseFailed
+    | IResponseFailed
     | IRefreshTokenResponseSuccess;
 
 export const refreshTokenRequest = (
@@ -34,6 +31,7 @@ export const refreshTokenRequest = (
         }),
     })
         .then(checkResponse)
+        .then(checkSuccess)
         .then(refreshData => {
             localStorage.setItem('refreshToken', refreshData.refreshToken);
             localStorage.setItem('accessToken', refreshData.accessToken);

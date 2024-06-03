@@ -18,14 +18,14 @@ export const ForgotPasswordPage = () => {
         event.preventDefault();
 
         sendResetCodeRequest({ email })
-            .then(response => {
-                if (!response.success) {
-                    throw new Error(response.message);
-                }
+            .then(() => {
                 localStorage.setItem('resetPassword', 'true');
                 navigate('/reset-password');
             })
-            .catch(() => setError('Произошла ошибка, попробуйте еще раз'));
+            .catch(reason => {
+                console.log(reason);
+                setError('Произошла ошибка, попробуйте еще раз');
+            });
     };
 
     return (

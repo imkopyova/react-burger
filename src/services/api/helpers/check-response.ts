@@ -1,7 +1,4 @@
-interface IResponseFailed {
-    message: string;
-    success: false;
-}
+import { IResponseFailed } from '../models';
 
 export const checkResponse = (response: Response) => {
     return response.ok

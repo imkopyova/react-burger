@@ -1,11 +1,8 @@
 import { checkResponse } from './helpers/check-response';
+import { checkSuccess } from './helpers/check-success';
+import { IResponseFailed } from './models';
 
 const API_AUTH_REGISTER = 'https://norma.nomoreparties.space/api/auth/register';
-
-export interface IRegisterResponseFailed {
-    message: string;
-    success: false;
-}
 
 export interface IRegisterResponseSuccess {
     user: {
@@ -17,9 +14,7 @@ export interface IRegisterResponseSuccess {
     success: true;
 }
 
-export type IRegisterResponse =
-    | IRegisterResponseFailed
-    | IRegisterResponseSuccess;
+export type IRegisterResponse = IResponseFailed | IRegisterResponseSuccess;
 
 export interface IRegisterRequest {
     email: string;
@@ -38,4 +33,6 @@ export const registerRequest = (
         body: JSON.stringify({
             ...data,
         }),
-    }).then(checkResponse);
+    })
+        .then(checkResponse)
+        .then(checkSuccess);

@@ -17,12 +17,11 @@ export function thunkPostOrder(
         });
         postOrderRequest(orderData)
             .then(response => {
-                if (!response.success) {
-                    throw new Error(response.message);
-                }
                 dispatch({
                     type: POST_ORDER_SUCCESS,
+                    // @ts-ignore
                     number: response.order.number,
+                    // @ts-ignore
                     name: response.name,
                 });
             })

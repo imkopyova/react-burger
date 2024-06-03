@@ -1,11 +1,8 @@
 import { fetchWithRefresh } from './helpers/fetch-with-refresh';
+import { IResponseFailed } from './models';
+import { checkSuccess } from './helpers/check-success';
 
 const API_ORDERS = 'https://norma.nomoreparties.space/api/orders';
-
-export interface IPostOrderResponseFailed {
-    message: string;
-    success: false;
-}
 
 export interface IPostOrderResponseSuccess {
     name: string;
@@ -15,9 +12,7 @@ export interface IPostOrderResponseSuccess {
     success: true;
 }
 
-export type IPostOrderResponse =
-    | IPostOrderResponseFailed
-    | IPostOrderResponseSuccess;
+export type IPostOrderResponse = IResponseFailed | IPostOrderResponseSuccess;
 
 export interface IPostOrderRequest {
     ingredients: string[];
@@ -36,4 +31,4 @@ export const postOrderRequest = (
         body: JSON.stringify({
             ...data,
         }),
-    });
+    }).then(checkSuccess);

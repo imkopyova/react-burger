@@ -20,10 +20,7 @@ export const setIsAuthChecked = (value: boolean) => ({
 
 export const register = (registerData: IRegisterRequest) => {
     return (dispatch: any) => {
-        return registerRequest(registerData).then(response => {
-            if (!response.success) {
-                throw new Error(response.message);
-            }
+        return registerRequest(registerData).then((response: any) => {
             localStorage.setItem('accessToken', response.accessToken);
             localStorage.setItem('refreshToken', response.refreshToken);
             dispatch(
@@ -40,14 +37,15 @@ export const register = (registerData: IRegisterRequest) => {
 export const login = (loginData: ILoginRequest) => {
     return (dispatch: any) => {
         return loginRequest(loginData).then(response => {
-            if (!response.success) {
-                throw new Error(response.message);
-            }
+            // @ts-ignore
             localStorage.setItem('accessToken', response.accessToken);
+            // @ts-ignore
             localStorage.setItem('refreshToken', response.refreshToken);
             dispatch(
                 setUser({
+                    // @ts-ignore
                     username: response.user.name,
+                    // @ts-ignore
                     email: response.user.email,
                 }),
             );
@@ -60,10 +58,7 @@ export const logout = () => {
     return (dispatch: any) => {
         const refreshToken = localStorage.getItem('refreshToken');
         if (!refreshToken) return;
-        return logoutRequest({ refreshToken }).then(response => {
-            if (!response.success) {
-                throw new Error(response.message);
-            }
+        return logoutRequest({ refreshToken }).then(() => {
             localStorage.removeItem('accessToken');
             localStorage.removeItem('refreshToken');
 
@@ -79,12 +74,11 @@ export const checkUserAuth = () => {
         if (accessToken) {
             getUserRequest({ accessToken })
                 .then(response => {
-                    if (!response.success) {
-                        throw new Error(response.message);
-                    }
                     dispatch(
                         setUser({
+                            // @ts-ignore
                             username: response.user.name,
+                            // @ts-ignore
                             email: response.user.email,
                         }),
                     );
@@ -106,12 +100,11 @@ export const editUser = (userData: TEditUserData) => {
         if (accessToken) {
             editUserRequest({ ...userData, accessToken })
                 .then(response => {
-                    if (!response.success) {
-                        throw new Error(response.message);
-                    }
                     dispatch(
                         setUser({
+                            // @ts-ignore
                             username: response.user.name,
+                            // @ts-ignore
                             email: response.user.email,
                         }),
                     );

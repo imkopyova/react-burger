@@ -20,14 +20,14 @@ export const ResetPasswordPage = () => {
         event.preventDefault();
 
         resetPasswordRequest({ password, token: code })
-            .then(response => {
-                if (!response.success) {
-                    throw new Error(response.message);
-                }
+            .then(() => {
                 localStorage.removeItem('resetPassword');
                 navigate('/login');
             })
-            .catch(() => setError('Произошла ошибка, попробуйте еще раз'));
+            .catch(reason => {
+                console.error(reason);
+                setError('Произошла ошибка, попробуйте еще раз');
+            });
     };
 
     return localStorage.getItem('resetPassword') ? (

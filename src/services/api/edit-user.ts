@@ -1,11 +1,8 @@
 import { fetchWithRefresh } from './helpers/fetch-with-refresh';
+import { IResponseFailed } from './models';
+import { checkSuccess } from './helpers/check-success';
 
 const API_EDIT_USER = 'https://norma.nomoreparties.space/api/auth/user';
-
-export interface IEditUserResponseFailed {
-    message: string;
-    success: false;
-}
 
 export interface IEditUserResponseSuccess {
     user: {
@@ -15,9 +12,7 @@ export interface IEditUserResponseSuccess {
     success: true;
 }
 
-export type IEditUserResponse =
-    | IEditUserResponseFailed
-    | IEditUserResponseSuccess;
+export type IEditUserResponse = IResponseFailed | IEditUserResponseSuccess;
 
 export interface IEditUserRequest extends TEditUserData {
     accessToken: string;
@@ -41,4 +36,4 @@ export const editUserRequest = (
         body: JSON.stringify({
             ...data,
         }),
-    });
+    }).then(checkSuccess);
