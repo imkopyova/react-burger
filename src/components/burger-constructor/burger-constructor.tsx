@@ -59,23 +59,28 @@ export const BurgerConstructor = ({
                         window.innerHeight - FIXED_HEIGHT_WITHOUT_SCROLLABLE
                     }
                 >
-                    <div ref={dropIngredientTarget}>
-                        {ingredients && ingredients.length > 0 ? (
-                            ingredients.map((ingredient, index) => (
-                                <ConstructorIngredient
-                                    key={ingredient.inConstructorId}
-                                    index={index}
-                                    onDeleteIngredient={onDeleteIngredient}
-                                    onMoveIngredient={onMoveIngredient}
-                                    ingredient={ingredient}
-                                />
-                            ))
-                        ) : (
-                            <IngredientStub
-                                type="ingredient"
-                                isHover={isHoverIngredient}
-                            />
-                        )}
+                    <div
+                        ref={dropIngredientTarget}
+                        style={{ minHeight: '200px' }}
+                    >
+                        <IngredientStub
+                            type="ingredient"
+                            isHover={isHoverIngredient}
+                        >
+                            {ingredients && ingredients.length > 0
+                                ? ingredients.map((ingredient, index) => (
+                                      <ConstructorIngredient
+                                          key={ingredient.inConstructorId}
+                                          index={index}
+                                          onDeleteIngredient={
+                                              onDeleteIngredient
+                                          }
+                                          onMoveIngredient={onMoveIngredient}
+                                          ingredient={ingredient}
+                                      />
+                                  ))
+                                : null}
+                        </IngredientStub>
                     </div>
                 </Scrollable>
                 <DropBunZone onDropHandler={onDropHandler} stubType="bunBottom">

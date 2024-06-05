@@ -20,6 +20,7 @@ export interface IRootState {
     burgerConstructor: IBurgerConstructorState;
     shownIngredient: IShownIngredientState;
     order: IOrderState;
+    user: IUserState;
 }
 
 export interface IIngredientsState {
@@ -47,4 +48,14 @@ export type TBurgerConstructorIngredient = {
 export interface IBurgerConstructorState {
     bun?: string;
     ingredients: TBurgerConstructorIngredient[];
+}
+
+export type TUser = {
+    username: string;
+    email: string;
+};
+
+export interface IUserState {
+    isAuthChecked: boolean;
+    user: TUser | null;
 }

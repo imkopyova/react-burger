@@ -1,0 +1,23 @@
+.container {
+    margin-top: 180px;
+}
+
+.nav {
+    margin-top: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 16px;
+}
+
+.link {
+    color: #4c4cff;
+    text-decoration: none;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 24px;
+}

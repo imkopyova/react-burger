@@ -1,0 +1,30 @@
+.container {
+    margin-top: 120px;
+    display: grid;
+    grid-template-columns: 320px 480px;
+    column-gap: 60px;
+}
+
+.menu {
+    margin: 0;
+    padding: 0;
+}
+
+.menuItem {
+    height: 64px;
+    list-style-type: none;
+    cursor: pointer;
+}
+
+.menuLink {
+    text-decoration: none;
+    color: var(--text-inactive-color);
+}
+
+.menuLinkActive {
+    color: var(--text-primary-color);
+}
+
+.note {
+    margin-top: 80px;
+}

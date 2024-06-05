@@ -5,3 +5,8 @@
 .container {
     width: 600px;
 }
+
+.link {
+    text-decoration: none;
+    color: var(--text-primary-color);
+}

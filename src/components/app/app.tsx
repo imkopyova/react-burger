@@ -1,136 +1,115 @@
-import { useEffect, useMemo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 
+import { thunkGetIngredients } from '../../services/actions/ingredients';
+
+import { ProtectedRoute } from '../protected-route/protected-route';
 import { AppHeader } from '../app-header/app-header';
-import { BurgerIngredients } from '../burger-ingredients/burger-ingredients';
-import { BurgerConstructor } from '../burger-constructor/burger-constructor';
+import { HomePage } from '../../pages/home/home';
+import { LoginPage } from '../../pages/login/login';
+import { RegisterPage } from '../../pages/register/register';
+import { ForgotPasswordPage } from '../../pages/forgot-password/forgot-password';
+import { ResetPasswordPage } from '../../pages/reset-password/reset-password';
+import { ProfilePage } from '../../pages/profile/profile';
+import { ProfileForm } from '../../components/profile-form/profile-form';
+import { NotFoundPage } from '../../pages/not-found/not-found';
+import { IngredientDetails } from '../ingredient-details/ingredient-details';
+import { Modal } from '../modal/modal';
+import { checkUserAuth } from '../../services/actions/user';
 
 import styles from './app.module.css';
 
-import { TIngredient, TChosenIngredient } from '../../services/models';
-import {
-    getIngredients,
-    getBurgerConstructorBun,
-    getBurgerConstructorIngredients,
-} from '../../services/selectors/selectors';
-import { thunkGetIngredients } from '../../services/actions/ingredients';
-import {
-    ADD_BUN,
-    ADD_INGREDIENT,
-    DELETE_INGREDIENT,
-    SORT_INGREDIENTS,
-} from '../../services/actions/burger-constructor';
-
 export const App = () => {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const background = location.state && location.state.background;
+
     const dispatch = useDispatch();
 
-    const [chosenBun, setChosenBun] = useState<TIngredient>();
-    const [chosenIngredients, setChosenIngredients] = useState<
-        TChosenIngredient[]
-    >([]);
-
-    const {
-        ingredients,
-        ingredientsRequest: loading,
-        ingredientsFailed: error,
-    } = useSelector(getIngredients);
-    const chosenBunId = useSelector(getBurgerConstructorBun);
-    const chosenIngredientsIds = useSelector(getBurgerConstructorIngredients);
+    useEffect(() => {
+        // TODO: исправить типы
+        dispatch(checkUserAuth() as any);
+    }, [dispatch]);
 
     useEffect(() => {
         // TODO: исправить типы
         dispatch(thunkGetIngredients() as any);
     }, [dispatch]);
 
-    useEffect(() => {
-        if (!!chosenBunId && !!ingredients) {
-            setChosenBun(
-                ingredients.find(ingredient => ingredient._id === chosenBunId),
-            );
-        } else {
-            setChosenBun(undefined);
-        }
-    }, [ingredients, chosenBunId]);
-
-    useEffect(() => {
-        if (!!chosenIngredientsIds && !!ingredients) {
-            const filteredIngredients: TChosenIngredient[] = [];
-            chosenIngredientsIds.forEach(chosen => {
-                const newFilteredIngredient = ingredients.find(
-                    ingredient => ingredient._id === chosen.id,
-                );
-                if (newFilteredIngredient) {
-                    filteredIngredients.push({
-                        ...newFilteredIngredient,
-                        inConstructorId: chosen.inConstructorId,
-                    });
-                }
-            });
-
-            setChosenIngredients(filteredIngredients);
-        }
-    }, [ingredients, chosenIngredientsIds]);
-
-    const content = useMemo(() => {
-        return (
-            <>
-                {loading && (
-                    <p className="text text_type_main-default">
-                        Загружаем ингридиенты...
-                    </p>
-                )}
-                {error && (
-                    <p className="text text_type_main-default">
-                        Произошла ошибка, попробуйте перезагрузить страницу
-                    </p>
-                )}
-                {ingredients !== undefined && (
-                    <BurgerIngredients ingredients={ingredients} />
-                )}
-            </>
-        );
-    }, [loading, error, ingredients]);
-
-    const onDropHandlerBun = (id: string) => {
-        dispatch({ type: ADD_BUN, id });
-    };
-
-    const onDropIngredient = (id: string) => {
-        dispatch({ type: ADD_INGREDIENT, id });
-    };
-
-    const onDeleteIngredient = (id: string) => {
-        dispatch({ type: DELETE_INGREDIENT, id });
-    };
-
-    const onMoveIngredient = (fromIndex: number, toIndex: number) => {
-        dispatch({ type: SORT_INGREDIENTS, fromIndex, toIndex });
+    const closeModal = () => {
+        navigate(-1);
     };
 
     return (
         <div className={styles.app}>
             <AppHeader />
-            <div className={styles.container}>
-                <h1 className="text text_type_main-large pt-10 pb-5">
-                    Соберите бургер
-                </h1>
-                <DndProvider backend={HTML5Backend}>
-                    <main className={styles.main}>
-                        {content}
-                        {/* TODO: Поправить стили заглушек */}
-                        <BurgerConstructor
-                            bun={chosenBun}
-                            ingredients={chosenIngredients}
-                            onDropHandler={onDropHandlerBun}
-                            onDropIngredient={onDropIngredient}
-                            onDeleteIngredient={onDeleteIngredient}
-                            onMoveIngredient={onMoveIngredient}
+            <Routes location={background || location}>
+                <Route path="/" element={<HomePage />} />
+                <Route
+                    path="/login"
+                    element={
+                        <ProtectedRoute
+                            unauthorizedOnly
+                            component={<LoginPage />}
                         />
-                    </main>
-                </DndProvider>
-            </div>
+                    }
+                />
+                <Route
+                    path="/register"
+                    element={
+                        <ProtectedRoute
+                            unauthorizedOnly
+                            component={<RegisterPage />}
+                        />
+                    }
+                />
+                <Route
+                    path="/forgot-password"
+                    element={
+                        <ProtectedRoute
+                            unauthorizedOnly
+                            component={<ForgotPasswordPage />}
+                        />
+                    }
+                />
+                <Route
+                    path="/reset-password"
+                    element={
+                        <ProtectedRoute
+                            unauthorizedOnly
+                            component={<ResetPasswordPage />}
+                        />
+                    }
+                />
+                <Route
+                    path="/profile"
+                    element={<ProtectedRoute component={<ProfilePage />} />}
+                >
+                    <Route path="" element={<ProfileForm />} />
+                    <Route path="orders" element={<NotFoundPage />} />
+                </Route>
+                <Route
+                    path="/ingredients/:ingredientId"
+                    element={<IngredientDetails />}
+                />
+                <Route
+                    path="*"
+                    element={<ProtectedRoute component={<NotFoundPage />} />}
+                />
+            </Routes>
+            {background && (
+                <Routes>
+                    <Route
+                        path="/ingredients/:ingredientId"
+                        element={
+                            <Modal onClose={closeModal}>
+                                <IngredientDetails />
+                            </Modal>
+                        }
+                    />
+                </Routes>
+            )}
         </div>
     );
 };

@@ -10,9 +10,11 @@ export const STUBS = {
 export const IngredientStub = ({
     type,
     isHover,
+    children,
 }: {
     type: 'bunTop' | 'bunBottom' | 'ingredient';
     isHover?: boolean;
+    children?: any;
 }) => {
     return type === STUBS.bunTop ? (
         <div
@@ -36,7 +38,7 @@ export const IngredientStub = ({
                 [styles.hovered]: isHover,
             })}
         >
-            Перетащите ингредиенты
+            {children || 'Перетащите ингредиенты'}
         </div>
     );
 };

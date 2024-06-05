@@ -1,12 +1,27 @@
 import classNames from 'classnames';
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
+
 import styles from './ingredient-details.module.css';
 import type { TIngredient } from '../../services/models';
+import { getIngredients } from '../../services/selectors/selectors';
 
-interface IIngredientDetails {
-    ingredient: TIngredient;
-}
+export const IngredientDetails = () => {
+    let { ingredientId } = useParams();
+    const { ingredients } = useSelector(getIngredients);
+    const [ingredient, setIngredient] = useState<TIngredient>();
 
-export const IngredientDetails = ({ ingredient }: IIngredientDetails) => {
+    useEffect(() => {
+        if (ingredients) {
+            setIngredient(
+                ingredients.find(
+                    (item: TIngredient) => item._id === ingredientId,
+                ),
+            );
+        }
+    }, [ingredients, ingredientId]);
+
     return (
         <div className={classNames(styles.container, 'p-10 pb-15')}>
             <h3
@@ -19,12 +34,14 @@ export const IngredientDetails = ({ ingredient }: IIngredientDetails) => {
             </h3>
             <img
                 className={classNames(styles.image, 'mt-5')}
-                alt={ingredient.name}
-                src={ingredient.image}
+                alt={ingredient?.name}
+                src={ingredient?.image_large}
                 width={520}
                 height={240}
             />
-            <p className="text text_type_main-medium mt-2">{ingredient.name}</p>
+            <p className="text text_type_main-medium mt-2">
+                {ingredient?.name}
+            </p>
             <div
                 className={classNames(
                     styles.nutrients_layout,
@@ -36,7 +53,7 @@ export const IngredientDetails = ({ ingredient }: IIngredientDetails) => {
                         Калории,ккал
                     </span>
                     <span className="text text_type_digits-default pt-2">
-                        {ingredient.calories}
+                        {ingredient?.calories}
                     </span>
                 </div>
                 <div className={styles.nutrients_item}>
@@ -44,7 +61,7 @@ export const IngredientDetails = ({ ingredient }: IIngredientDetails) => {
                         Белки, г
                     </span>
                     <span className="text text_type_digits-default pt-2">
-                        {ingredient.proteins}
+                        {ingredient?.proteins}
                     </span>
                 </div>
                 <div className={styles.nutrients_item}>
@@ -52,7 +69,7 @@ export const IngredientDetails = ({ ingredient }: IIngredientDetails) => {
                         Жиры, г
                     </span>
                     <span className="text text_type_digits-default pt-2">
-                        {ingredient.fat}
+                        {ingredient?.fat}
                     </span>
                 </div>
                 <div className={styles.nutrients_item}>
@@ -60,7 +77,7 @@ export const IngredientDetails = ({ ingredient }: IIngredientDetails) => {
                         Углеводы, г
                     </span>
                     <span className="text text_type_digits-default pt-2">
-                        {ingredient.carbohydrates}
+                        {ingredient?.carbohydrates}
                     </span>
                 </div>
             </div>

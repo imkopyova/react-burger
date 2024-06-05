@@ -22,8 +22,10 @@
 
 .name {
     text-align: center;
+    text-decoration: none;
 }
 
 .image {
     pointer-events: none;
+    text-decoration: none;
 }
