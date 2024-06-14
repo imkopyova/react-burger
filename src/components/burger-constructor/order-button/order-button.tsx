@@ -33,12 +33,12 @@ export const OrderButton = () => {
 
         const accessToken = getAccessToken();
         if (!!accessToken) {
-            // TODO: any
             dispatch(
+                // @ts-ignore
                 thunkPostOrder({
                     ingredients: [bun, ...ingredientsIds, bun],
                     accessToken,
-                }) as any,
+                }),
             );
         } else {
             navigate('/login');

@@ -12,9 +12,9 @@ export const IngredientStub = ({
     isHover,
     children,
 }: {
-    type: 'bunTop' | 'bunBottom' | 'ingredient';
+    type: keyof typeof STUBS;
     isHover?: boolean;
-    children?: any;
+    children?: React.ReactNode;
 }) => {
     return type === STUBS.bunTop ? (
         <div

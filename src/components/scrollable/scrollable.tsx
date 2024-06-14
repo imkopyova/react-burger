@@ -8,11 +8,8 @@ interface IScrollable {
     handleScroll?: (e: React.UIEvent) => void;
 }
 
-export const Scrollable = forwardRef(
-    (
-        { children, availableHeight, handleScroll }: IScrollable,
-        ref: React.ForwardedRef<HTMLDivElement>,
-    ) => {
+export const Scrollable = forwardRef<HTMLDivElement, IScrollable>(
+    ({ children, availableHeight, handleScroll }, ref) => {
         const scrollableRef =
             ref as React.MutableRefObject<HTMLDivElement | null>;
         const [currentHeight, setCurrentHeight] = useState(availableHeight);

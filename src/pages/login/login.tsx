@@ -21,7 +21,8 @@ export const LoginPage = () => {
         event.preventDefault();
         // TODO: Отрефакторить
         try {
-            await dispatch(login({ email, password }) as any);
+            // @ts-ignore
+            await dispatch(login({ email, password }));
         } catch {
             setError('Неверный логин или пароль');
         }

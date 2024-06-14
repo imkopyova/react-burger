@@ -28,13 +28,13 @@ export const App = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        // TODO: исправить типы
-        dispatch(checkUserAuth() as any);
+        // @ts-ignore
+        dispatch(checkUserAuth());
     }, [dispatch]);
 
     useEffect(() => {
-        // TODO: исправить типы
-        dispatch(thunkGetIngredients() as any);
+        // @ts-ignore
+        dispatch(thunkGetIngredients());
     }, [dispatch]);
 
     const closeModal = () => {

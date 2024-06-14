@@ -29,7 +29,7 @@ export const refreshTokenRequest = (
             token: data.refreshToken,
         }),
     })
-        .then(checkResponse)
+        .then(checkResponse<IRefreshTokenResponse>)
         .then(checkSuccess)
         .then(refreshData => {
             localStorage.setItem('refreshToken', refreshData.refreshToken);

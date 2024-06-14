@@ -21,5 +21,5 @@ export const logoutRequest = (data: ILogoutRequest): Promise<ILogoutResponse> =>
             token: data.refreshToken,
         }),
     })
-        .then(checkResponse)
+        .then(checkResponse<ILogoutResponse>)
         .then(checkSuccess);
