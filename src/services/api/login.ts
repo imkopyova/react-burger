@@ -30,5 +30,5 @@ export const loginRequest = (data: ILoginRequest): Promise<ILoginResponse> =>
             ...data,
         }),
     })
-        .then(checkResponse)
+        .then(checkResponse<ILoginResponse>)
         .then(checkSuccess);

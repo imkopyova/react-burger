@@ -23,5 +23,5 @@ export const sendResetCodeRequest = (
             ...data,
         }),
     })
-        .then(checkResponse)
+        .then(checkResponse<ISendResetCodeResponse>)
         .then(checkSuccess);

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import {
@@ -24,7 +24,8 @@ export const RegisterPage = () => {
 
         try {
             await dispatch(
-                register({ name: username, email, password }) as any,
+                // @ts-ignore
+                register({ name: username, email, password }),
             );
         } catch {
             setError('Произошла ошибка авторизации, попробуйте еще раз');

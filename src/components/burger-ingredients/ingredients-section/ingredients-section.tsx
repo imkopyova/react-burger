@@ -7,11 +7,8 @@ interface IIngredientsSection {
     children: React.ReactElement[];
 }
 
-export const IngredientsSection = forwardRef(
-    (
-        { name, children }: IIngredientsSection,
-        ref: React.ForwardedRef<HTMLElement>,
-    ) => {
+export const IngredientsSection = forwardRef<HTMLElement, IIngredientsSection>(
+    ({ name, children }, ref) => {
         return (
             <section className="pt-10" ref={ref}>
                 <h2 className="text text_type_main-medium">{name}</h2>

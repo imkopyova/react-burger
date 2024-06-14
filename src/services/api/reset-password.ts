@@ -24,5 +24,5 @@ export const resetPasswordRequest = (
             ...data,
         }),
     })
-        .then(checkResponse)
+        .then(checkResponse<IResetPasswordResponse>)
         .then(checkSuccess);

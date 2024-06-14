@@ -33,5 +33,5 @@ export const registerRequest = (
             ...data,
         }),
     })
-        .then(checkResponse)
+        .then(checkResponse<IRegisterResponse>)
         .then(checkSuccess);

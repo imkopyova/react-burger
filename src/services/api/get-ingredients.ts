@@ -13,4 +13,6 @@ export type IGetIngredientsResponse =
     | IGetIngredientsResponseSuccess;
 
 export const getIngredientsRequest = (): Promise<IGetIngredientsResponse> =>
-    fetch(`${BASE_URL}/ingredients`).then(checkResponse).then(checkSuccess);
+    fetch(`${BASE_URL}/ingredients`)
+        .then(checkResponse<IGetIngredientsResponse>)
+        .then(checkSuccess);

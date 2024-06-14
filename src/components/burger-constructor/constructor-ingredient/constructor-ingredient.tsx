@@ -17,7 +17,7 @@ export interface IConstructorIngredient {
     onMoveIngredient: (fromIndex: number, toIndex: number) => void;
 }
 
-interface DragItem {
+interface IDragItem {
     index: number;
     id: string;
 }
@@ -30,9 +30,9 @@ export const ConstructorIngredient = ({
 }: IConstructorIngredient) => {
     const ref = useRef<HTMLDivElement>(null);
 
-    const [, drop] = useDrop<DragItem, void>({
+    const [, drop] = useDrop<IDragItem, void>({
         accept: 'order',
-        hover(item: DragItem, monitor) {
+        hover(item: IDragItem, monitor) {
             if (!ref.current) return;
 
             const dragIndex = item.index;
@@ -59,10 +59,14 @@ export const ConstructorIngredient = ({
         },
     });
 
-    const [{ isDragging }, drag] = useDrag({
+    const [{ isDragging }, drag] = useDrag<
+        IDragItem,
+        unknown,
+        { isDragging: boolean }
+    >({
         type: 'order',
         item: () => {
-            return { id: ingredient.inConstructorId, index: index } as DragItem;
+            return { id: ingredient.inConstructorId, index: index };
         },
         collect: monitor => ({
             isDragging: monitor.isDragging(),

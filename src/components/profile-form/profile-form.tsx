@@ -56,7 +56,8 @@ export const ProfileForm = () => {
         }
 
         try {
-            await dispatch(editUser(data) as any);
+            // @ts-ignore
+            await dispatch(editUser(data));
             setModified(false);
         } catch {
             setError('Произошла ошибка, попробуйте еще раз');

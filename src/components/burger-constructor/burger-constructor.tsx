@@ -13,7 +13,7 @@ import { DropBunZone } from './drop-bun-zone/drop-bun-zone';
 
 const FIXED_HEIGHT_WITHOUT_SCROLLABLE = 582;
 
-export interface IBurgerConstructor {
+interface IBurgerConstructor {
     bun?: TIngredient;
     ingredients?: TChosenIngredient[];
     onDropHandler: (id: string) => void;

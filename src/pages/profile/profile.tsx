@@ -9,7 +9,8 @@ export const ProfilePage = () => {
     const dispatch = useDispatch();
     const handleLogout = async () => {
         try {
-            await dispatch(logout() as any);
+            // @ts-ignore
+            await dispatch(logout());
         } catch (error) {
             console.log('Ошибка:', error);
         }
