@@ -1,9 +1,8 @@
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 
 import { thunkGetIngredients } from '../../services/actions/ingredients';
-
+import { useDispatch } from '../../services/hooks';
 import { ProtectedRoute } from '../protected-route/protected-route';
 import { AppHeader } from '../app-header/app-header';
 import { HomePage } from '../../pages/home/home';
@@ -28,12 +27,10 @@ export const App = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        // @ts-ignore
         dispatch(checkUserAuth());
     }, [dispatch]);
 
     useEffect(() => {
-        // @ts-ignore
         dispatch(thunkGetIngredients());
     }, [dispatch]);
 

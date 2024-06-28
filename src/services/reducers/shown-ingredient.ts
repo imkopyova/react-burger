@@ -5,6 +5,7 @@ import {
     SET_SHOWN_INGREDIENT,
     CLEAR_SHOWN_INGREDIENT,
 } from '../actions/shown-ingredient';
+import type { TShownIngredient } from '../actions/shown-ingredient';
 
 export const initialShownIngredientState: IShownIngredientState = {
     ingredient: null,
@@ -12,7 +13,7 @@ export const initialShownIngredientState: IShownIngredientState = {
 
 export const shownIngredientReducer = (
     state = initialShownIngredientState,
-    action: UnknownAction,
+    action: TShownIngredient,
 ) => {
     switch (action.type) {
         case SET_SHOWN_INGREDIENT: {

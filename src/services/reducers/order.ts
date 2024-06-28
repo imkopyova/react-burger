@@ -1,5 +1,3 @@
-import { UnknownAction } from 'redux';
-
 import { IOrderState } from '../models';
 import {
     POST_ORDER_REQUEST,
@@ -7,6 +5,8 @@ import {
     POST_ORDER_FAILED,
     CLEAR_ORDER_DATA,
 } from '../actions/order';
+
+import type { TOrderActions } from '../actions/order';
 
 export const initialOrderState: IOrderState = {
     orderRequest: false,
@@ -17,7 +17,7 @@ export const initialOrderState: IOrderState = {
 
 export const orderReducer = (
     state = initialOrderState,
-    action: UnknownAction,
+    action: TOrderActions,
 ) => {
     switch (action.type) {
         case POST_ORDER_REQUEST: {

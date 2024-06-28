@@ -1,3 +1,4 @@
+import { TDispatch } from '../models';
 import { getUserRequest } from '../api/get-user';
 import { loginRequest, ILoginRequest } from '../api/login';
 import { logoutRequest } from '../api/logout';
@@ -5,21 +6,33 @@ import { registerRequest, IRegisterRequest } from '../api/register';
 import { editUserRequest, TEditUserData } from '../api/edit-user';
 import { TUser } from '../models';
 
-export const SET_USER = 'SET_USER';
-export const SET_IS_AUTH_CHECKED = 'SET_IS_AUTH_CHECKED';
+export const SET_USER: 'SET_USER' = 'SET_USER';
+export const SET_IS_AUTH_CHECKED: 'SET_IS_AUTH_CHECKED' = 'SET_IS_AUTH_CHECKED';
 
-export const setUser = (user: TUser | null) => ({
+export interface ISetUserAction {
+    readonly type: typeof SET_USER;
+    readonly user: TUser | null;
+}
+
+export interface ISetIsAuthCheckedAction {
+    readonly type: typeof SET_IS_AUTH_CHECKED;
+    readonly value: boolean;
+}
+
+export type TUserActions = ISetUserAction | ISetIsAuthCheckedAction;
+
+export const setUser = (user: TUser | null): ISetUserAction => ({
     type: SET_USER,
     user,
 });
 
-export const setIsAuthChecked = (value: boolean) => ({
+export const setIsAuthChecked = (value: boolean): ISetIsAuthCheckedAction => ({
     type: SET_IS_AUTH_CHECKED,
     value,
 });
 
 export const register = (registerData: IRegisterRequest) => {
-    return (dispatch: any) => {
+    return (dispatch: TDispatch) => {
         return registerRequest(registerData).then((response: any) => {
             localStorage.setItem('accessToken', response.accessToken);
             localStorage.setItem('refreshToken', response.refreshToken);
@@ -35,7 +48,7 @@ export const register = (registerData: IRegisterRequest) => {
 };
 
 export const login = (loginData: ILoginRequest) => {
-    return (dispatch: any) => {
+    return (dispatch: TDispatch) => {
         return loginRequest(loginData).then(response => {
             // @ts-ignore
             localStorage.setItem('accessToken', response.accessToken);
@@ -55,7 +68,7 @@ export const login = (loginData: ILoginRequest) => {
 };
 
 export const logout = () => {
-    return (dispatch: any) => {
+    return (dispatch: TDispatch) => {
         const refreshToken = localStorage.getItem('refreshToken');
         if (!refreshToken) return;
         return logoutRequest({ refreshToken }).then(() => {
@@ -69,7 +82,7 @@ export const logout = () => {
 };
 
 export const checkUserAuth = () => {
-    return (dispatch: any) => {
+    return (dispatch: TDispatch) => {
         const accessToken = localStorage.getItem('accessToken');
         if (accessToken) {
             getUserRequest({ accessToken })
@@ -95,7 +108,7 @@ export const checkUserAuth = () => {
 };
 
 export const editUser = (userData: TEditUserData) => {
-    return (dispatch: any) => {
+    return (dispatch: TDispatch) => {
         const accessToken = localStorage.getItem('accessToken');
         if (accessToken) {
             editUserRequest({ ...userData, accessToken })
