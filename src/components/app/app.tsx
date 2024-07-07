@@ -6,12 +6,15 @@ import { useDispatch } from '../../services/hooks';
 import { ProtectedRoute } from '../protected-route/protected-route';
 import { AppHeader } from '../app-header/app-header';
 import { HomePage } from '../../pages/home/home';
+import { FeedPage } from '../../pages/feed/feed';
+import { OrderPage } from '../../pages/order/order';
 import { LoginPage } from '../../pages/login/login';
 import { RegisterPage } from '../../pages/register/register';
 import { ForgotPasswordPage } from '../../pages/forgot-password/forgot-password';
 import { ResetPasswordPage } from '../../pages/reset-password/reset-password';
 import { ProfilePage } from '../../pages/profile/profile';
 import { ProfileForm } from '../../components/profile-form/profile-form';
+import { OrdersList } from '../../components/orders-list/orders-list';
 import { NotFoundPage } from '../../pages/not-found/not-found';
 import { IngredientDetails } from '../ingredient-details/ingredient-details';
 import { Modal } from '../modal/modal';
@@ -84,12 +87,15 @@ export const App = () => {
                     element={<ProtectedRoute component={<ProfilePage />} />}
                 >
                     <Route path="" element={<ProfileForm />} />
-                    <Route path="orders" element={<NotFoundPage />} />
+                    <Route path="orders" element={<OrdersList />} />
+                    <Route path="orders/:number" element={<OrderPage />} />
                 </Route>
                 <Route
                     path="/ingredients/:ingredientId"
                     element={<IngredientDetails />}
                 />
+                <Route path="/feed" element={<FeedPage />} />
+                <Route path="/feed/:order" element={<OrderPage />} />
                 <Route
                     path="*"
                     element={<ProtectedRoute component={<NotFoundPage />} />}

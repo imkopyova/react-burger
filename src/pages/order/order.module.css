@@ -1,0 +1,38 @@
+.container {
+    width: 640px;
+    display: flex;
+    flex-direction: column;
+}
+
+.number {
+    width: 100%;
+    text-align: center;
+}
+
+.list {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.row {
+    display: flex;
+    gap: 16px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.rowLeft {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.rowRight {
+    flex-shrink: 0;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+}

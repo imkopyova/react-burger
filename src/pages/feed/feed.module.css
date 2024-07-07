@@ -1,0 +1,51 @@
+.container {
+    width: 1240px;
+}
+
+.heading {
+    padding: 40px 0 10px 0;
+}
+
+.main {
+    display: grid;
+    grid-template-columns: 608px 1fr;
+    gap: 60px;
+}
+
+.orders {
+    width: 584px;
+}
+
+.stat_layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+        'stat_done stat_progress'
+        'stat_all stat_all'
+        'stat_today stat_today';
+}
+
+.stat_done {
+    grid-area: stat_done;
+}
+
+.stat_progress {
+    grid-area: stat_progress;
+}
+
+.stat_all {
+    grid-area: stat_all;
+}
+
+.stat_today {
+    grid-area: stat_today;
+}
+
+.stat_list {
+    padding: 0;
+    margin: 0;
+}
+
+.stat_list li {
+    list-style-type: none;
+}
