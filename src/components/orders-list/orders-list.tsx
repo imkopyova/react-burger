@@ -52,7 +52,7 @@ export const OrdersList = () => {
                         <Link
                             key={order._id}
                             to={`${location.pathname}/${order.number}`}
-                            // state={{ background: location }}
+                            state={{ background: location }}
                             className={styles.link}
                         >
                             <OrderItem order={order} />

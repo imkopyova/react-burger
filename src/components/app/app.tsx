@@ -88,7 +88,6 @@ export const App = () => {
                 >
                     <Route path="" element={<ProfileForm />} />
                     <Route path="orders" element={<OrdersList />} />
-                    <Route path="orders/:number" element={<OrderPage />} />
                 </Route>
                 <Route
                     path="/ingredients/:ingredientId"
@@ -96,6 +95,7 @@ export const App = () => {
                 />
                 <Route path="/feed" element={<FeedPage />} />
                 <Route path="/feed/:order" element={<OrderPage />} />
+                <Route path="/profile/orders/:number" element={<OrderPage />} />
                 <Route
                     path="*"
                     element={<ProtectedRoute component={<NotFoundPage />} />}
@@ -108,6 +108,22 @@ export const App = () => {
                         element={
                             <Modal onClose={closeModal}>
                                 <IngredientDetails />
+                            </Modal>
+                        }
+                    />
+                    <Route
+                        path="/feed/:order"
+                        element={
+                            <Modal onClose={closeModal}>
+                                <OrderPage />
+                            </Modal>
+                        }
+                    />
+                    <Route
+                        path="/profile/orders/:number"
+                        element={
+                            <Modal onClose={closeModal}>
+                                <OrderPage />
                             </Modal>
                         }
                     />

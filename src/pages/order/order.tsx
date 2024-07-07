@@ -38,7 +38,7 @@ export const OrderPage = () => {
     });
 
     return (
-        <div className={(styles.container, 'mt-15')}>
+        <div className={(styles.container, 'p-10')}>
             <p
                 className={classNames(
                     styles.number,
