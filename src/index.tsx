@@ -1,23 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { compose, createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import { thunk } from 'redux-thunk';
 import './index.css';
 import App from './components/app/app';
 import reportWebVitals from './reportWebVitals';
-import { rootReducer } from './services/reducers';
+import { configureStore } from '@reduxjs/toolkit';
+import { ingredientsReducer } from './services/reducers/ingredients';
+import { burgerConstructorReducer } from './services/reducers/burger-constructor';
+import { orderReducer } from './services/reducers/order';
+import { shownIngredientReducer } from './services/reducers/shown-ingredient';
+import { userReducer } from './services/reducers/user';
 
-const composeEnhancers =
-    typeof window === 'object' &&
-    (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-        ? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-        : compose;
-
-const enhancer = composeEnhancers(applyMiddleware(thunk));
-
-export const store = createStore(rootReducer, enhancer);
+export const store = configureStore({
+    reducer: {
+        // @ts-ignore
+        ingredients: ingredientsReducer,
+        // @ts-ignore
+        burgerConstructor: burgerConstructorReducer,
+        // @ts-ignore
+        order: orderReducer,
+        // @ts-ignore
+        shownIngredient: shownIngredientReducer,
+        // @ts-ignore
+        user: userReducer,
+    },
+});
 
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 root.render(
