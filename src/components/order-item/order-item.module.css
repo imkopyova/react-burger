@@ -9,6 +9,7 @@
     grid-template-areas:
         'number date'
         'title title'
+        'status status'
         'ingredients price';
 }
 
@@ -27,6 +28,10 @@
 
 .ingredients {
     grid-area: ingredients;
+}
+
+.status {
+    grid-area: status;
 }
 
 .price {

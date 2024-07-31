@@ -7,37 +7,54 @@ import { Scrollable } from '../../components/scrollable/scrollable';
 import { Price } from '../../components/price/price';
 import { IngredientCircle } from '../../components/ingredient-circle/ingredient-circle';
 import styles from './order.module.css';
-
-const ORDER = {
-    ingredients: [
-        '643d69a5c3f7b9001cfa093c',
-        '643d69a5c3f7b9001cfa0946',
-        '643d69a5c3f7b9001cfa094a',
-        '643d69a5c3f7b9001cfa093d',
-        '643d69a5c3f7b9001cfa093d',
-        '643d69a5c3f7b9001cfa0942',
-        '643d69a5c3f7b9001cfa0948',
-        '643d69a5c3f7b9001cfa093f',
-    ],
-    _id: '',
-    status: 'done',
-    number: '034533',
-    createdAt: '2021-06-23T14:43:22.587Z',
-    updatedAt: '2021-06-23T14:43:22.603Z',
-};
+import { useDispatch, useSelector } from '../../services/hooks';
+import { useEffect } from 'react';
+import { fetchOrder } from '../../services/order-current/slice';
+import { getAccessToken } from '../../helpers/getAccessToken';
 
 const countQuantity = (idsList: string[], id: string) => {
     return idsList.filter(listId => listId === id).length;
 };
 
 export const OrderPage = () => {
-    let { orderId } = useParams();
-    const order = ORDER;
-    const { ingredients, price } = useOrderIngredients({
-        ingredientsId: order.ingredients,
+    let { number: orderId } = useParams();
+    let test = useParams();
+    console.log(test);
+    const dispatch = useDispatch();
+    const accessToken = getAccessToken();
+
+    const order = useSelector(state => {
+        let order = state.ordersFeed.orders?.orders.find(
+            o => o.number === orderId,
+        );
+        if (order) {
+            return order;
+        }
+        order = state.ordersProfile.orders?.orders.find(
+            o => o.number === orderId,
+        );
+        if (order) {
+            return order;
+        }
+        order = state.orderCurrent.order;
+        if (order?.number == orderId) {
+            return order;
+        }
+        return;
     });
 
-    return (
+    const { ingredients, price } = useOrderIngredients({
+        ingredientsId: order?.ingredients || [],
+    });
+
+    useEffect(() => {
+        console.log(accessToken, orderId, order);
+        if (!order && orderId) {
+            dispatch(fetchOrder({ orderId, accessToken }));
+        }
+    }, []);
+
+    return order ? (
         <div className={(styles.container, 'p-10')}>
             <p
                 className={classNames(
@@ -47,7 +64,7 @@ export const OrderPage = () => {
             >
                 #{order.number}
             </p>
-            <p className="text text_type_main-medium mt-10">?</p>
+            <p className="text text_type_main-medium mt-10">{order.name}</p>
             <p
                 className={classNames(
                     order.status === 'done' && 'text_color_success',
@@ -61,7 +78,10 @@ export const OrderPage = () => {
                 <Scrollable availableHeight={312}>
                     <ul className={styles.list}>
                         {ingredients.map(ingredient => (
-                            <li className={classNames(styles.row, 'mb-4')}>
+                            <li
+                                key={ingredient._id}
+                                className={classNames(styles.row, 'mb-4')}
+                            >
                                 <div className={styles.rowLeft}>
                                     <IngredientCircle ingredient={ingredient} />
                                     <p className="text text_type_main-default">
@@ -89,5 +109,5 @@ export const OrderPage = () => {
                 <Price>{price}</Price>
             </div>
         </div>
-    );
+    ) : null;
 };

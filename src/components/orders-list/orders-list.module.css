@@ -2,3 +2,8 @@
     text-decoration: none;
     color: var(--text-primary-color);
 }
+/* 
+.list {
+    display: flex;
+    flex-direction: column-reverse;
+} */

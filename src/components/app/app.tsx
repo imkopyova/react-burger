@@ -14,7 +14,7 @@ import { ForgotPasswordPage } from '../../pages/forgot-password/forgot-password'
 import { ResetPasswordPage } from '../../pages/reset-password/reset-password';
 import { ProfilePage } from '../../pages/profile/profile';
 import { ProfileForm } from '../../components/profile-form/profile-form';
-import { OrdersList } from '../../components/orders-list/orders-list';
+import { ProfileOrders } from '../profile-orders/profile-orders';
 import { NotFoundPage } from '../../pages/not-found/not-found';
 import { IngredientDetails } from '../ingredient-details/ingredient-details';
 import { Modal } from '../modal/modal';
@@ -87,14 +87,14 @@ export const App = () => {
                     element={<ProtectedRoute component={<ProfilePage />} />}
                 >
                     <Route path="" element={<ProfileForm />} />
-                    <Route path="orders" element={<OrdersList />} />
+                    <Route path="orders" element={<ProfileOrders />} />
                 </Route>
                 <Route
                     path="/ingredients/:ingredientId"
                     element={<IngredientDetails />}
                 />
                 <Route path="/feed" element={<FeedPage />} />
-                <Route path="/feed/:order" element={<OrderPage />} />
+                <Route path="/feed/:number" element={<OrderPage />} />
                 <Route path="/profile/orders/:number" element={<OrderPage />} />
                 <Route
                     path="*"
@@ -112,7 +112,7 @@ export const App = () => {
                         }
                     />
                     <Route
-                        path="/feed/:order"
+                        path="/feed/:number"
                         element={
                             <Modal onClose={closeModal}>
                                 <OrderPage />

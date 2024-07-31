@@ -8,20 +8,22 @@ export const IngredientsStack = ({
     ingredients: TIngredient[];
 }) => {
     return (
-        <ul className={styles.ingredients}>
-            {ingredients.length > 5 && (
-                <li className={styles.ingredientsCell}>
-                    <IngredientCircle
-                        ingredient={ingredients[5]}
-                        text={`${ingredients.length - 5}+`}
-                    />
-                </li>
-            )}
-            {ingredients.slice(0, 5)?.map(ingredient => (
-                <li className={styles.ingredientsCell}>
-                    <IngredientCircle ingredient={ingredient} />
-                </li>
-            ))}
-        </ul>
+        <div className={styles.ingredientsContainer}>
+            <ul className={styles.ingredients}>
+                {ingredients.length > 5 && (
+                    <li className={styles.ingredientsCell}>
+                        <IngredientCircle
+                            ingredient={ingredients[5]}
+                            text={`${ingredients.length - 5}+`}
+                        />
+                    </li>
+                )}
+                {ingredients.slice(0, 5)?.map(ingredient => (
+                    <li key={ingredient._id} className={styles.ingredientsCell}>
+                        <IngredientCircle ingredient={ingredient} />
+                    </li>
+                ))}
+            </ul>
+        </div>
     );
 };

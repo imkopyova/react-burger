@@ -10,3 +10,7 @@
 .ingredientsCell {
     width: 50px;
 }
+
+.ingredientsContainer {
+    display: flex;
+}

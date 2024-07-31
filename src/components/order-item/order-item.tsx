@@ -9,15 +9,17 @@ import { IngredientsStack } from '../ingredients-stack/ingredients-stack';
 interface IOrderItem {
     order: {
         ingredients: string[];
-        status: string;
+        status: 'pending' | 'created' | 'done';
         number: string;
+        name: string;
         createdAt: string;
         updatedAt: string;
         _id: string;
     };
+    withStatus?: boolean;
 }
 
-export const OrderItem = ({ order }: IOrderItem) => {
+export const OrderItem = ({ order, withStatus }: IOrderItem) => {
     const { ingredients, price } = useOrderIngredients({
         ingredientsId: order.ingredients,
     });
@@ -42,12 +44,26 @@ export const OrderItem = ({ order }: IOrderItem) => {
             <p
                 className={classNames(
                     styles.title,
-                    'text text_type_main-medium mt-6 mb-6',
+                    'text text_type_main-medium mt-6',
                 )}
             >
-                ?
+                {order.name}
             </p>
-            <div className={styles.ingredients}>
+            {withStatus && (
+                <p
+                    className={classNames(
+                        styles.status,
+                        'text text_type_main-small mt-6',
+                    )}
+                >
+                    {order.status === 'done'
+                        ? 'Выполнен'
+                        : order.status === 'pending'
+                          ? 'Готовится'
+                          : 'Создан'}
+                </p>
+            )}
+            <div className={classNames(styles.ingredients, 'mt-6')}>
                 {ingredients && <IngredientsStack ingredients={ingredients} />}
             </div>
             <div className={styles.price}>
