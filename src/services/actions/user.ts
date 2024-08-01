@@ -1,6 +1,10 @@
 import { TDispatch } from '../models';
 import { getUserRequest } from '../api/get-user';
-import { loginRequest, ILoginRequest } from '../api/login';
+import {
+    loginRequest,
+    ILoginRequest,
+    ILoginResponseSuccess,
+} from '../api/login';
 import { logoutRequest } from '../api/logout';
 import { registerRequest, IRegisterRequest } from '../api/register';
 import { editUserRequest, TEditUserData } from '../api/edit-user';
@@ -50,16 +54,18 @@ export const register = (registerData: IRegisterRequest) => {
 export const login = (loginData: ILoginRequest) => {
     return (dispatch: TDispatch) => {
         return loginRequest(loginData).then(response => {
-            // @ts-ignore
-            localStorage.setItem('accessToken', response.accessToken);
-            // @ts-ignore
-            localStorage.setItem('refreshToken', response.refreshToken);
+            localStorage.setItem(
+                'accessToken',
+                (response as ILoginResponseSuccess).accessToken,
+            );
+            localStorage.setItem(
+                'refreshToken',
+                (response as ILoginResponseSuccess).refreshToken,
+            );
             dispatch(
                 setUser({
-                    // @ts-ignore
-                    username: response.user.name,
-                    // @ts-ignore
-                    email: response.user.email,
+                    username: (response as ILoginResponseSuccess).user.name,
+                    email: (response as ILoginResponseSuccess).user.email,
                 }),
             );
             dispatch(setIsAuthChecked(true));
@@ -89,10 +95,10 @@ export const checkUserAuth = () => {
                 .then(response => {
                     dispatch(
                         setUser({
-                            // @ts-ignore
-                            username: response.user.name,
-                            // @ts-ignore
-                            email: response.user.email,
+                            username: (response as ILoginResponseSuccess).user
+                                .name,
+                            email: (response as ILoginResponseSuccess).user
+                                .email,
                         }),
                     );
                 })
@@ -115,10 +121,10 @@ export const editUser = (userData: TEditUserData) => {
                 .then(response => {
                     dispatch(
                         setUser({
-                            // @ts-ignore
-                            username: response.user.name,
-                            // @ts-ignore
-                            email: response.user.email,
+                            username: (response as ILoginResponseSuccess).user
+                                .name,
+                            email: (response as ILoginResponseSuccess).user
+                                .email,
                         }),
                     );
                 })

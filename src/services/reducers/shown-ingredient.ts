@@ -1,5 +1,3 @@
-import { UnknownAction } from 'redux';
-
 import { IShownIngredientState } from '../models';
 import {
     SET_SHOWN_INGREDIENT,

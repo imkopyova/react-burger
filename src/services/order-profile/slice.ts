@@ -55,6 +55,7 @@ export const { getOrdersProfile, getWSStatusProfile } =
     ordersProfileSlice.selectors;
 
 type TActionCreators = typeof ordersProfileSlice.actions;
-export type TInternalActions = ReturnType<
+
+export type TInternalProfileActions = ReturnType<
     TActionCreators[keyof TActionCreators]
 >;

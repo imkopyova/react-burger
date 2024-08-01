@@ -1,7 +1,6 @@
-import { ThunkAction } from 'redux-thunk';
-import { Action, ActionCreator, Dispatch } from 'redux';
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { Action } from 'redux';
 
-import { store } from '../index';
 import type { TBurgerConstructorActions } from './actions/burger-constructor';
 import type { TGetIngredientsActions } from './actions/ingredients';
 import type { TOrderActions } from './actions/order';
@@ -10,6 +9,8 @@ import type { TUserActions } from './actions/user';
 import { rootReducer } from '../index';
 import { TExternalActions } from './order-feed/actions';
 import { TInternalActions } from './order-feed/slice';
+import { TExternalProfileActions } from './order-profile/actions';
+import { TInternalProfileActions } from './order-profile/slice';
 
 export type TRootState = ReturnType<typeof rootReducer>;
 
@@ -20,13 +21,18 @@ export type TActions =
     | TShownIngredient
     | TUserActions
     | TExternalActions
-    | TInternalActions;
+    | TInternalActions
+    | TExternalProfileActions
+    | TInternalProfileActions;
 
-export type TThunk<TReturn = void> = ActionCreator<
-    ThunkAction<TReturn, Action, TRootState, TActions>
+export type TThunk<TReturn = void> = ThunkAction<
+    TReturn,
+    Action,
+    TRootState,
+    TActions
 >;
 
-export type TDispatch = Dispatch<TActions>;
+export type TDispatch = ThunkDispatch<TRootState, unknown, TActions>;
 
 export type TIngredient = {
     _id: string;

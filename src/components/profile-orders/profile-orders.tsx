@@ -15,7 +15,7 @@ export const ProfileOrders = () => {
     const dispatch = useDispatch();
 
     const connect = () => dispatch(wsConnectOrderProfile(WS_URL_PROFILE));
-    const disconnect = () => dispatch(wsDisconnectOrderProfile);
+    const disconnect = () => dispatch(wsDisconnectOrderProfile());
 
     useEffect(() => {
         connect();

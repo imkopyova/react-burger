@@ -1,5 +1,9 @@
-import { TThunk, TDispatch } from '../models';
-import { postOrderRequest, IPostOrderRequest } from '../api/post-order';
+import { TDispatch } from '../models';
+import {
+    postOrderRequest,
+    IPostOrderRequest,
+    IPostOrderResponseSuccess,
+} from '../api/post-order';
 
 export const POST_ORDER_REQUEST: 'POST_ORDER_REQUEST' = 'POST_ORDER_REQUEST';
 export const POST_ORDER_SUCCESS: 'POST_ORDER_SUCCESS' = 'POST_ORDER_SUCCESS';
@@ -30,7 +34,7 @@ export type TOrderActions =
     | IPostOrderFailedAction
     | IClearOrderDataAction;
 
-export const thunkPostOrder: TThunk =
+export const thunkPostOrder =
     (orderData: IPostOrderRequest) => (dispatch: TDispatch) => {
         dispatch({
             type: POST_ORDER_REQUEST,
@@ -39,10 +43,9 @@ export const thunkPostOrder: TThunk =
             .then(response => {
                 dispatch({
                     type: POST_ORDER_SUCCESS,
-                    // @ts-ignore
-                    number: response.order.number,
-                    // @ts-ignore
-                    name: response.name,
+                    number: (response as IPostOrderResponseSuccess).order
+                        .number,
+                    name: (response as IPostOrderResponseSuccess).name,
                 });
             })
             .catch(() => {

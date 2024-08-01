@@ -1,5 +1,8 @@
-import { TThunk, TDispatch, TIngredient } from '../models';
-import { getIngredientsRequest } from '../api/get-ingredients';
+import { TDispatch, TIngredient } from '../models';
+import {
+    getIngredientsRequest,
+    IGetIngredientsResponseSuccess,
+} from '../api/get-ingredients';
 
 export const GET_INGREDIENTS_REQUEST: 'GET_INGREDIENTS_REQUEST' =
     'GET_INGREDIENTS_REQUEST';
@@ -26,7 +29,7 @@ export type TGetIngredientsActions =
     | IGetIngredientsSuccessAction
     | IGetIngredientsFailedAction;
 
-export const thunkGetIngredients: TThunk = () => (dispatch: TDispatch) => {
+export const thunkGetIngredients = () => (dispatch: TDispatch) => {
     dispatch({
         type: GET_INGREDIENTS_REQUEST,
     });
@@ -34,8 +37,7 @@ export const thunkGetIngredients: TThunk = () => (dispatch: TDispatch) => {
         .then(response => {
             dispatch({
                 type: GET_INGREDIENTS_SUCCESS,
-                // @ts-ignore
-                ingredients: response.data,
+                ingredients: (response as IGetIngredientsResponseSuccess).data,
             });
         })
         .catch(() => {

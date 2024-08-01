@@ -1,5 +1,3 @@
-import { UnknownAction } from 'redux';
-
 import { IUserState } from '../models';
 import { SET_USER, SET_IS_AUTH_CHECKED } from '../actions/user';
 import type { TUserActions } from '../actions/user';

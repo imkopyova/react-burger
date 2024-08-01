@@ -4,10 +4,11 @@ export const wsConnectOrderProfile = createAction<
     string,
     'ORDER_PROFILE_CONNECT'
 >('ORDER_PROFILE_CONNECT');
-export const wsDisconnectOrderProfile = createAction(
-    'ORDER_PROFILE_DISCONNECT',
-);
+export const wsDisconnectOrderProfile = createAction<
+    void,
+    'ORDER_PROFILE_DISCONNECT'
+>('ORDER_PROFILE_DISCONNECT');
 
-export type TExternalActions =
+export type TExternalProfileActions =
     | ReturnType<typeof wsConnectOrderProfile>
     | ReturnType<typeof wsDisconnectOrderProfile>;

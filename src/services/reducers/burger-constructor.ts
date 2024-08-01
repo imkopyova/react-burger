@@ -1,4 +1,3 @@
-import { UnknownAction } from 'redux';
 import { v4 as uuidv4 } from 'uuid';
 
 import { IBurgerConstructorState } from '../models';

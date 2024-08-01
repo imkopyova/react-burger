@@ -4,16 +4,12 @@ import { refreshTokenRequest } from '../api/refresh-token';
 
 export type TWSActionTypes = {
     connect: ActionCreatorWithPayload<string>;
-    // @ts-ignore
-    disconnect: ActionCreatorWithPayload;
+    disconnect: ActionCreatorWithPayload<void>;
     sendMessage?: ActionCreatorWithPayload<any>;
-    // @ts-ignore
-    onConnecting: ActionCreatorWithPayload;
-    // @ts-ignore
-    onOpen: ActionCreatorWithPayload;
+    onConnecting: ActionCreatorWithPayload<void>;
+    onOpen: ActionCreatorWithPayload<void>;
     onError: ActionCreatorWithPayload<string>;
-    // @ts-ignore
-    onClose: ActionCreatorWithPayload;
+    onClose: ActionCreatorWithPayload<void>;
     onMessage: ActionCreatorWithPayload<any>;
 };
 

@@ -14,8 +14,9 @@ export const fetchWithRefresh = async <T extends TCheckResponse>(
             const refreshData = await refreshTokenRequest({
                 refreshToken,
             });
-            // @ts-ignore
-            options.headers.Authorization = refreshData.accessToken;
+            if (!refreshData.success || !options?.headers) return;
+            (options.headers as Record<string, string>).Authorization =
+                refreshData.accessToken;
             const response = await fetch(url, options);
             return await checkResponse<T>(response);
         } else {

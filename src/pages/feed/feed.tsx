@@ -48,7 +48,7 @@ export const FeedPage = () => {
     }, [orders]);
 
     const connect = () => dispatch(wsConnect(WS_URL));
-    const disconnect = () => dispatch(wsDisconnect);
+    const disconnect = () => dispatch(wsDisconnect());
 
     useEffect(() => {
         connect();
