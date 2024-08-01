@@ -23,7 +23,6 @@ export const wsMiddleware = (
     wsActions: TWSActionTypes,
     withTokenRefresh: boolean = false,
 ): Middleware<{}, TRootState> => {
-    const refreshToken = localStorage.getItem('refreshToken');
     return (store => {
         let socket: WebSocket | null = null;
         let reconnectTimer = 0;
@@ -63,27 +62,32 @@ export const wsMiddleware = (
                             withTokenRefresh &&
                             parseData.message === 'Invalid or missing token'
                         ) {
-                            // @ts-ignore
-                            refreshTokenRequest({ refreshToken })
-                                .then(refreshData => {
-                                    const wssUrl = new URL(url);
-                                    wssUrl.searchParams.set(
-                                        'token',
-                                        // @ts-ignore
-                                        refreshData.accessToken.replace(
-                                            'Bearer ',
-                                            '',
-                                        ),
-                                    );
-                                    dispatch(connect(wssUrl.toString()));
-                                })
-                                .catch(e => {
-                                    dispatch(
-                                        onError(
-                                            (e as { message: string }).message,
-                                        ),
-                                    );
-                                });
+                            const refreshToken =
+                                localStorage.getItem('refreshToken');
+                            if (refreshToken) {
+                                refreshTokenRequest({ refreshToken })
+                                    .then(refreshData => {
+                                        if (!refreshData.success) return;
+                                        const wssUrl = new URL(url);
+                                        wssUrl.searchParams.set(
+                                            'token',
+                                            refreshData.accessToken.replace(
+                                                'Bearer ',
+                                                '',
+                                            ),
+                                        );
+                                        dispatch(connect(wssUrl.toString()));
+                                    })
+                                    .catch(e => {
+                                        dispatch(
+                                            onError(
+                                                (e as { message: string })
+                                                    .message,
+                                            ),
+                                        );
+                                    });
+                            }
+
                             dispatch(disconnect());
 
                             return;

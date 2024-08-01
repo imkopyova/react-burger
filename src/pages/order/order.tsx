@@ -48,7 +48,6 @@ export const OrderPage = () => {
     });
 
     useEffect(() => {
-        console.log(accessToken, orderId, order);
         if (!order && orderId) {
             dispatch(fetchOrder({ orderId, accessToken }));
         }

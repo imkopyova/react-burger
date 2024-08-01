@@ -23,9 +23,7 @@ export const fetchOrder = createAsyncThunk(
         orderId: string;
         accessToken?: string;
     }) => {
-        const response = await getOrderRequest(orderId, accessToken);
-        console.log(accessToken);
-        return response;
+        return await getOrderRequest(orderId, accessToken);
     },
 );
 
