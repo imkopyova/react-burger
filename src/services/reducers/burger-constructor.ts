@@ -1,4 +1,3 @@
-import { UnknownAction } from 'redux';
 import { v4 as uuidv4 } from 'uuid';
 
 import { IBurgerConstructorState } from '../models';
@@ -10,6 +9,8 @@ import {
     CLEAR_CONSTRUCTOR,
 } from '../actions/burger-constructor';
 
+import type { TBurgerConstructorActions } from '../actions/burger-constructor';
+
 export const initialBurgerConstructorState: IBurgerConstructorState = {
     bun: undefined,
     ingredients: [],
@@ -17,7 +18,7 @@ export const initialBurgerConstructorState: IBurgerConstructorState = {
 
 export const burgerConstructorReducer = (
     state = initialBurgerConstructorState,
-    action: UnknownAction,
+    action: TBurgerConstructorActions,
 ) => {
     switch (action.type) {
         case ADD_BUN: {
@@ -51,9 +52,9 @@ export const burgerConstructorReducer = (
         case SORT_INGREDIENTS: {
             const ingredients = [...state.ingredients];
             ingredients.splice(
-                (action as any).toIndex,
+                action.toIndex,
                 0,
-                ingredients.splice((action as any).fromIndex, 1)[0],
+                ingredients.splice(action.fromIndex, 1)[0],
             );
             return {
                 ...state,

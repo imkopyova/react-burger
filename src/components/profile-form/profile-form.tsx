@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { geUserState } from '../../services/selectors/selectors';
 import { editUser } from '../../services/actions/user';
 
+import { useDispatch, useSelector } from '../../services/hooks';
 import {
     EmailInput,
     PasswordInput,
@@ -56,7 +56,6 @@ export const ProfileForm = () => {
         }
 
         try {
-            // @ts-ignore
             await dispatch(editUser(data));
             setModified(false);
         } catch {

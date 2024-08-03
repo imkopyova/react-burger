@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import { useDispatch, useSelector } from '../../../services/hooks';
 import { Modal } from '../../modal/modal';
 import { OrderDetails } from '../../order-details/order-details';
 import { thunkPostOrder } from '../../../services/actions/order';
@@ -34,7 +34,6 @@ export const OrderButton = () => {
         const accessToken = getAccessToken();
         if (!!accessToken) {
             dispatch(
-                // @ts-ignore
                 thunkPostOrder({
                     ingredients: [bun, ...ingredientsIds, bun],
                     accessToken,

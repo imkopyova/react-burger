@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
-import { useSelector } from 'react-redux';
 
+import { useSelector } from '../../services/hooks';
 import { Price } from '../price/price';
 import {
     getIngredients,

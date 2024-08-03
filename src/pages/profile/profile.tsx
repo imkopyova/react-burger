@@ -1,7 +1,7 @@
 import classNames from 'classnames';
-import { useDispatch } from 'react-redux';
 import { NavLink, Outlet } from 'react-router-dom';
 
+import { useDispatch } from '../../services/hooks';
 import { logout } from '../../services/actions/user';
 import styles from './profile.module.css';
 
@@ -9,7 +9,6 @@ export const ProfilePage = () => {
     const dispatch = useDispatch();
     const handleLogout = async () => {
         try {
-            // @ts-ignore
             await dispatch(logout());
         } catch (error) {
             console.log('Ошибка:', error);

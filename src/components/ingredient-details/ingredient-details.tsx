@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 
+import { useSelector } from '../../services/hooks';
 import styles from './ingredient-details.module.css';
 import type { TIngredient } from '../../services/models';
 import { getIngredients } from '../../services/selectors/selectors';

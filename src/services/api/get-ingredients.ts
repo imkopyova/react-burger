@@ -2,9 +2,10 @@ import { checkResponse } from './helpers/check-response';
 import { checkSuccess } from './helpers/check-success';
 import { IResponseFailed } from './models';
 import { BASE_URL } from './helpers/base-url';
+import { TIngredient } from '../models';
 
 export interface IGetIngredientsResponseSuccess {
-    data: string[];
+    data: TIngredient[];
     success: true;
 }
 
