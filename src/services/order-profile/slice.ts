@@ -59,3 +59,5 @@ type TActionCreators = typeof ordersProfileSlice.actions;
 export type TInternalProfileActions = ReturnType<
     TActionCreators[keyof TActionCreators]
 >;
+
+export default ordersProfileSlice.reducer;

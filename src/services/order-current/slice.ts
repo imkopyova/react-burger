@@ -52,3 +52,5 @@ export const orderCurrentSlice = createSlice({
             });
     },
 });
+
+export default orderCurrentSlice.reducer;

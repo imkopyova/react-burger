@@ -49,3 +49,5 @@ type TActionCreators = typeof ordersFeedSlice.actions;
 export type TInternalActions = ReturnType<
     TActionCreators[keyof TActionCreators]
 >;
+
+export default ordersFeedSlice.reducer;
