@@ -28,26 +28,33 @@ export const LoginPage = () => {
     };
 
     return (
-        <div className={styles.container}>
+        <div className={styles.container} data-testid="login-page">
             <form className={styles.form} onSubmit={handleSubmit}>
                 <h1 className="text text_type_main-medium">Вход</h1>
-                <EmailInput
-                    onChange={e => setEmail(e.target.value)}
-                    value={email}
-                    name="email"
-                    placeholder="E-mail"
-                    isIcon={false}
-                    required
-                />
-                <PasswordInput
-                    onChange={e => setPassword(e.target.value)}
-                    value={password}
-                    name="password"
-                    required
-                />
-                <Button htmlType="submit" type="primary" size="medium">
-                    Войти
-                </Button>
+                <div data-testid="email-input">
+                    <EmailInput
+                        onChange={e => setEmail(e.target.value)}
+                        value={email}
+                        name="email"
+                        placeholder="E-mail"
+                        isIcon={false}
+                        required
+                    />
+                </div>
+                <div data-testid="password-input">
+                    <PasswordInput
+                        onChange={e => setPassword(e.target.value)}
+                        value={password}
+                        name="password"
+                        required
+                    />
+                </div>
+                <div data-testid="login-button">
+                    <Button htmlType="submit" type="primary" size="medium">
+                        Войти
+                    </Button>
+                </div>
+
                 {error && <p className="text text_type_main-small">{error}</p>}
             </form>
             <div className={styles.nav}>

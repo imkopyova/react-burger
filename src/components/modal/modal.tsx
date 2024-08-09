@@ -28,7 +28,11 @@ export const Modal = ({ children, onClose }: IModal) => {
         <>
             <ModalOverlay onClick={onClose} />
             <div onClick={handleClick} className={styles.modal}>
-                <div className={styles.close} onClick={onClose}>
+                <div
+                    className={styles.close}
+                    onClick={onClose}
+                    data-testid="modal-close"
+                >
                     <CloseIcon type="primary" />
                 </div>
                 {children}

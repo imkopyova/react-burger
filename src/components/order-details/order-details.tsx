@@ -8,7 +8,10 @@ interface IOrderDetails {
 
 export const OrderDetails = ({ number }: IOrderDetails) => {
     return (
-        <div className={classNames(styles.container, 'p-30 pl-10 pr-10')}>
+        <div
+            className={classNames(styles.container, 'p-30 pl-10 pr-10')}
+            data-testid="order-details"
+        >
             <h3 className="text text_type_digits-large">{number}</h3>
             <p className="text text_type_main-medium mt-8">
                 идентификатор заказа

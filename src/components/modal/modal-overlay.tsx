@@ -5,5 +5,11 @@ interface IModalOverlay {
 }
 
 export const ModalOverlay = ({ onClick }: IModalOverlay) => {
-    return <div onClick={onClick} className={styles.overlay} />;
+    return (
+        <div
+            onClick={onClick}
+            className={styles.overlay}
+            data-testid="modal-overlay"
+        />
+    );
 };
