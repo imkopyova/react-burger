@@ -21,6 +21,7 @@ export const IngredientStub = ({
             className={classNames(styles.stubTop, {
                 [styles.hovered]: isHover,
             })}
+            data-testid="ingredient-stub-bun-top"
         >
             Перетащите булку
         </div>
@@ -29,6 +30,7 @@ export const IngredientStub = ({
             className={classNames(styles.stubBottom, {
                 [styles.hovered]: isHover,
             })}
+            data-testid="ingredient-stub-bun-bottom"
         >
             Перетащите булку
         </div>
@@ -37,6 +39,7 @@ export const IngredientStub = ({
             className={classNames(styles.stubMiddle, {
                 [styles.hovered]: isHover,
             })}
+            data-testid="ingredient-stub"
         >
             {children || 'Перетащите ингредиенты'}
         </div>
