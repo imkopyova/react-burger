@@ -34,12 +34,9 @@
         "eject": "react-scripts eject",
         "eslint": "npx eslint .",
         "prettier": "npx prettier . --write",
-<<<<<<< HEAD
-        "cypress:open": "./node_modules/.bin/cypress open"
-=======
+        "cypress:open": "./node_modules/.bin/cypress open",
         "predeploy": "npm run build",
         "deploy": "gh-pages -d build"
->>>>>>> origin/master
     },
     "eslintConfig": {
         "extends": [
