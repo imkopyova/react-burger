@@ -1,23 +1,87 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { compose, createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import { thunk } from 'redux-thunk';
 import './index.css';
 import App from './components/app/app';
 import reportWebVitals from './reportWebVitals';
-import { rootReducer } from './services/reducers';
+import { wsMiddleware } from './services/middleware/ws-middleware';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { wsConnect, wsDisconnect } from './services/order-feed/actions';
+import {
+    wsConnectOrderProfile,
+    wsDisconnectOrderProfile,
+} from './services/order-profile/actions';
+import {
+    ordersFeedSlice,
+    wsClose,
+    wsConnecting,
+    wsError,
+    wsMessage,
+    wsOpen,
+} from './services/order-feed/slice';
+import { orderCurrentSlice } from './services/order-current/slice';
 
-const composeEnhancers =
-    typeof window === 'object' &&
-    (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-        ? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-        : compose;
+import {
+    ordersProfileSlice,
+    wsCloseOrderProfile,
+    wsConnectingOrderProfile,
+    wsErrorOrderProfile,
+    wsMessageOrderProfile,
+    wsOpenOrderProfile,
+} from './services/order-profile/slice';
 
-const enhancer = composeEnhancers(applyMiddleware(thunk));
+import { ingredientsReducer } from './services/reducers/ingredients';
+import { burgerConstructorReducer } from './services/reducers/burger-constructor';
+import { orderReducer } from './services/reducers/order';
+import { shownIngredientReducer } from './services/reducers/shown-ingredient';
+import { userReducer } from './services/reducers/user';
 
-const store = createStore(rootReducer, enhancer);
+export const rootReducer = combineReducers({
+    ingredients: ingredientsReducer,
+    burgerConstructor: burgerConstructorReducer,
+    order: orderReducer,
+    shownIngredient: shownIngredientReducer,
+    user: userReducer,
+    [ordersFeedSlice.reducerPath]: ordersFeedSlice.reducer,
+    [ordersProfileSlice.reducerPath]: ordersProfileSlice.reducer,
+    [orderCurrentSlice.reducerPath]: orderCurrentSlice.reducer,
+});
+
+export type TRootState = ReturnType<typeof rootReducer>;
+
+const ordersFeedWSMiddleware = wsMiddleware({
+    connect: wsConnect,
+    disconnect: wsDisconnect,
+    onConnecting: wsConnecting,
+    onOpen: wsOpen,
+    onError: wsError,
+    onClose: wsClose,
+    onMessage: wsMessage,
+});
+
+const ordersProfileWSMiddleware = wsMiddleware(
+    {
+        connect: wsConnectOrderProfile,
+        disconnect: wsDisconnectOrderProfile,
+        onConnecting: wsConnectingOrderProfile,
+        onOpen: wsOpenOrderProfile,
+        onError: wsErrorOrderProfile,
+        onClose: wsCloseOrderProfile,
+        onMessage: wsMessageOrderProfile,
+    },
+    true,
+);
+
+export const store = configureStore({
+    reducer: rootReducer,
+    middleware: getDefaultMiddleware => {
+        return getDefaultMiddleware().concat(
+            ordersFeedWSMiddleware,
+            ordersProfileWSMiddleware,
+        );
+    },
+});
 
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 root.render(

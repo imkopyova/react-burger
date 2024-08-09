@@ -1,9 +1,9 @@
 import classNames from 'classnames';
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 
+import { useSelector } from '../../../services/hooks';
 import styles from './ingredient-card.module.css';
 import { Price } from '../../price/price';
 import type {

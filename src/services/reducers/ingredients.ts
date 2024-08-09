@@ -1,10 +1,10 @@
-import { UnknownAction } from 'redux';
-
 import {
     GET_INGREDIENTS_REQUEST,
     GET_INGREDIENTS_SUCCESS,
     GET_INGREDIENTS_FAILED,
 } from '../actions/ingredients';
+
+import type { TGetIngredientsActions } from '../actions/ingredients';
 
 import { IIngredientsState } from '../models';
 
@@ -16,7 +16,7 @@ export const initialIngredientsState: IIngredientsState = {
 
 export const ingredientsReducer = (
     state = initialIngredientsState,
-    action: UnknownAction,
+    action: TGetIngredientsActions,
 ) => {
     switch (action.type) {
         case GET_INGREDIENTS_REQUEST: {

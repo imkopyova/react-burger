@@ -1,18 +1,20 @@
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 
 import { thunkGetIngredients } from '../../services/actions/ingredients';
-
+import { useDispatch } from '../../services/hooks';
 import { ProtectedRoute } from '../protected-route/protected-route';
 import { AppHeader } from '../app-header/app-header';
 import { HomePage } from '../../pages/home/home';
+import { FeedPage } from '../../pages/feed/feed';
+import { OrderPage } from '../../pages/order/order';
 import { LoginPage } from '../../pages/login/login';
 import { RegisterPage } from '../../pages/register/register';
 import { ForgotPasswordPage } from '../../pages/forgot-password/forgot-password';
 import { ResetPasswordPage } from '../../pages/reset-password/reset-password';
 import { ProfilePage } from '../../pages/profile/profile';
 import { ProfileForm } from '../../components/profile-form/profile-form';
+import { ProfileOrders } from '../profile-orders/profile-orders';
 import { NotFoundPage } from '../../pages/not-found/not-found';
 import { IngredientDetails } from '../ingredient-details/ingredient-details';
 import { Modal } from '../modal/modal';
@@ -28,12 +30,10 @@ export const App = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        // @ts-ignore
         dispatch(checkUserAuth());
     }, [dispatch]);
 
     useEffect(() => {
-        // @ts-ignore
         dispatch(thunkGetIngredients());
     }, [dispatch]);
 
@@ -87,12 +87,15 @@ export const App = () => {
                     element={<ProtectedRoute component={<ProfilePage />} />}
                 >
                     <Route path="" element={<ProfileForm />} />
-                    <Route path="orders" element={<NotFoundPage />} />
+                    <Route path="orders" element={<ProfileOrders />} />
                 </Route>
                 <Route
                     path="/ingredients/:ingredientId"
                     element={<IngredientDetails />}
                 />
+                <Route path="/feed" element={<FeedPage />} />
+                <Route path="/feed/:number" element={<OrderPage />} />
+                <Route path="/profile/orders/:number" element={<OrderPage />} />
                 <Route
                     path="*"
                     element={<ProtectedRoute component={<NotFoundPage />} />}
@@ -105,6 +108,22 @@ export const App = () => {
                         element={
                             <Modal onClose={closeModal}>
                                 <IngredientDetails />
+                            </Modal>
+                        }
+                    />
+                    <Route
+                        path="/feed/:number"
+                        element={
+                            <Modal onClose={closeModal}>
+                                <OrderPage />
+                            </Modal>
+                        }
+                    />
+                    <Route
+                        path="/profile/orders/:number"
+                        element={
+                            <Modal onClose={closeModal}>
+                                <OrderPage />
                             </Modal>
                         }
                     />

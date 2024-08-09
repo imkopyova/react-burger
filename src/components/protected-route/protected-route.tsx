@@ -1,6 +1,6 @@
-import { useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
 
+import { useSelector } from '../../services/hooks';
 import { geUserState } from '../../services/selectors/selectors';
 
 interface IProtectedRoute {

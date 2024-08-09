@@ -1,0 +1,41 @@
+.card {
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 40px;
+    background-color: var(--background);
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+        'number date'
+        'title title'
+        'status status'
+        'ingredients price';
+}
+
+.number {
+    grid-area: number;
+}
+
+.date {
+    grid-area: date;
+    justify-self: end;
+}
+
+.title {
+    grid-area: title;
+}
+
+.ingredients {
+    grid-area: ingredients;
+}
+
+.status {
+    grid-area: status;
+}
+
+.price {
+    grid-area: price;
+    justify-self: end;
+    align-self: center;
+}

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import {
     EmailInput,
@@ -7,6 +6,7 @@ import {
     Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
+import { useDispatch } from '../../services/hooks';
 import styles from '../auth-layout.module.css';
 import { login } from '../../services/actions/user';
 
@@ -21,7 +21,6 @@ export const LoginPage = () => {
         event.preventDefault();
         // TODO: Отрефакторить
         try {
-            // @ts-ignore
             await dispatch(login({ email, password }));
         } catch {
             setError('Неверный логин или пароль');

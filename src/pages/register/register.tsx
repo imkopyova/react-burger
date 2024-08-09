@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import {
     EmailInput,
     PasswordInput,
@@ -9,6 +8,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { register } from '../../services/actions/user';
 
+import { useDispatch } from '../../services/hooks';
 import styles from '../auth-layout.module.css';
 
 export const RegisterPage = () => {
@@ -23,10 +23,7 @@ export const RegisterPage = () => {
         event.preventDefault();
 
         try {
-            await dispatch(
-                // @ts-ignore
-                register({ name: username, email, password }),
-            );
+            await dispatch(register({ name: username, email, password }));
         } catch {
             setError('Произошла ошибка авторизации, попробуйте еще раз');
         }

@@ -1,0 +1,16 @@
+.ingredients {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    direction: rtl;
+    list-style: none;
+    flex-wrap: nowrap;
+}
+
+.ingredientsCell {
+    width: 50px;
+}
+
+.ingredientsContainer {
+    display: flex;
+}
