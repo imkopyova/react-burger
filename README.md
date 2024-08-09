@@ -1,5 +1,7 @@
 # Rect Burger
 
+GitHub Pages https://imkopyova.github.io/react-burger/
+
 The Space Burger App is a React app designed to explore and experiment with new frameworks and technologies, such as replacing Redux with Effector. It serves as a practical example for learning and applying modern development practices in a fun and engaging way.
 
 ## Features
