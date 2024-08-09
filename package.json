@@ -1,6 +1,7 @@
 {
     "name": "react-burger",
     "version": "0.1.0",
+    "homepage": "https://imkopyova.github.io/react-burger",
     "private": true,
     "dependencies": {
         "@testing-library/jest-dom": "^5.17.0",
@@ -32,7 +33,9 @@
         "test": "react-scripts test",
         "eject": "react-scripts eject",
         "eslint": "npx eslint .",
-        "prettier": "npx prettier . --write"
+        "prettier": "npx prettier . --write",
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d build"
     },
     "eslintConfig": {
         "extends": [
@@ -58,6 +61,7 @@
         "eslint": "^8.57.0",
         "eslint-config-prettier": "^9.1.0",
         "eslint-plugin-react": "^7.34.1",
+        "gh-pages": "^6.1.1",
         "globals": "^15.0.0",
         "prettier": "3.2.5",
         "typescript-eslint": "^7.6.0"
