@@ -58,16 +58,18 @@ export const OrderButton = () => {
                 </Modal>
             )}
 
-            <Button
-                htmlType="button"
-                type="primary"
-                size="large"
-                extraClass="ml-10"
-                onClick={postOrder}
-                disabled={!bun}
-            >
-                {order.orderRequest ? 'В процессе...' : 'Оформить заказ'}
-            </Button>
+            <div data-testid="make-order-button">
+                <Button
+                    htmlType="button"
+                    type="primary"
+                    size="large"
+                    extraClass="ml-10"
+                    onClick={postOrder}
+                    disabled={!bun}
+                >
+                    {order.orderRequest ? 'В процессе...' : 'Оформить заказ'}
+                </Button>
+            </div>
         </>
     );
 };

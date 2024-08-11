@@ -85,6 +85,7 @@ export const ConstructorIngredient = ({
                 'pt-4',
             )}
             style={{ opacity: opacity }}
+            data-testid="constructor-element-ingredient"
         >
             <ConstructorElement
                 text={ingredient.name}

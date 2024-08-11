@@ -23,7 +23,10 @@ export const IngredientDetails = () => {
     }, [ingredients, ingredientId]);
 
     return (
-        <div className={classNames(styles.container, 'p-10 pb-15')}>
+        <div
+            className={classNames(styles.container, 'p-10 pb-15')}
+            data-testid="ingredient-modal"
+        >
             <h3
                 className={classNames(
                     styles.title,

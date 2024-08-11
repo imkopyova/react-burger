@@ -137,40 +137,52 @@ export const BurgerIngredients = ({ ingredients }: IBurgerIngredients) => {
                     <div>
                         <IngredientsSection name="Булки" ref={bunsRef}>
                             {buns.map(ingredient => (
-                                <Link
-                                    key={ingredient._id}
-                                    to={`/ingredients/${ingredient._id}`}
-                                    state={{ background: location }}
-                                    className={styles.link}
-                                >
-                                    <IngredientCard ingredient={ingredient} />
-                                </Link>
+                                <div data-testid="draggable-bun">
+                                    <Link
+                                        key={ingredient._id}
+                                        to={`/ingredients/${ingredient._id}`}
+                                        state={{ background: location }}
+                                        className={styles.link}
+                                    >
+                                        <IngredientCard
+                                            ingredient={ingredient}
+                                        />
+                                    </Link>
+                                </div>
                             ))}
                         </IngredientsSection>
 
                         <IngredientsSection name="Соусы" ref={saucesRef}>
                             {sauces.map(ingredient => (
-                                <Link
-                                    key={ingredient._id}
-                                    to={`/ingredients/${ingredient._id}`}
-                                    state={{ background: location }}
-                                    className={styles.link}
-                                >
-                                    <IngredientCard ingredient={ingredient} />
-                                </Link>
+                                <div data-testid="draggable-sause">
+                                    <Link
+                                        key={ingredient._id}
+                                        to={`/ingredients/${ingredient._id}`}
+                                        state={{ background: location }}
+                                        className={styles.link}
+                                    >
+                                        <IngredientCard
+                                            ingredient={ingredient}
+                                        />
+                                    </Link>
+                                </div>
                             ))}
                         </IngredientsSection>
 
                         <IngredientsSection name="Начинки" ref={mainsRef}>
                             {mains.map(ingredient => (
-                                <Link
-                                    key={ingredient._id}
-                                    to={`/ingredients/${ingredient._id}`}
-                                    state={{ background: location }}
-                                    className={styles.link}
-                                >
-                                    <IngredientCard ingredient={ingredient} />
-                                </Link>
+                                <div data-testid="draggable-main">
+                                    <Link
+                                        key={ingredient._id}
+                                        to={`/ingredients/${ingredient._id}`}
+                                        state={{ background: location }}
+                                        className={styles.link}
+                                    >
+                                        <IngredientCard
+                                            ingredient={ingredient}
+                                        />
+                                    </Link>
+                                </div>
                             ))}
                         </IngredientsSection>
                     </div>

@@ -45,13 +45,15 @@ export const BurgerConstructor = ({
             <section className={classNames(styles.container, 'pl-4')}>
                 <DropBunZone onDropHandler={onDropHandler} stubType="bunTop">
                     {bun && (
-                        <ConstructorElement
-                            type="top"
-                            isLocked={true}
-                            text={`${bun.name} (верх)`}
-                            price={bun.price}
-                            thumbnail={bun.image}
-                        />
+                        <div data-testid="constructor-element-bun-top">
+                            <ConstructorElement
+                                type="top"
+                                isLocked={true}
+                                text={`${bun.name} (верх)`}
+                                price={bun.price}
+                                thumbnail={bun.image}
+                            />
+                        </div>
                     )}
                 </DropBunZone>
                 <Scrollable
@@ -85,13 +87,15 @@ export const BurgerConstructor = ({
                 </Scrollable>
                 <DropBunZone onDropHandler={onDropHandler} stubType="bunBottom">
                     {bun && (
-                        <ConstructorElement
-                            type="bottom"
-                            isLocked={true}
-                            text={`${bun.name} (низ)`}
-                            price={bun.price}
-                            thumbnail={bun.image}
-                        />
+                        <div data-testid="constructor-element-bun-bottom">
+                            <ConstructorElement
+                                type="bottom"
+                                isLocked={true}
+                                text={`${bun.name} (низ)`}
+                                price={bun.price}
+                                thumbnail={bun.image}
+                            />
+                        </div>
                     )}
                 </DropBunZone>
                 <div className={classNames(styles.order, 'mt-10')}>
